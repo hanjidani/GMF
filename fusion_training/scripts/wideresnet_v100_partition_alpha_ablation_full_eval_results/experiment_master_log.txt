@@ -1,0 +1,69 @@
+Comprehensive V100 Partition Experiment Log (Alpha Ablation Full Eval - WRN)
+Started: Mon Sep  1 08:32:13 PM CEST 2025
+==========================================
+Models: improved_wide_resnet
+Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+Alpha Values: 0.5 1.0 5.0 10.0 15.0
+Total Experiments: 25
+Partition: volta (V100)
+Batch Size: 16 experiments (16 GPUs for parallel execution)
+Mode: Alpha Ablation Full Eval (No LR schedulers)
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Gradient Clipping (1.0)
+Auto-resubmission: CUDA ECC errors
+==========================================
+[2025-09-01 20:32:13] ==========================================
+[2025-09-01 20:32:13] COMPREHENSIVE V100 PARTITION EXPERIMENT RUNNER (ALPHA ABLATION FULL EVAL - WRN)
+[2025-09-01 20:32:13] ==========================================
+[2025-09-01 20:32:13] Models: improved_wide_resnet
+[2025-09-01 20:32:13] Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+[2025-09-01 20:32:13] Alpha Values: 0.5 1.0 5.0 10.0 15.0
+[2025-09-01 20:32:13] Total Experiments: 25
+[2025-09-01 20:32:13] Partition: volta (V100)
+[2025-09-01 20:32:13] Batch Size: 16 experiments (16 GPUs for parallel execution)
+[2025-09-01 20:32:13] Mode: Alpha Ablation Full Eval (No LR schedulers)
+[2025-09-01 20:32:13] Augmentation: CutMix + Label Smoothing + Gradient Clipping
+[2025-09-01 20:32:13] Auto-resubmission: CUDA ECC errors
+[2025-09-01 20:32:13] ==========================================
+[2025-09-01 20:32:13] Creating experiment combinations...
+[2025-09-01 20:32:13] Created 25 experiment combinations
+[2025-09-01 20:32:13] Starting comprehensive experiment execution on V100 partition (Alpha Ablation Full Eval - WRN)...
+[2025-09-01 20:32:13] Starting batch processing of 25 experiments
+[2025-09-01 20:32:13] Processing experiments 1-16 of 25 (Batch 1)
+[2025-09-01 20:32:13] Submitting Exp 1: improved_wide_resnet multiplicative fusion, alpha=0.5
+[2025-09-01 20:32:13] Submitted Exp 1: improved_wide_resnet multiplicative fusion, alpha=0.5 (Job ID: 10723)
+[2025-09-01 20:32:13] Submitting Exp 2: improved_wide_resnet multiplicative fusion, alpha=1.0
+[2025-09-01 20:32:13] Submitted Exp 2: improved_wide_resnet multiplicative fusion, alpha=1.0 (Job ID: 10724)
+[2025-09-01 20:32:13] Submitting Exp 3: improved_wide_resnet multiplicative fusion, alpha=5.0
+[2025-09-01 20:32:13] Submitted Exp 3: improved_wide_resnet multiplicative fusion, alpha=5.0 (Job ID: 10725)
+[2025-09-01 20:32:13] Submitting Exp 4: improved_wide_resnet multiplicative fusion, alpha=10.0
+[2025-09-01 20:32:13] Submitted Exp 4: improved_wide_resnet multiplicative fusion, alpha=10.0 (Job ID: 10726)
+[2025-09-01 20:32:14] Submitting Exp 5: improved_wide_resnet multiplicative fusion, alpha=15.0
+[2025-09-01 20:32:14] Submitted Exp 5: improved_wide_resnet multiplicative fusion, alpha=15.0 (Job ID: 10727)
+[2025-09-01 20:32:14] Submitting Exp 6: improved_wide_resnet multiplicativeAddition fusion, alpha=0.5
+[2025-09-01 20:32:14] Submitted Exp 6: improved_wide_resnet multiplicativeAddition fusion, alpha=0.5 (Job ID: 10728)
+[2025-09-01 20:32:14] Submitting Exp 7: improved_wide_resnet multiplicativeAddition fusion, alpha=1.0
+[2025-09-01 20:32:14] Submitted Exp 7: improved_wide_resnet multiplicativeAddition fusion, alpha=1.0 (Job ID: 10729)
+[2025-09-01 20:32:14] Submitting Exp 8: improved_wide_resnet multiplicativeAddition fusion, alpha=5.0
+[2025-09-01 20:32:14] Submitted Exp 8: improved_wide_resnet multiplicativeAddition fusion, alpha=5.0 (Job ID: 10730)
+[2025-09-01 20:32:14] Submitting Exp 9: improved_wide_resnet multiplicativeAddition fusion, alpha=10.0
+[2025-09-01 20:32:14] Submitted Exp 9: improved_wide_resnet multiplicativeAddition fusion, alpha=10.0 (Job ID: 10731)
+[2025-09-01 20:32:14] Submitting Exp 10: improved_wide_resnet multiplicativeAddition fusion, alpha=15.0
+[2025-09-01 20:32:14] Submitted Exp 10: improved_wide_resnet multiplicativeAddition fusion, alpha=15.0 (Job ID: 10732)
+[2025-09-01 20:32:14] Submitting Exp 11: improved_wide_resnet TransformerBase fusion, alpha=0.5
+[2025-09-01 20:32:14] Submitted Exp 11: improved_wide_resnet TransformerBase fusion, alpha=0.5 (Job ID: 10733)
+[2025-09-01 20:32:14] Submitting Exp 12: improved_wide_resnet TransformerBase fusion, alpha=1.0
+[2025-09-01 20:32:14] Submitted Exp 12: improved_wide_resnet TransformerBase fusion, alpha=1.0 (Job ID: 10734)
+[2025-09-01 20:32:14] Submitting Exp 13: improved_wide_resnet TransformerBase fusion, alpha=5.0
+[2025-09-01 20:32:14] Submitted Exp 13: improved_wide_resnet TransformerBase fusion, alpha=5.0 (Job ID: 10735)
+[2025-09-01 20:32:14] Submitting Exp 14: improved_wide_resnet TransformerBase fusion, alpha=10.0
+[2025-09-01 20:32:14] Submitted Exp 14: improved_wide_resnet TransformerBase fusion, alpha=10.0 (Job ID: 10736)
+[2025-09-01 20:32:14] Submitting Exp 15: improved_wide_resnet TransformerBase fusion, alpha=15.0
+[2025-09-01 20:32:14] Submitted Exp 15: improved_wide_resnet TransformerBase fusion, alpha=15.0 (Job ID: 10737)
+[2025-09-01 20:32:14] Submitting Exp 16: improved_wide_resnet concatenation fusion, alpha=0.5
+[2025-09-01 20:32:14] Submitted Exp 16: improved_wide_resnet concatenation fusion, alpha=0.5 (Job ID: 10738)
+[2025-09-01 20:32:14] Waiting for experiment to complete...
+[2025-09-01 20:32:14] Waiting for experiment: Exp 1: improved_wide_resnet multiplicative fusion, alpha=0.5 (Job ID: 10723)
+[2025-09-01 22:31:00] ❌ FAILED: Exp 1: improved_wide_resnet multiplicative fusion, alpha=0.5 (Job ID: 10723, Exit:      0)
+[2025-09-01 22:31:00] 🔍 Checking for CUDA ECC error in job 10723...
+[2025-09-01 22:31:00] ⚠️  Could not find log file for job ID: 10723
+[2025-09-01 22:31:00] ❌ Non-CUDA error - will not resubmit

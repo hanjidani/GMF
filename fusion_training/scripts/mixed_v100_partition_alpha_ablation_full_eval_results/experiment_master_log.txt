@@ -1,0 +1,50 @@
+Mixed-Experts V100 Partition Experiment Log (Alpha Ablation Full Eval)
+Started: Thu Sep  4 10:49:42 AM CEST 2025
+==========================================
+Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+Alpha Values: 0.5 1.0 5.0 10.0 15.0
+Total Experiments: 25
+Partition: volta (V100)
+Batch Size: 16 experiments (16 GPUs for parallel execution)
+Mode: Alpha Ablation Full Eval (No LR schedulers)
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Gradient Clipping (1.0)
+Auto-resubmission: CUDA ECC errors
+==========================================
+[2025-09-04 10:49:42] ==========================================
+[2025-09-04 10:49:42] MIXED-EXPERTS V100 PARTITION EXPERIMENT RUNNER (ALPHA ABLATION FULL EVAL)
+[2025-09-04 10:49:42] ==========================================
+[2025-09-04 10:49:42] Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+[2025-09-04 10:49:42] Alpha Values: 0.5 1.0 5.0 10.0 15.0
+[2025-09-04 10:49:42] Total Experiments: 25
+[2025-09-04 10:49:42] Partition: volta (V100)
+[2025-09-04 10:49:42] Batch Size: 16 experiments (16 GPUs for parallel execution)
+[2025-09-04 10:49:42] Mode: Alpha Ablation Full Eval (No LR schedulers)
+[2025-09-04 10:49:42] Augmentation: CutMix + Label Smoothing + Gradient Clipping
+[2025-09-04 10:49:42] Auto-resubmission: CUDA ECC errors
+[2025-09-04 10:49:42] ==========================================
+[2025-09-04 10:49:42] Creating experiment combinations...
+[2025-09-04 10:49:42] Created 25 experiment combinations
+[2025-09-04 10:49:42] Starting comprehensive experiment execution on V100 partition (Mixed-Experts Alpha Ablation Full Eval)...
+[2025-09-04 10:49:42] Starting batch processing of 25 experiments
+[2025-09-04 10:49:42] Processing experiments 1-16 of 25 (Batch 1)
+[2025-09-04 10:49:42] Submitting Exp 1: MIXED multiplicative fusion, alpha=0.5
+[2025-09-04 10:49:42] Submitted Exp 1: MIXED multiplicative fusion, alpha=0.5 (Job ID: 11097)
+[2025-09-04 10:49:42] Submitting Exp 2: MIXED multiplicative fusion, alpha=1.0
+[2025-09-04 10:49:42] Submitted Exp 2: MIXED multiplicative fusion, alpha=1.0 (Job ID: 11098)
+[2025-09-04 10:49:42] Submitting Exp 3: MIXED multiplicative fusion, alpha=5.0
+[2025-09-04 10:49:42] Submitted Exp 3: MIXED multiplicative fusion, alpha=5.0 (Job ID: 11099)
+[2025-09-04 10:49:42] Submitting Exp 4: MIXED multiplicative fusion, alpha=10.0
+[2025-09-04 10:49:42] Submitted Exp 4: MIXED multiplicative fusion, alpha=10.0 (Job ID: 11100)
+[2025-09-04 10:49:42] Submitting Exp 5: MIXED multiplicative fusion, alpha=15.0
+[2025-09-04 10:49:43] Submitted Exp 5: MIXED multiplicative fusion, alpha=15.0 (Job ID: 11101)
+[2025-09-04 10:49:43] Submitting Exp 6: MIXED multiplicativeAddition fusion, alpha=0.5
+[2025-09-04 10:49:43] Submitted Exp 6: MIXED multiplicativeAddition fusion, alpha=0.5 (Job ID: 11102)
+[2025-09-04 10:49:43] Submitting Exp 7: MIXED multiplicativeAddition fusion, alpha=1.0
+[2025-09-04 10:49:43] Submitted Exp 7: MIXED multiplicativeAddition fusion, alpha=1.0 (Job ID: 11103)
+[2025-09-04 10:49:43] Submitting Exp 8: MIXED multiplicativeAddition fusion, alpha=5.0
+[2025-09-04 10:49:43] Submitted Exp 8: MIXED multiplicativeAddition fusion, alpha=5.0 (Job ID: 11104)
+[2025-09-04 10:49:43] Submitting Exp 9: MIXED multiplicativeAddition fusion, alpha=10.0
+[2025-09-04 10:49:43] Submitted Exp 9: MIXED multiplicativeAddition fusion, alpha=10.0 (Job ID: 11105)
+[2025-09-04 10:49:43] Submitting Exp 10: MIXED multiplicativeAddition fusion, alpha=15.0
+[2025-09-04 10:49:43] Submitted Exp 10: MIXED multiplicativeAddition fusion, alpha=15.0 (Job ID: 11106)
+[2025-09-04 10:49:43] Submitting Exp 11: MIXED TransformerBase fusion, alpha=0.5

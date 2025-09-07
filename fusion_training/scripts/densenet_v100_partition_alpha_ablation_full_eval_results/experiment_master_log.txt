@@ -1,0 +1,276 @@
+Comprehensive V100 Partition Experiment Log (Alpha Ablation Full Eval)
+Started: Mon Sep  1 08:56:40 AM CEST 2025
+==========================================
+Models: densenet
+Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+Alpha Values: 0.5 1.0 5.0 10.0 15.0
+Total Experiments: 25
+Partition: volta (V100)
+Batch Size: 16 experiments (16 GPUs for parallel execution)
+Mode: Alpha Ablation Full Eval (No LR schedulers)
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Gradient Clipping (1.0)
+Auto-resubmission: CUDA ECC errors
+==========================================
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] COMPREHENSIVE V100 PARTITION EXPERIMENT RUNNER (ALPHA ABLATION FULL EVAL)
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] Models: densenet
+[2025-09-01 08:56:40] Fusion Types: multiplicative multiplicativeAddition TransformerBase concatenation simpleAddition
+[2025-09-01 08:56:40] Alpha Values: 0.5 1.0 5.0 10.0 15.0
+[2025-09-01 08:56:40] Total Experiments: 25
+[2025-09-01 08:56:40] Partition: volta (V100)
+[2025-09-01 08:56:40] Batch Size: 16 experiments (16 GPUs for parallel execution)
+[2025-09-01 08:56:40] Mode: Alpha Ablation Full Eval (No LR schedulers)
+[2025-09-01 08:56:40] Augmentation: CutMix + Label Smoothing + Gradient Clipping
+[2025-09-01 08:56:40] Auto-resubmission: CUDA ECC errors
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] Creating experiment combinations...
+[2025-09-01 08:56:40] Created 25 experiment combinations
+[2025-09-01 08:56:40] Starting comprehensive experiment execution on V100 partition (Alpha Ablation Full Eval)...
+[2025-09-01 08:56:40] Starting batch processing of 25 experiments
+[2025-09-01 08:56:40] Processing experiments 1-16 of 25 (Batch 1)
+[2025-09-01 08:56:40] Submitting Exp 1: densenet multiplicative fusion, alpha=0.5
+[2025-09-01 08:56:40] Submitted Exp 1: densenet multiplicative fusion, alpha=0.5 (Job ID: 10620)
+[2025-09-01 08:56:40] Submitting Exp 2: densenet multiplicative fusion, alpha=1.0
+[2025-09-01 08:56:40] Submitted Exp 2: densenet multiplicative fusion, alpha=1.0 (Job ID: 10621)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 17: densenet concatenation fusion, alpha=1.0 (Job ID: 10611, Exit:      0)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10611...
+[2025-09-01 08:56:40] Submitting Exp 3: densenet multiplicative fusion, alpha=5.0
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10611
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Waiting for experiment: Exp 18: densenet concatenation fusion, alpha=5.0 (Job ID: 10612)
+[2025-09-01 08:56:40] Submitted Exp 3: densenet multiplicative fusion, alpha=5.0 (Job ID: 10622)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 18: densenet concatenation fusion, alpha=5.0 (Job ID: 10612, Exit:      0)
+[2025-09-01 08:56:40] Submitting Exp 4: densenet multiplicative fusion, alpha=10.0
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10612...
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10612
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Submitted Exp 4: densenet multiplicative fusion, alpha=10.0 (Job ID: 10623)
+[2025-09-01 08:56:40] Waiting for experiment: Exp 19: densenet concatenation fusion, alpha=10.0 (Job ID: 10613)
+[2025-09-01 08:56:40] Submitting Exp 5: densenet multiplicative fusion, alpha=15.0
+[2025-09-01 08:56:40] ❌ FAILED: Exp 19: densenet concatenation fusion, alpha=10.0 (Job ID: 10613, Exit:      0)
+[2025-09-01 08:56:40] Submitted Exp 5: densenet multiplicative fusion, alpha=15.0 (Job ID: 10624)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10613...
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10613
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Submitting Exp 6: densenet multiplicativeAddition fusion, alpha=0.5
+[2025-09-01 08:56:40] Waiting for experiment: Exp 20: densenet concatenation fusion, alpha=15.0 (Job ID: 10614)
+[2025-09-01 08:56:40] Submitted Exp 6: densenet multiplicativeAddition fusion, alpha=0.5 (Job ID: 10625)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 20: densenet concatenation fusion, alpha=15.0 (Job ID: 10614, Exit:      0)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10614...
+[2025-09-01 08:56:40] Submitting Exp 7: densenet multiplicativeAddition fusion, alpha=1.0
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10614
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Waiting for experiment: Exp 21: densenet simpleAddition fusion, alpha=0.5 (Job ID: 10615)
+[2025-09-01 08:56:40] Submitted Exp 7: densenet multiplicativeAddition fusion, alpha=1.0 (Job ID: 10626)
+[2025-09-01 08:56:40] Submitting Exp 8: densenet multiplicativeAddition fusion, alpha=5.0
+[2025-09-01 08:56:40] ❌ FAILED: Exp 21: densenet simpleAddition fusion, alpha=0.5 (Job ID: 10615, Exit:      0)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10615...
+[2025-09-01 08:56:40] Submitted Exp 8: densenet multiplicativeAddition fusion, alpha=5.0 (Job ID: 10627)
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10615
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Waiting for experiment: Exp 22: densenet simpleAddition fusion, alpha=1.0 (Job ID: 10616)
+[2025-09-01 08:56:40] Submitting Exp 9: densenet multiplicativeAddition fusion, alpha=10.0
+[2025-09-01 08:56:40] Submitted Exp 9: densenet multiplicativeAddition fusion, alpha=10.0 (Job ID: 10628)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 22: densenet simpleAddition fusion, alpha=1.0 (Job ID: 10616, Exit:      0)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10616...
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10616
+[2025-09-01 08:56:40] Submitting Exp 10: densenet multiplicativeAddition fusion, alpha=15.0
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Waiting for experiment: Exp 23: densenet simpleAddition fusion, alpha=5.0 (Job ID: 10617)
+[2025-09-01 08:56:40] Submitted Exp 10: densenet multiplicativeAddition fusion, alpha=15.0 (Job ID: 10629)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 23: densenet simpleAddition fusion, alpha=5.0 (Job ID: 10617, Exit:      0)
+[2025-09-01 08:56:40] Submitting Exp 11: densenet TransformerBase fusion, alpha=0.5
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10617...
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10617
+[2025-09-01 08:56:40] Submitted Exp 11: densenet TransformerBase fusion, alpha=0.5 (Job ID: 10630)
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Waiting for experiment: Exp 24: densenet simpleAddition fusion, alpha=10.0 (Job ID: 10618)
+[2025-09-01 08:56:40] Submitting Exp 12: densenet TransformerBase fusion, alpha=1.0
+[2025-09-01 08:56:40] ❌ FAILED: Exp 24: densenet simpleAddition fusion, alpha=10.0 (Job ID: 10618, Exit:      0)
+[2025-09-01 08:56:40] Submitted Exp 12: densenet TransformerBase fusion, alpha=1.0 (Job ID: 10631)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10618...
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10618
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Submitting Exp 13: densenet TransformerBase fusion, alpha=5.0
+[2025-09-01 08:56:40] Waiting for experiment: Exp 25: densenet simpleAddition fusion, alpha=15.0 (Job ID: 10619)
+[2025-09-01 08:56:40] Submitted Exp 13: densenet TransformerBase fusion, alpha=5.0 (Job ID: 10632)
+[2025-09-01 08:56:40] ❌ FAILED: Exp 25: densenet simpleAddition fusion, alpha=15.0 (Job ID: 10619, Exit:      0)
+[2025-09-01 08:56:40] 🔍 Checking for CUDA ECC error in job 10619...
+[2025-09-01 08:56:40] Submitting Exp 14: densenet TransformerBase fusion, alpha=10.0
+[2025-09-01 08:56:40] ⚠️  Could not find log file for job ID: 10619
+[2025-09-01 08:56:40] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 08:56:40] Experiment completed: 0/9 succeeded
+[2025-09-01 08:56:40] Experiment final status: 0 succeeded, 9 failed
+[2025-09-01 08:56:40] Submitted Exp 14: densenet TransformerBase fusion, alpha=10.0 (Job ID: 10633)
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] ALL EXPERIMENTS COMPLETED!
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] Total experiments: 25
+[2025-09-01 08:56:40] Results saved in: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/densenet_v100_partition_alpha_ablation_full_eval_results
+[2025-09-01 08:56:40] Submitting Exp 15: densenet TransformerBase fusion, alpha=15.0
+[2025-09-01 08:56:40] Master log: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/densenet_v100_partition_alpha_ablation_full_eval_results/experiment_master_log.txt
+[2025-09-01 08:56:40] Failed jobs log: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/densenet_v100_partition_alpha_ablation_full_eval_results/failed_jobs_log.txt
+[2025-09-01 08:56:40] Resubmission log: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/densenet_v100_partition_alpha_ablation_full_eval_results/resubmission_log.txt
+[2025-09-01 08:56:40] ==========================================
+[2025-09-01 08:56:40] Submitted Exp 15: densenet TransformerBase fusion, alpha=15.0 (Job ID: 10634)
+==========================================
+ALL EXPERIMENTS COMPLETED!
+Completed: Mon Sep  1 08:56:40 AM CEST 2025
+Total experiments: 25
+==========================================
+[2025-09-01 08:56:40] Submitting Exp 16: densenet concatenation fusion, alpha=0.5
+[2025-09-01 08:56:40] Submitted Exp 16: densenet concatenation fusion, alpha=0.5 (Job ID: 10635)
+[2025-09-01 08:56:40] Waiting for experiment to complete...
+[2025-09-01 08:56:40] Waiting for experiment: Exp 1: densenet multiplicative fusion, alpha=0.5 (Job ID: 10620)
+[2025-09-01 13:59:46] ❌ FAILED: Exp 1: densenet multiplicative fusion, alpha=0.5 (Job ID: 10620, Exit:      0)
+[2025-09-01 13:59:46] 🔍 Checking for CUDA ECC error in job 10620...
+[2025-09-01 13:59:46] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicative_alpha0.5_exp1_10620.log
+[2025-09-01 13:59:46] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 13:59:46] Waiting for experiment: Exp 2: densenet multiplicative fusion, alpha=1.0 (Job ID: 10621)
+[2025-09-01 13:59:46] ❌ FAILED: Exp 2: densenet multiplicative fusion, alpha=1.0 (Job ID: 10621, Exit:      0)
+[2025-09-01 13:59:46] 🔍 Checking for CUDA ECC error in job 10621...
+[2025-09-01 13:59:46] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicative_alpha1.0_exp2_10621.log
+[2025-09-01 13:59:46] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 13:59:46] Waiting for experiment: Exp 3: densenet multiplicative fusion, alpha=5.0 (Job ID: 10622)
+[2025-09-01 13:59:46] ❌ FAILED: Exp 3: densenet multiplicative fusion, alpha=5.0 (Job ID: 10622, Exit:      0)
+[2025-09-01 13:59:46] 🔍 Checking for CUDA ECC error in job 10622...
+[2025-09-01 13:59:46] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicative_alpha5.0_exp3_10622.log
+[2025-09-01 13:59:46] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 13:59:46] Waiting for experiment: Exp 4: densenet multiplicative fusion, alpha=10.0 (Job ID: 10623)
+[2025-09-01 14:00:49] ❌ FAILED: Exp 4: densenet multiplicative fusion, alpha=10.0 (Job ID: 10623, Exit:      0)
+[2025-09-01 14:00:49] 🔍 Checking for CUDA ECC error in job 10623...
+[2025-09-01 14:00:49] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicative_alpha10.0_exp4_10623.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 5: densenet multiplicative fusion, alpha=15.0 (Job ID: 10624)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 5: densenet multiplicative fusion, alpha=15.0 (Job ID: 10624, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10624...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicative_alpha15.0_exp5_10624.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 6: densenet multiplicativeAddition fusion, alpha=0.5 (Job ID: 10625)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 6: densenet multiplicativeAddition fusion, alpha=0.5 (Job ID: 10625, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10625...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicativeAddition_alpha0.5_exp6_10625.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 7: densenet multiplicativeAddition fusion, alpha=1.0 (Job ID: 10626)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 7: densenet multiplicativeAddition fusion, alpha=1.0 (Job ID: 10626, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10626...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicativeAddition_alpha1.0_exp7_10626.log
+[2025-09-01 14:00:50] 🔄 CUDA ECC error detected in log file
+[2025-09-01 14:00:50] 🔄 CUDA ECC error detected - will resubmit automatically
+[2025-09-01 14:00:50] Waiting for experiment: Exp 8: densenet multiplicativeAddition fusion, alpha=5.0 (Job ID: 10627)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 8: densenet multiplicativeAddition fusion, alpha=5.0 (Job ID: 10627, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10627...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicativeAddition_alpha5.0_exp8_10627.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 9: densenet multiplicativeAddition fusion, alpha=10.0 (Job ID: 10628)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 9: densenet multiplicativeAddition fusion, alpha=10.0 (Job ID: 10628, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10628...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicativeAddition_alpha10.0_exp9_10628.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 10: densenet multiplicativeAddition fusion, alpha=15.0 (Job ID: 10629)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 10: densenet multiplicativeAddition fusion, alpha=15.0 (Job ID: 10629, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10629...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_multiplicativeAddition_alpha15.0_exp10_10629.log
+[2025-09-01 14:00:50] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:50] Waiting for experiment: Exp 11: densenet TransformerBase fusion, alpha=0.5 (Job ID: 10630)
+[2025-09-01 14:00:50] ❌ FAILED: Exp 11: densenet TransformerBase fusion, alpha=0.5 (Job ID: 10630, Exit:      0)
+[2025-09-01 14:00:50] 🔍 Checking for CUDA ECC error in job 10630...
+[2025-09-01 14:00:50] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_TransformerBase_alpha0.5_exp11_10630.log
+[2025-09-01 14:00:51] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:51] Waiting for experiment: Exp 12: densenet TransformerBase fusion, alpha=1.0 (Job ID: 10631)
+[2025-09-01 14:00:51] ❌ FAILED: Exp 12: densenet TransformerBase fusion, alpha=1.0 (Job ID: 10631, Exit:      0)
+[2025-09-01 14:00:51] 🔍 Checking for CUDA ECC error in job 10631...
+[2025-09-01 14:00:51] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_TransformerBase_alpha1.0_exp12_10631.log
+[2025-09-01 14:00:51] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:51] Waiting for experiment: Exp 13: densenet TransformerBase fusion, alpha=5.0 (Job ID: 10632)
+[2025-09-01 14:00:51] ❌ FAILED: Exp 13: densenet TransformerBase fusion, alpha=5.0 (Job ID: 10632, Exit:      0)
+[2025-09-01 14:00:51] 🔍 Checking for CUDA ECC error in job 10632...
+[2025-09-01 14:00:51] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_TransformerBase_alpha5.0_exp13_10632.log
+[2025-09-01 14:00:51] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:51] Waiting for experiment: Exp 14: densenet TransformerBase fusion, alpha=10.0 (Job ID: 10633)
+[2025-09-01 14:00:51] ❌ FAILED: Exp 14: densenet TransformerBase fusion, alpha=10.0 (Job ID: 10633, Exit:      0)
+[2025-09-01 14:00:51] 🔍 Checking for CUDA ECC error in job 10633...
+[2025-09-01 14:00:51] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_TransformerBase_alpha10.0_exp14_10633.log
+[2025-09-01 14:00:51] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:51] Waiting for experiment: Exp 15: densenet TransformerBase fusion, alpha=15.0 (Job ID: 10634)
+[2025-09-01 14:00:51] ❌ FAILED: Exp 15: densenet TransformerBase fusion, alpha=15.0 (Job ID: 10634, Exit:      0)
+[2025-09-01 14:00:51] 🔍 Checking for CUDA ECC error in job 10634...
+[2025-09-01 14:00:51] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_TransformerBase_alpha15.0_exp15_10634.log
+[2025-09-01 14:00:52] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:52] Waiting for experiment: Exp 16: densenet concatenation fusion, alpha=0.5 (Job ID: 10635)
+[2025-09-01 14:00:52] ❌ FAILED: Exp 16: densenet concatenation fusion, alpha=0.5 (Job ID: 10635, Exit:      0)
+[2025-09-01 14:00:52] 🔍 Checking for CUDA ECC error in job 10635...
+[2025-09-01 14:00:52] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_concatenation_alpha0.5_exp16_10635.log
+[2025-09-01 14:00:52] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 14:00:52] Experiment completed: 0/16 succeeded
+[2025-09-01 14:00:52] Experiment final status: 0 succeeded, 16 failed
+[2025-09-01 14:00:52] Waiting 60 seconds before next batch...
+[2025-09-01 14:01:52] Processing experiments 17-25 of 25 (Batch 2)
+[2025-09-01 14:01:52] Submitting Exp 17: densenet concatenation fusion, alpha=1.0
+[2025-09-01 14:01:52] Submitted Exp 17: densenet concatenation fusion, alpha=1.0 (Job ID: 10674)
+[2025-09-01 14:01:52] Submitting Exp 18: densenet concatenation fusion, alpha=5.0
+[2025-09-01 14:01:52] Submitted Exp 18: densenet concatenation fusion, alpha=5.0 (Job ID: 10675)
+[2025-09-01 14:01:52] Submitting Exp 19: densenet concatenation fusion, alpha=10.0
+[2025-09-01 14:01:52] Submitted Exp 19: densenet concatenation fusion, alpha=10.0 (Job ID: 10676)
+[2025-09-01 14:01:52] Submitting Exp 20: densenet concatenation fusion, alpha=15.0
+[2025-09-01 14:01:52] Submitted Exp 20: densenet concatenation fusion, alpha=15.0 (Job ID: 10677)
+[2025-09-01 14:01:52] Submitting Exp 21: densenet simpleAddition fusion, alpha=0.5
+[2025-09-01 14:01:52] Submitted Exp 21: densenet simpleAddition fusion, alpha=0.5 (Job ID: 10678)
+[2025-09-01 14:01:52] Submitting Exp 22: densenet simpleAddition fusion, alpha=1.0
+[2025-09-01 14:01:52] Submitted Exp 22: densenet simpleAddition fusion, alpha=1.0 (Job ID: 10679)
+[2025-09-01 14:01:52] Submitting Exp 23: densenet simpleAddition fusion, alpha=5.0
+[2025-09-01 14:01:52] Submitted Exp 23: densenet simpleAddition fusion, alpha=5.0 (Job ID: 10680)
+[2025-09-01 14:01:52] Submitting Exp 24: densenet simpleAddition fusion, alpha=10.0
+[2025-09-01 14:01:52] Submitted Exp 24: densenet simpleAddition fusion, alpha=10.0 (Job ID: 10681)
+[2025-09-01 14:01:52] Submitting Exp 25: densenet simpleAddition fusion, alpha=15.0
+[2025-09-01 14:01:52] Submitted Exp 25: densenet simpleAddition fusion, alpha=15.0 (Job ID: 10682)
+[2025-09-01 14:01:52] Waiting for experiment to complete...
+[2025-09-01 14:01:52] Waiting for experiment: Exp 17: densenet concatenation fusion, alpha=1.0 (Job ID: 10674)
+[2025-09-01 19:00:39] ❌ FAILED: Exp 17: densenet concatenation fusion, alpha=1.0 (Job ID: 10674, Exit:      0)
+[2025-09-01 19:00:39] 🔍 Checking for CUDA ECC error in job 10674...
+[2025-09-01 19:00:39] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_concatenation_alpha1.0_exp17_10674.log
+[2025-09-01 19:00:39] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:00:39] Waiting for experiment: Exp 18: densenet concatenation fusion, alpha=5.0 (Job ID: 10675)
+[2025-09-01 19:04:09] ❌ FAILED: Exp 18: densenet concatenation fusion, alpha=5.0 (Job ID: 10675, Exit:      0)
+[2025-09-01 19:04:09] 🔍 Checking for CUDA ECC error in job 10675...
+[2025-09-01 19:04:09] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_concatenation_alpha5.0_exp18_10675.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 19: densenet concatenation fusion, alpha=10.0 (Job ID: 10676)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 19: densenet concatenation fusion, alpha=10.0 (Job ID: 10676, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10676...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_concatenation_alpha10.0_exp19_10676.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 20: densenet concatenation fusion, alpha=15.0 (Job ID: 10677)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 20: densenet concatenation fusion, alpha=15.0 (Job ID: 10677, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10677...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_concatenation_alpha15.0_exp20_10677.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 21: densenet simpleAddition fusion, alpha=0.5 (Job ID: 10678)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 21: densenet simpleAddition fusion, alpha=0.5 (Job ID: 10678, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10678...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_simpleAddition_alpha0.5_exp21_10678.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 22: densenet simpleAddition fusion, alpha=1.0 (Job ID: 10679)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 22: densenet simpleAddition fusion, alpha=1.0 (Job ID: 10679, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10679...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_simpleAddition_alpha1.0_exp22_10679.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 23: densenet simpleAddition fusion, alpha=5.0 (Job ID: 10680)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 23: densenet simpleAddition fusion, alpha=5.0 (Job ID: 10680, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10680...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_simpleAddition_alpha5.0_exp23_10680.log
+[2025-09-01 19:04:10] 🔄 CUDA ECC error detected in log file
+[2025-09-01 19:04:10] 🔄 CUDA ECC error detected - will resubmit automatically
+[2025-09-01 19:04:10] Waiting for experiment: Exp 24: densenet simpleAddition fusion, alpha=10.0 (Job ID: 10681)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 24: densenet simpleAddition fusion, alpha=10.0 (Job ID: 10681, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10681...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_simpleAddition_alpha10.0_exp24_10681.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Waiting for experiment: Exp 25: densenet simpleAddition fusion, alpha=15.0 (Job ID: 10682)
+[2025-09-01 19:04:10] ❌ FAILED: Exp 25: densenet simpleAddition fusion, alpha=15.0 (Job ID: 10682, Exit:      0)
+[2025-09-01 19:04:10] 🔍 Checking for CUDA ECC error in job 10682...
+[2025-09-01 19:04:10] 🔍 Checking log file for CUDA ECC error: /home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/logs_alpha_ablation_full_eval/densenet_simpleAddition_alpha15.0_exp25_10682.log
+[2025-09-01 19:04:10] ❌ Non-CUDA error - will not resubmit
+[2025-09-01 19:04:10] Experiment completed: 0/9 succeeded
+[2025-09-01 19:04:10] Experiment final status: 0 succeeded, 9 failed
