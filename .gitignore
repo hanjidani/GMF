@@ -65,7 +65,6 @@ data/
 tiny-imagenet*
 cache/
 cached_*/
-*.csv
 *.json
 *.h5
 *.hdf5

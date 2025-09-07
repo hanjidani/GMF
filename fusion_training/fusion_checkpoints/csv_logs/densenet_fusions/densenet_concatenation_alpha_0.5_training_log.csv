@@ -1,0 +1,1 @@
+epoch,train_loss,val_loss,val_accuracy,experts_lr,fusion_lr,global_head_lr,loss_global,loss_individual,loss_total,expert_0_accuracy,expert_1_accuracy,expert_2_accuracy,expert_3_accuracy,expert_0_loss,expert_1_loss,expert_2_loss,expert_3_loss,alpha,fusion_type,model_architecture,timestamp
