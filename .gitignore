@@ -80,3 +80,6 @@ wandb/
 
 # SLURM output files
 slurm-*.out
+
+# Archives
+*.zip
