@@ -13,7 +13,7 @@ def main():
                        choices=['train', 'train_all', 'evaluate', 'test'],
                        help='Action to perform')
     parser.add_argument('--fusion_type', type=str, 
-                       choices=['multiplicative', 'multiplicativeAddition', 'TransformerBase', 'concatenation', 'simpleAddition'],
+                       choices=['multiplicative', 'multiplicativeAddition', 'multiplicativeShifted', 'TransformerBase', 'concatenation', 'simpleAddition'],
                        help='Type of fusion to train (required for single training)')
     parser.add_argument('--input_dim', type=int, default=None,
                        help='Input feature dimension (auto-detected if not specified)')
@@ -38,6 +38,7 @@ def main():
             print("\nAvailable fusion types:")
             print("  - multiplicative: Simple element-wise multiplication")
             print("  - multiplicativeAddition: Combines multiplicative + additive with MLP")
+            print("  - multiplicativeShifted: Product of (LayerNorm(f_k) + 1) with MLP")
             print("  - TransformerBase: Uses attention mechanism for fusion")
             print("  - concatenation: Concatenates features and processes through MLP")
             print("  - simpleAddition: Direct feature addition with hidden layer processing")
@@ -51,7 +52,7 @@ def main():
             cmd += f" --input_dim {args.input_dim}"
         
         # Add hidden dimension for MLP-based fusions
-        if args.fusion_type in ['multiplicativeAddition', 'concatenation', 'simpleAddition']:
+        if args.fusion_type in ['multiplicativeAddition', 'multiplicativeShifted', 'concatenation', 'simpleAddition']:
             if args.hidden_dim:
                 cmd += f" --hidden_dim {args.hidden_dim}"
             else:
@@ -65,9 +66,10 @@ def main():
         print("\nTraining order:")
         print("  1. multiplicative (simple, fast)")
         print("  2. multiplicativeAddition (balanced)")
-        print("  3. TransformerBase (attention-based)")
-        print("  4. concatenation (MLP-based)")
-        print("  5. simpleAddition (addition-based)")
+        print("  3. multiplicativeShifted (shifted product)")
+        print("  4. TransformerBase (attention-based)")
+        print("  5. concatenation (MLP-based)")
+        print("  6. simpleAddition (addition-based)")
         os.system("cd scripts && python train_all_fusions.py")
     
     elif args.action == 'evaluate':

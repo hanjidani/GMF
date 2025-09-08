@@ -1,0 +1,1 @@
+timestamp,model_type,fusion_type,alpha,expert_id,model_architecture,ood_dataset,ood_type,auroc,aupr,fpr95,detection_accuracy,confidence_threshold,uncertainty_metric,ood_score_mean,ood_score_std

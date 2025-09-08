@@ -28,8 +28,9 @@ MANIFEST
 *.pickle
 
 # Log files
-*.log
-logs/
+logs/**
+!logs/
+!logs/**/*.log
 *.out
 
 # Jupyter Notebook

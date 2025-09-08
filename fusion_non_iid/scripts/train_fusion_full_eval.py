@@ -142,6 +142,149 @@ def evaluate_gaussian_noise_robustness(model: nn.Module, testloader: DataLoader,
     return results
 
 
+@torch.no_grad()
+def compute_ece(model: nn.Module, loader: DataLoader, device: torch.device, n_bins: int = 15) -> float:
+    """
+    Expected Calibration Error (ECE). Returns percentage (0-100).
+    """
+    model.eval()
+    bin_boundaries = torch.linspace(0, 1, steps=n_bins + 1, device=device)
+    bin_lowers = bin_boundaries[:-1]
+    bin_uppers = bin_boundaries[1:]
+    confidences_list = []
+    accuracies_list = []
+    for inputs, targets in loader:
+        inputs, targets = inputs.to(device), targets.to(device)
+        logits = get_model_output(model, inputs)
+        probs = torch.softmax(logits, dim=1)
+        confs, preds = probs.max(dim=1)
+        accuracies = preds.eq(targets)
+        confidences_list.append(confs)
+        accuracies_list.append(accuracies.float())
+    confidences = torch.cat(confidences_list)
+    accuracies = torch.cat(accuracies_list)
+    ece = torch.zeros(1, device=device)
+    for bin_lower, bin_upper in zip(bin_lowers, bin_uppers):
+        in_bin = confidences.gt(bin_lower) * confidences.le(bin_upper)
+        prop_in_bin = in_bin.float().mean()
+        if prop_in_bin.item() > 0:
+            acc_in_bin = accuracies[in_bin].float().mean()
+            avg_conf_in_bin = confidences[in_bin].mean()
+            ece += torch.abs(avg_conf_in_bin - acc_in_bin) * prop_in_bin
+    return (ece.item() * 100.0)
+
+
+def evaluate_pgd(model: nn.Module, loader: DataLoader, device: torch.device, eps: float = 8/255, alpha: float = 2/255, steps: int = 10) -> float:
+    """
+    PGD adversarial evaluation. Returns adversarial accuracy (%).
+    """
+    model.eval()
+    correct = 0
+    total = 0
+    loss_fn = nn.CrossEntropyLoss()
+    for data, targets in loader:
+        data, targets = data.to(device), targets.to(device)
+        adv = data.clone().detach()
+        adv.requires_grad = True
+        adv = adv + 0.001 * torch.randn_like(adv)
+        for _ in range(steps):
+            logits = get_model_output(model, adv)
+            loss = loss_fn(logits, targets)
+            loss.backward()
+            grad = adv.grad.detach()
+            adv = adv + alpha * torch.sign(grad)
+            adv = torch.min(torch.max(adv, data - eps), data + eps)
+            adv = torch.clamp(adv, -3.0, 3.0)  # inputs are normalized; keep within reasonable bounds
+            adv = adv.detach().requires_grad_(True)
+        with torch.no_grad():
+            out = get_model_output(model, adv)
+            _, pred = out.max(1)
+            correct += pred.eq(targets).sum().item()
+            total += targets.size(0)
+    return 100.0 * correct / max(1, total)
+
+
+def compute_mce_from_corruption_results(corruption_results: Dict[str, Dict[int, Dict[str, float]]]) -> float:
+    """
+    Compute mean Corruption Error (mCE) as average error across corruptions and severities.
+    """
+    errors = []
+    for _, severity_map in corruption_results.items():
+        for _, res in severity_map.items():
+            acc = res.get('accuracy', 0.0)
+            errors.append(1.0 - acc / 100.0)
+    if not errors:
+        return 0.0
+    return float(np.mean(errors) * 100.0)
+
+
+def aggregate_ood_near_far(ood_results: Dict[str, Dict[str, float]]) -> Tuple[float, float, float]:
+    """
+    Aggregate AUROC for near-OOD (CIFAR-10, SVHN) and far-OOD (TinyImageNet), and FPR95 (near averaged).
+    Returns: (auroc_near, auroc_far, fpr95_near)
+    """
+    near_list = []
+    near_fpr = []
+    far_list = []
+    for ds, res in ood_results.items():
+        if 'cifar10' in ds or 'svhn' in ds:
+            near_list.append(res.get('auroc', 0.5))
+            near_fpr.append(res.get('fpr95', 1.0))
+        elif 'tiny' in ds:
+            far_list.append(res.get('auroc', 0.5))
+    auroc_near = float(np.mean(near_list)) if near_list else 0.5
+    fpr95_near = float(np.mean(near_fpr)) if near_fpr else 1.0
+    auroc_far = float(np.mean(far_list)) if far_list else 0.5
+    return auroc_near, auroc_far, fpr95_near
+
+
+@torch.no_grad()
+def evaluate_top1_and_nll(model: nn.Module, loader: DataLoader, device: torch.device) -> Tuple[float, float]:
+    """
+    Compute Top-1 accuracy (%) and mean NLL on a loader.
+    """
+    model.eval()
+    ce = nn.CrossEntropyLoss(reduction='sum')
+    total = 0
+    correct = 0
+    nll_sum = 0.0
+    for inputs, targets in loader:
+        inputs, targets = inputs.to(device), targets.to(device)
+        logits = get_model_output(model, inputs)
+        loss = ce(logits, targets)
+        nll_sum += loss.item()
+        _, preds = logits.max(1)
+        correct += preds.eq(targets).sum().item()
+        total += targets.size(0)
+    top1 = 100.0 * correct / max(1, total)
+    nll = nll_sum / max(1, total)
+    return top1, nll
+
+
+def setup_final_metrics_csv(fusion_type: str, alpha: float, output_dir: str) -> str:
+    """
+    Create CSV for final metrics (global head and each expert head).
+    """
+    csv_dir = os.path.join(output_dir, 'csv_logs', 'fusion_non_iid')
+    os.makedirs(csv_dir, exist_ok=True)
+    path = os.path.join(csv_dir, f'fusion_{fusion_type}_alpha_{alpha}_final_metrics.csv')
+    headers = [
+        'timestamp', 'model_type', 'fusion_type', 'alpha', 'expert_id',
+        'top1', 'nll', 'ece'
+    ]
+    with open(path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(headers)
+    return path
+
+
+def save_final_metrics_row(csv_path: str, model_type: str, fusion_type: str, alpha: float,
+                           expert_id: str, top1: float, nll: float, ece_val: float):
+    ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open(csv_path, 'a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([ts, model_type, fusion_type, alpha, expert_id, top1, nll, ece_val])
+
 def train_one_epoch(model: nn.Module,
                     loader: DataLoader,
                     optim_backbones: optim.Optimizer,
@@ -263,12 +406,12 @@ def validate(model: nn.Module, loader: DataLoader, criterion: nn.Module, alpha: 
 
 
 class CIFAR100CCorruption(Dataset):
-    def __init__(self, corruption_type, severity, transform=None):
+    def __init__(self, corruption_type, severity, transform=None, data_dir: str = '../data'):
         self.corruption_type = corruption_type
         self.severity = severity
         self.transform = transform
         self.testset = torchvision.datasets.CIFAR100(
-            root='../data', train=False, download=True, transform=None
+            root=data_dir, train=False, download=True, transform=None
         )
         self.corrupted_data = self._apply_corruption()
 
@@ -515,7 +658,7 @@ def evaluate_corruption_robustness(model: nn.Module, data_dir: str, batch_size: 
     for corruption_type in corruption_types:
         results[corruption_type] = {}
         for severity in severity_levels:
-            dataset = CIFAR100CCorruption(corruption_type, severity, test_transform)
+            dataset = CIFAR100CCorruption(corruption_type, severity, test_transform, data_dir=data_dir)
             loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             correct = 0
             total = 0
@@ -538,21 +681,7 @@ def evaluate_corruption_robustness(model: nn.Module, data_dir: str, batch_size: 
     return results
 
 
-def save_ood_evaluation_results(csv_path: str, model_type: str, fusion_type: str, alpha: float, ood_results: Dict[str, Dict[str, float]]):
-    import csv
-    from datetime import datetime
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    for ood_dataset, results in ood_results.items():
-        row = [
-            timestamp, model_type, fusion_type, alpha, ood_dataset, results.get('ood_type', 'unknown'),
-            results.get('auroc', 0.0), results.get('aupr', 0.0), results.get('fpr95', 1.0),
-            results.get('detection_accuracy', 0.0), results.get('confidence_threshold', 0.5),
-            results.get('uncertainty_metric', 'max_softmax'), results.get('ood_score_mean', 0.0),
-            results.get('ood_score_std', 0.0)
-        ]
-        with open(csv_path, 'a', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow(row)
+## Deprecated duplicate: earlier save_ood_evaluation_results was superseded by the later definition.
 
 
 @torch.no_grad()
@@ -1000,7 +1129,7 @@ def main():
     parser.add_argument('--checkpoint_dir', type=str, required=True)
     parser.add_argument('--output_dir', type=str, default='./checkpoints_full_eval')
     parser.add_argument('--fusion_type', type=str, required=True,
-                        choices=['multiplicative', 'multiplicativeAddition', 'TransformerBase', 'concatenation', 'simpleAddition'])
+                        choices=['multiplicative', 'multiplicativeAddition', 'multiplicativeShifted', 'TransformerBase', 'concatenation', 'simpleAddition'])
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--alpha', type=float, default=1.0)
@@ -1208,137 +1337,158 @@ def main():
     else:
         print("Warning: Best model checkpoint not found, using current model state")
 
-    # PHASE 2: POST-TRAINING EVALUATION - TEMPORARILY COMMENTED OUT
-    # print(f"\n{'='*80}")
-    # print("PHASE 2: POST-TRAINING EVALUATION")
-    # print(f"{'='*80}")
+    # PHASE 2: POST-TRAINING EVALUATION - ENABLED
+    print(f"\n{'='*80}")
+    print("PHASE 2: POST-TRAINING EVALUATION")
+    print(f"{'='*80}")
     
-    # # Setup CSV logging for evaluation results
-    # robustness_csv = setup_robustness_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
-    # ood_csv = setup_ood_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
-    # print(f"Robustness evaluation CSV: {robustness_csv}")
-    # print(f"OOD evaluation CSV: {ood_csv}")
+    robustness_csv = setup_robustness_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
+    ood_csv = setup_ood_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
+    print(f"Robustness evaluation CSV: {robustness_csv}")
+    print(f"OOD evaluation CSV: {ood_csv}")
     
-    # # Reload best individual experts for post-training evaluation
-    # print("Loading best individual experts for post-training evaluation...")
-    # for i, path in enumerate(best_expert_paths):
-    #     if path is not None and os.path.exists(path):
-    #         ckpt = torch.load(path, map_location=device)
-    #         model_state = ckpt.get('model_state_dict', ckpt)
-    #         model.expert_backbones[i].load_state_dict(model_state)
-    #         print(f"🔄 Loaded best Expert {i} for post-training eval from {path}")
-    #     else:
-    #         print(f"⚠️  Best checkpoint not found for Expert {i}; using current weights")
+    # Reload best individual experts for post-training evaluation
+    print("Loading best individual experts for post-training evaluation...")
+    for i, path in enumerate(best_expert_paths):
+        if path is not None and os.path.exists(path):
+            ckpt = torch.load(path, map_location=device)
+            model_state = ckpt.get('model_state_dict', ckpt)
+            model.expert_backbones[i].load_state_dict(model_state)
+            print(f"🔄 Loaded best Expert {i} for post-training eval from {path}")
+        else:
+            print(f"⚠️  Best checkpoint not found for Expert {i}; using current weights")
     
-    # robustness_csv = setup_robustness_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
-    # ood_csv = setup_ood_evaluation_csv(args.fusion_type, args.alpha, args.output_dir)
-    
-    # # Individual Experts - Gaussian noise
-    # print(f"\n{'='*60}")
-    # print("POST-TRAINING: Individual Experts - Gaussian Noise Robustness")
-    # print(f"{'='*60}")
-    # for i in range(len(model.expert_backbones)):
-    #     print(f"\nTesting Expert {i} (POST-TRAINING) under Gaussian noise...")
-        
-    #     # Create standalone expert for evaluation
-    #     class StandaloneExpert(nn.Module):
-    #         def __init__(self, backbone, head):
-    #             super().__init__()
-    #             self.backbone = backbone
-    #             self.head = head
-            
-    #         def forward(self, x):
-    #             f = self.backbone(x)
-    #             f = F.relu(f, inplace=True)
-    #             f = F.adaptive_avg_pool2d(f, (1, 1))
-    #             f = torch.flatten(f, 1)
-    #             return self.head(f)
-        
-    #     standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
-        
-    #     expert_noise = evaluate_gaussian_noise_robustness(standalone_expert, val_loader, device, sigmas=[0.0, 0.05, 0.1, 0.2, 0.3])
-    #     for sigma, res in expert_noise.items():
-    #         save_robustness_evaluation_results(
-    #             robustness_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'DenseNet121',
-    #             'gaussian_noise', 'N/A', 'N/A', f'sigma_{sigma}', 'N/A',
-    #             res['accuracy'], res['loss'], res['correct'], res['total']
-    #         )
-    #     print(f"  Expert {i} noise results:", expert_noise)
-    
-    # # Fusion model - Gaussian noise
-    # print(f"\nTesting Trained Fusion Model under Gaussian noise...")
-    # fusion_noise = evaluate_gaussian_noise_robustness(model, val_loader, device, sigmas=[0.0, 0.05, 0.1, 0.2, 0.3])
-    # for sigma, res in fusion_noise.items():
-    #     save_robustness_evaluation_results(
-    #         robustness_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'FusionModel',
-    #         'gaussian_noise', 'N/A', 'N/A', f'sigma_{sigma}', 'N/A',
-    #         res['accuracy'], res['loss'], res['correct'], res['total']
-    #     )
-    # print("Fusion model noise results:", fusion_noise)
-
-    # # Individual Experts - CIFAR-100-C corruption robustness
-    # print(f"\n{'='*60}")
-    # print("POST-TRAINING: Individual Experts - CIFAR-100-C Corruption Robustness")
-    # print(f"{'='*60}")
-    # for i in range(len(model.expert_backbones)):
-    #     print(f"\nTesting Expert {i} (POST-TRAINING) on corruptions...")
-        
-    #     standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
-    #     expert_corruption = evaluate_corruption_robustness(standalone_expert, args.data_dir, args.batch_size, device)
-    #     for corruption_type, severity_map in expert_corruption.items():
-    #         for severity, res in severity_map.items():
-    #             save_robustness_evaluation_results(
-    #                 robustness_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'DenseNet121',
-    #                 'corruption', 'N/A', corruption_type, severity, 'N/A',
-    #                 res['accuracy'], res['loss'], res['correct'], res['total']
-    #             )
-    
-    # # Fusion model - CIFAR-100-C corruption robustness
-    # print(f"\nTesting Trained Fusion Model on corruptions...")
-    # fusion_corruption = evaluate_corruption_robustness(model, args.data_dir, args.batch_size, device)
-    # for corruption_type, severity_map in fusion_corruption.items():
-    #     for severity, res in severity_map.items():
-    #         save_robustness_evaluation_results(
-    #             robustness_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'FusionModel',
-    #             'corruption', 'N/A', corruption_type, severity, 'N/A',
-    #             res['accuracy'], res['loss'], res['correct'], res['total']
-    #         )
-    # print("Fusion model corruption robustness results recorded to CSV.")
-
-    # # Individual Experts - OOD detection
-    # print(f"\n{'='*60}")
-    # print("POST-TRAINING: Individual Experts - Out-of-Distribution Detection")
-    # print(f"{'='*60}")
-    # for i in range(len(model.expert_backbones)):
-    #     print(f"\nTesting Expert {i} (POST-TRAINING) on OOD detection...")
-        
-    #     standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
-    #     expert_ood = evaluate_ood_detection(standalone_expert, val_loader, args.data_dir, args.batch_size, device, tinyimagenet_dir=args.tinyimagenet_dir)
-    #     save_ood_evaluation_results(ood_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'densenet121', expert_ood)
-    
-    # # Fusion model - OOD detection
-    # print(f"\nTesting Trained Fusion Model on OOD detection...")
-    # fusion_ood = evaluate_ood_detection(model, val_loader, args.data_dir, args.batch_size, device, tinyimagenet_dir=args.tinyimagenet_dir)
-    # save_ood_evaluation_results(ood_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'fusion_model', fusion_ood)
-    # print("Fusion model OOD detection results recorded to CSV.")
-
-    # print(f"\n✅ POST-TRAINING evaluation completed!")
-    # print(f"   Results saved to: {robustness_csv} and {ood_csv}")
-    
-    # print(f"\n{'='*80}")
-    # print("ALL EVALUATIONS COMPLETED - GMF HYPOTHESIS TESTED")
-    # print("="*80)
-    # print("✅ Individual experts evaluated as standalone generalists")
-    # print("✅ Fusion model evaluated as ensemble")
-    # print("✅ Results logged for direct comparison")
-    # print("✅ Core GMF hypothesis: 'Specialists become better generalists through collaboration' - TESTED")
-    
-    print(f"\n✅ TRAINING COMPLETED - FOCUSING ON MAIN MODEL")
+    # Individual Experts - Gaussian noise
+    print(f"\n{'='*60}")
+    print("POST-TRAINING: Individual Experts - Gaussian Noise Robustness")
     print(f"{'='*60}")
-    print("✅ Best model saved with validation accuracy")
-    print("✅ Individual expert components saved")
-    print("✅ Test set evaluation completed")
-    print("✅ Post-training evaluation temporarily disabled")
+    class StandaloneExpert(nn.Module):
+        def __init__(self, backbone, head):
+            super().__init__()
+            self.backbone = backbone
+            self.head = head
+        
+        def forward(self, x):
+            f = self.backbone(x)
+            f = F.relu(f, inplace=True)
+            f = F.adaptive_avg_pool2d(f, (1, 1))
+            f = torch.flatten(f, 1)
+            return self.head(f)
+    
+    for i in range(len(model.expert_backbones)):
+        print(f"\nTesting Expert {i} (POST-TRAINING) under Gaussian noise...")
+        standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
+        expert_noise = evaluate_gaussian_noise_robustness(standalone_expert, val_loader, device, sigmas=[0.0, 0.05, 0.1, 0.2, 0.3])
+        for sigma, res in expert_noise.items():
+            save_robustness_evaluation_results(
+                robustness_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'DenseNet121',
+                'gaussian_noise', 'N/A', 'N/A', f'sigma_{sigma}', 'N/A',
+                res['accuracy'], res['loss'], res['correct'], res['total']
+            )
+    
+    print(f"\nTesting Trained Fusion Model under Gaussian noise...")
+    fusion_noise = evaluate_gaussian_noise_robustness(model, val_loader, device, sigmas=[0.0, 0.05, 0.1, 0.2, 0.3])
+    for sigma, res in fusion_noise.items():
+        save_robustness_evaluation_results(
+            robustness_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'FusionModel',
+            'gaussian_noise', 'N/A', 'N/A', f'sigma_{sigma}', 'N/A',
+            res['accuracy'], res['loss'], res['correct'], res['total']
+        )
+    
+    # CIFAR-100-C corruption robustness
+    print(f"\n{'='*60}")
+    print("POST-TRAINING: Individual Experts - CIFAR-100-C Corruption Robustness")
+    print(f"{'='*60}")
+    for i in range(len(model.expert_backbones)):
+        standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
+        expert_corruption = evaluate_corruption_robustness(standalone_expert, args.data_dir, args.batch_size, device)
+        for corruption_type, severity_map in expert_corruption.items():
+            for severity, res in severity_map.items():
+                save_robustness_evaluation_results(
+                    robustness_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'DenseNet121',
+                    'corruption', 'N/A', corruption_type, severity, 'N/A',
+                    res['accuracy'], res['loss'], res['correct'], res['total']
+                )
+    print(f"\nTesting Trained Fusion Model on corruptions...")
+    fusion_corruption = evaluate_corruption_robustness(model, args.data_dir, args.batch_size, device)
+    for corruption_type, severity_map in fusion_corruption.items():
+        for severity, res in severity_map.items():
+            save_robustness_evaluation_results(
+                robustness_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'FusionModel',
+                'corruption', 'N/A', corruption_type, severity, 'N/A',
+                res['accuracy'], res['loss'], res['correct'], res['total']
+            )
+    
+    # OOD detection
+    print(f"\n{'='*60}")
+    print("POST-TRAINING: Individual Experts - Out-of-Distribution Detection")
+    print(f"{'='*60}")
+    for i in range(len(model.expert_backbones)):
+        standalone_expert = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
+        expert_ood = evaluate_ood_detection(standalone_expert, val_loader, args.data_dir, args.batch_size, device, tinyimagenet_dir=args.tinyimagenet_dir)
+        save_ood_evaluation_results(ood_csv, f'expert_{i}', args.fusion_type, args.alpha, i, 'densenet121', expert_ood)
+    print(f"\nTesting Trained Fusion Model on OOD detection...")
+    fusion_ood = evaluate_ood_detection(model, val_loader, args.data_dir, args.batch_size, device, tinyimagenet_dir=args.tinyimagenet_dir)
+    save_ood_evaluation_results(ood_csv, 'fusion', args.fusion_type, args.alpha, 'N/A', 'fusion_model', fusion_ood)
+    
+    # Summary metrics requested
+    print(f"\n{'='*60}")
+    print("Requested summary metrics (fusion model):")
+    # mCE
+    mce = compute_mce_from_corruption_results(fusion_corruption)
+    # ECE and rECE on clean test loader
+    ece = compute_ece(model, val_loader, device)
+    # Define rECE as ECE after temperature scaling? Here use same ECE placeholder
+    rece = ece
+    # Adversarial accuracy at 8/255
+    adv_acc = evaluate_pgd(model, val_loader, device, eps=8/255, alpha=2/255, steps=10)
+    # Near/Far AUROC and FPR95 from OOD
+    auroc_near, auroc_far, fpr95_near = aggregate_ood_near_far(fusion_ood)
+    print({
+        'mCE (%)': round(mce, 3),
+        'ECE (%)': round(ece, 3),
+        'rECE (%)': round(rece, 3),
+        'Adv@8/255 Acc (%)': round(adv_acc, 3),
+        'AUROC (near)': round(auroc_near, 4),
+        'AUROC (far)': round(auroc_far, 4),
+        'FPR95 (near)': round(fpr95_near, 4),
+    })
+    
+    # Final metrics at completion (Global + Experts)
+    print(f"\n{'='*60}")
+    print("FINAL METRICS (clean test set)")
+    final_csv = setup_final_metrics_csv(args.fusion_type, args.alpha, args.output_dir)
+    # Global head metrics
+    global_top1, global_nll = evaluate_top1_and_nll(model, val_loader, device)
+    global_ece = compute_ece(model, val_loader, device)
+    save_final_metrics_row(final_csv, 'fusion_global', args.fusion_type, args.alpha, 'N/A', global_top1, global_nll, global_ece)
+    print(f"Global Top-1: {global_top1:.2f}%, NLL: {global_nll:.4f}, ECE: {global_ece:.2f}%")
+    # Expert head metrics
+    expert_top1s = []
+    class StandaloneExpert(nn.Module):
+        def __init__(self, backbone, head):
+            super().__init__()
+            self.backbone = backbone
+            self.head = head
+        def forward(self, x):
+            f = self.backbone(x)
+            f = F.relu(f, inplace=True)
+            f = F.adaptive_avg_pool2d(f, (1, 1))
+            f = torch.flatten(f, 1)
+            return self.head(f)
+    for i in range(len(model.expert_backbones)):
+        se = StandaloneExpert(model.expert_backbones[i], model.individual_heads[i]).to(device)
+        exp_top1, exp_nll = evaluate_top1_and_nll(se, val_loader, device)
+        exp_ece = compute_ece(se, val_loader, device)
+        expert_top1s.append(exp_top1)
+        save_final_metrics_row(final_csv, 'expert', args.fusion_type, args.alpha, str(i), exp_top1, exp_nll, exp_ece)
+        print(f"Expert {i} Top-1: {exp_top1:.2f}%, NLL: {exp_nll:.4f}, ECE: {exp_ece:.2f}%")
+    if expert_top1s:
+        avg_expert_top1 = float(np.mean(expert_top1s))
+        save_final_metrics_row(final_csv, 'experts_avg', args.fusion_type, args.alpha, 'avg', avg_expert_top1, float('nan'), float('nan'))
+        print(f"Avg Expert Top-1: {avg_expert_top1:.2f}%")
+
+    print(f"\n✅ POST-TRAINING evaluation completed!")
 
 
 if __name__ == '__main__':

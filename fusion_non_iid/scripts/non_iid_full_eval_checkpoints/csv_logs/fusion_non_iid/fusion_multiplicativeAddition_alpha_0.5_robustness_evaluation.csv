@@ -1,0 +1,26 @@
+model_type,fusion_type,alpha,expert_id,model_architecture,test_type,attack_type,corruption_type,severity_level,epsilon,accuracy,loss,correct_predictions,total_predictions,timestamp
+expert_0,multiplicativeAddition,0.5,0,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.0,N/A,55.23,1.7183638427734376,5523,10000,2025-09-07 17:36:45
+expert_0,multiplicativeAddition,0.5,0,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.05,N/A,46.0,2.1465946044921873,4600,10000,2025-09-07 17:36:45
+expert_0,multiplicativeAddition,0.5,0,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.1,N/A,29.5,3.272219546508789,2950,10000,2025-09-07 17:36:45
+expert_0,multiplicativeAddition,0.5,0,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.2,N/A,9.87,5.216195208740235,987,10000,2025-09-07 17:36:45
+expert_0,multiplicativeAddition,0.5,0,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.3,N/A,4.51,5.812885443115235,451,10000,2025-09-07 17:36:45
+expert_1,multiplicativeAddition,0.5,1,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.0,N/A,53.14,1.7988532150268555,5314,10000,2025-09-07 17:37:01
+expert_1,multiplicativeAddition,0.5,1,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.05,N/A,42.98,2.313713276672363,4298,10000,2025-09-07 17:37:01
+expert_1,multiplicativeAddition,0.5,1,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.1,N/A,26.22,3.409027862548828,2622,10000,2025-09-07 17:37:01
+expert_1,multiplicativeAddition,0.5,1,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.2,N/A,9.52,5.213773883056641,952,10000,2025-09-07 17:37:01
+expert_1,multiplicativeAddition,0.5,1,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.3,N/A,5.0,5.988626782226563,500,10000,2025-09-07 17:37:01
+expert_2,multiplicativeAddition,0.5,2,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.0,N/A,51.13,1.8722408340454102,5113,10000,2025-09-07 17:37:17
+expert_2,multiplicativeAddition,0.5,2,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.05,N/A,45.16,2.1388141998291017,4516,10000,2025-09-07 17:37:17
+expert_2,multiplicativeAddition,0.5,2,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.1,N/A,31.97,2.787156802368164,3197,10000,2025-09-07 17:37:17
+expert_2,multiplicativeAddition,0.5,2,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.2,N/A,13.14,4.016963287353516,1314,10000,2025-09-07 17:37:17
+expert_2,multiplicativeAddition,0.5,2,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.3,N/A,6.64,4.684893060302734,664,10000,2025-09-07 17:37:17
+expert_3,multiplicativeAddition,0.5,3,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.0,N/A,53.87,1.7741754638671876,5387,10000,2025-09-07 17:37:34
+expert_3,multiplicativeAddition,0.5,3,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.05,N/A,46.18,2.144035388183594,4618,10000,2025-09-07 17:37:34
+expert_3,multiplicativeAddition,0.5,3,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.1,N/A,29.71,3.131915182495117,2971,10000,2025-09-07 17:37:34
+expert_3,multiplicativeAddition,0.5,3,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.2,N/A,11.37,4.6910448760986325,1137,10000,2025-09-07 17:37:34
+expert_3,multiplicativeAddition,0.5,3,DenseNet121,gaussian_noise,N/A,N/A,sigma_0.3,N/A,5.99,5.335538198852539,599,10000,2025-09-07 17:37:34
+fusion,multiplicativeAddition,0.5,N/A,FusionModel,gaussian_noise,N/A,N/A,sigma_0.0,N/A,66.61,1.7421214851379394,6661,10000,2025-09-07 17:38:36
+fusion,multiplicativeAddition,0.5,N/A,FusionModel,gaussian_noise,N/A,N/A,sigma_0.05,N/A,57.53,2.3358046478271484,5753,10000,2025-09-07 17:38:36
+fusion,multiplicativeAddition,0.5,N/A,FusionModel,gaussian_noise,N/A,N/A,sigma_0.1,N/A,38.23,3.8212891204833985,3823,10000,2025-09-07 17:38:36
+fusion,multiplicativeAddition,0.5,N/A,FusionModel,gaussian_noise,N/A,N/A,sigma_0.2,N/A,13.44,6.609019812011719,1344,10000,2025-09-07 17:38:36
+fusion,multiplicativeAddition,0.5,N/A,FusionModel,gaussian_noise,N/A,N/A,sigma_0.3,N/A,5.99,8.185380157470703,599,10000,2025-09-07 17:38:36

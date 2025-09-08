@@ -1,0 +1,2152 @@
+==========================================
+SLURM_JOB_ID = 10921
+SLURM_NODELIST = pascal-node09.l3s.intra
+==========================================
+==========================================
+Mixed-Experts Alpha Ablation (Full Eval) Experiment 2: multiplicative fusion, alpha=1.0
+SLURM_JOB_ID = 
+SLURM_NODELIST = 
+Alpha: 1.0
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Grad Clip (1.0)
+No LR schedulers (fixed LR); Full evaluation enabled
+==========================================
+Starting MIXED EXPERTS multiplicative fusion training (alpha-ablation, full evaluation, no schedulers)...
+Alpha: 1.0
+Checkpoint directory: ../../expert_training/scripts/checkpoints_expert_iid
+Output directory: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0
+Using device: cuda
+Loading heterogeneous expert backbones (DenseNet121, ResNet18, WRN-28-10, PreAct-ResNeXt-29 8x64d)...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_mixed_experts_fusions_alpha_ablation_full_eval.py:125: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(checkpoint_path, map_location=device)
+Successfully loaded 4 heterogeneous experts
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Creating Mixed-Experts MCN fusion model (adapting features to 1024)...
+✅ Successfully created Mixed-Experts MCN fusion model
+Files already downloaded and verified
+
+============================================================
+PRE-TRAINING: Clean Test Evaluation of Each Expert (CIFAR-100)
+============================================================
+  Expert 0 Clean Test: Acc=74.76% Loss=1.0872
+  Expert 1 Clean Test: Acc=71.10% Loss=1.3230
+  Expert 2 Clean Test: Acc=78.18% Loss=1.0137
+  Expert 3 Clean Test: Acc=76.20% Loss=1.1990
+
+================================================================================
+PHASE 1: PRE-TRAINING EVALUATION (α=1.0)
+================================================================================
+
+============================================================
+PRE-TRAINING: Gaussian Noise Robustness
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 74.76%, σ=0.05: 68.02%, σ=0.1: 48.66%, σ=0.2: 17.68%, σ=0.3: 7.98%
+
+Testing Expert 1 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 71.10%, σ=0.05: 64.46%, σ=0.1: 43.69%, σ=0.2: 13.79%, σ=0.3: 5.72%
+
+Testing Expert 2 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 78.18%, σ=0.05: 74.99%, σ=0.1: 62.87%, σ=0.2: 32.09%, σ=0.3: 14.35%
+
+Testing Expert 3 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 76.20%, σ=0.05: 72.96%, σ=0.1: 65.20%, σ=0.2: 42.36%, σ=0.3: 23.19%
+
+Testing Baseline DenseNet (PRE-TRAINING) under Gaussian noise...
+  Baseline noise results: σ=0.0: 83.69%, σ=0.05: 76.31%, σ=0.1: 56.45%, σ=0.2: 27.45%, σ=0.3: 15.89%
+
+============================================================
+PRE-TRAINING: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 30.10% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.26% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 6.26% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 43.55% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 70.43% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.42% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.26% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.59% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 74.65% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 74.52% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 53.64% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 21.78% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.43% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.42% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 43.56% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.05% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.42% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.45% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 74.41% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 74.04% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 74.53% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 74.27% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 74.36% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 73.73% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 34.62% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 18.02% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 74.63% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 74.80% accuracy
+
+Testing Expert 1 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 26.26% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 11.78% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 1.34% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 4.41% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 41.66% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 14.24% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 49.71% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 37.21% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 71.38% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 70.75% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 51.81% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 22.25% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 41.42% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 14.78% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 40.92% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 12.61% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 4.03% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.54% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 71.01% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 70.43% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 70.86% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 70.69% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 69.91% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 67.60% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 24.11% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 11.86% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 71.16% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 71.28% accuracy
+
+Testing Expert 2 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 46.74% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 26.53% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 2.35% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 26.82% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 65.96% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 49.30% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 66.25% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 57.10% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 78.38% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 78.27% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 48.34% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 19.52% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 59.39% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 27.86% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 59.65% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 27.99% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 8.61% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.57% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 78.11% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 77.95% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 78.20% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 77.92% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 77.75% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.77% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 48.90% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 30.15% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 78.05% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 78.19% accuracy
+
+Testing Expert 3 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 53.79% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 37.21% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.24% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 33.41% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.90% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 57.74% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 67.17% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 61.63% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 76.52% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.17% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 41.64% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 15.57% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 62.98% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 37.83% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 63.52% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 39.73% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 14.86% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.19% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.23% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 75.74% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 76.03% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 75.67% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 75.51% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 74.65% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 49.79% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 40.57% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 76.04% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 76.20% accuracy
+
+Testing Baseline DenseNet (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 39.47% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 24.02% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 10.19% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 52.47% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 79.06% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 69.45% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 61.46% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 50.11% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 83.25% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 82.94% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 60.76% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 25.22% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 51.81% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 24.20% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 52.52% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 24.13% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 11.10% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.71% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 83.44% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 83.18% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 83.41% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 83.32% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 83.15% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 82.38% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 43.60% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 83.41% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 83.53% accuracy
+
+============================================================
+PRE-TRAINING: Out-of-Distribution Detection
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 1 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 2 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 3 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Baseline DenseNet (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+✅ PRE-TRAINING evaluation completed!
+   Results saved to: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/csv_logs/densenet_fusions/densenet_multiplicative_alpha_1.0_pre_training_evaluation.csv
+
+================================================================================
+PHASE 2: FUSION TRAINING (α=1.0)
+================================================================================
+Loading data splits for fusion training...
+Files already downloaded and verified
+Loaded 10000 fusion holdout samples for training.
+✅ Using SOTA augmentation: DenseNet with moderate augmentation for stability
+Files already downloaded and verified
+Files already downloaded and verified
+Using 10000 samples from the official test set for validation.
+✅ Data splits loaded successfully
+CSV logging setup: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/csv_logs/densenet_fusions/densenet_multiplicative_alpha_1.0_training_log.csv
+  - Experiment Output: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative
+
+🚀 Starting Mixed-Experts multiplicative fusion training with alpha=1.0 (no schedulers)...
+   Augmentation: CUTMIX, MixUp α=0.2, CutMix α=1.0, Label Smoothing=0.1, Grad Clip=1.0
+Total parameters: 92,712,644
+Trainable parameters: 92,712,644
+Epoch 1/40, Batch 0/79, Loss: 17.1793 (Global: 4.6128, Individual: 12.5665)
+Epoch 1/40, Batch 50/79, Loss: 10.3754 (Global: 2.3084, Individual: 8.0669)
+  🔸 Saved new best Expert 0 (test acc 74.86%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 70.25%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (test acc 78.31%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (test acc 77.43%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_3_best.pth
+Epoch 1/40:
+  Train Loss: 14.4114, Train Acc: 37.62%
+  Val   Loss: 5.8231, Val   Acc: 74.94%
+  Test Accuracies: Global: 74.95% | Expert 0: 74.86%, Expert 1: 70.25%, Expert 2: 78.31%, Expert 3: 77.43%
+  🔸 Saved new best Fusion Module (test acc 74.95%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 74.95%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 74.95%
+Epoch 2/40, Batch 0/79, Loss: 15.5415 (Global: 3.4696, Individual: 12.0718)
+Epoch 2/40, Batch 50/79, Loss: 10.4524 (Global: 2.1211, Individual: 8.3313)
+  🔸 Saved new best Expert 0 (test acc 75.38%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 71.11%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (test acc 78.62%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 2/40:
+  Train Loss: 13.5563, Train Acc: 54.06%
+  Val   Loss: 5.5716, Val   Acc: 77.70%
+  Test Accuracies: Global: 77.76% | Expert 0: 75.38%, Expert 1: 71.11%, Expert 2: 78.62%, Expert 3: 77.43%
+  🔸 Saved new best Fusion Module (test acc 77.76%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 77.76%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 77.76%
+Epoch 3/40, Batch 0/79, Loss: 14.1274 (Global: 2.8448, Individual: 11.2826)
+Epoch 3/40, Batch 50/79, Loss: 12.4960 (Global: 2.4663, Individual: 10.0297)
+  🔸 Saved new best Expert 0 (test acc 75.63%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 71.41%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (test acc 78.76%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 3/40:
+  Train Loss: 13.2162, Train Acc: 57.35%
+  Val   Loss: 5.4478, Val   Acc: 78.57%
+  Test Accuracies: Global: 78.55% | Expert 0: 75.63%, Expert 1: 71.41%, Expert 2: 78.76%, Expert 3: 77.33%
+  🔸 Saved new best Fusion Module (test acc 78.55%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 78.55%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 78.55%
+Epoch 4/40, Batch 0/79, Loss: 14.7307 (Global: 2.9753, Individual: 11.7554)
+Epoch 4/40, Batch 50/79, Loss: 13.8941 (Global: 2.7839, Individual: 11.1101)
+  🔸 Saved new best Expert 0 (test acc 75.90%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 71.66%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (test acc 78.91%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 4/40:
+  Train Loss: 13.4153, Train Acc: 53.49%
+  Val   Loss: 5.5459, Val   Acc: 78.85%
+  Test Accuracies: Global: 78.84% | Expert 0: 75.90%, Expert 1: 71.66%, Expert 2: 78.91%, Expert 3: 76.63%
+  🔸 Saved new best Fusion Module (test acc 78.84%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 78.84%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 78.84%
+Epoch 5/40, Batch 0/79, Loss: 15.1569 (Global: 3.0316, Individual: 12.1253)
+Epoch 5/40, Batch 50/79, Loss: 14.6391 (Global: 2.9611, Individual: 11.6780)
+  🔸 Saved new best Expert 0 (test acc 75.99%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 72.01%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 5/40:
+  Train Loss: 13.2358, Train Acc: 54.34%
+  Val   Loss: 5.4280, Val   Acc: 79.15%
+  Test Accuracies: Global: 79.17% | Expert 0: 75.99%, Expert 1: 72.01%, Expert 2: 78.59%, Expert 3: 77.02%
+  🔸 Saved new best Fusion Module (test acc 79.17%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 79.17%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 79.17%
+Epoch 6/40, Batch 0/79, Loss: 11.0253 (Global: 2.0800, Individual: 8.9453)
+Epoch 6/40, Batch 50/79, Loss: 10.4957 (Global: 1.9795, Individual: 8.5162)
+  🔸 Saved new best Expert 0 (test acc 76.15%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 72.47%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (test acc 79.20%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 6/40:
+  Train Loss: 13.0717, Train Acc: 57.70%
+  Val   Loss: 5.2777, Val   Acc: 79.88%
+  Test Accuracies: Global: 79.88% | Expert 0: 76.15%, Expert 1: 72.47%, Expert 2: 79.20%, Expert 3: 77.35%
+  🔸 Saved new best Fusion Module (test acc 79.88%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 79.88%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 79.88%
+Epoch 7/40, Batch 0/79, Loss: 14.9488 (Global: 2.9655, Individual: 11.9833)
+Epoch 7/40, Batch 50/79, Loss: 13.7935 (Global: 2.7016, Individual: 11.0920)
+  🔸 Saved new best Expert 1 (test acc 72.50%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 7/40:
+  Train Loss: 12.7167, Train Acc: 60.95%
+  Val   Loss: 5.3587, Val   Acc: 79.29%
+  Test Accuracies: Global: 79.27% | Expert 0: 76.15%, Expert 1: 72.50%, Expert 2: 78.76%, Expert 3: 76.87%
+  📊 Training progress logged to CSV
+Epoch 8/40, Batch 0/79, Loss: 14.2306 (Global: 2.8973, Individual: 11.3333)
+Epoch 8/40, Batch 50/79, Loss: 12.7114 (Global: 2.4474, Individual: 10.2640)
+  🔸 Saved new best Expert 0 (test acc 76.47%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 72.66%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 8/40:
+  Train Loss: 12.7146, Train Acc: 60.35%
+  Val   Loss: 5.2231, Val   Acc: 79.78%
+  Test Accuracies: Global: 79.75% | Expert 0: 76.47%, Expert 1: 72.66%, Expert 2: 79.01%, Expert 3: 76.53%
+  📊 Training progress logged to CSV
+Epoch 9/40, Batch 0/79, Loss: 10.2951 (Global: 1.9205, Individual: 8.3746)
+Epoch 9/40, Batch 50/79, Loss: 11.5989 (Global: 2.2177, Individual: 9.3812)
+  🔸 Saved new best Expert 0 (test acc 76.50%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 72.77%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 9/40:
+  Train Loss: 12.2767, Train Acc: 63.16%
+  Val   Loss: 5.2384, Val   Acc: 79.27%
+  Test Accuracies: Global: 79.25% | Expert 0: 76.50%, Expert 1: 72.77%, Expert 2: 79.05%, Expert 3: 76.08%
+  📊 Training progress logged to CSV
+Epoch 10/40, Batch 0/79, Loss: 8.8039 (Global: 1.6203, Individual: 7.1835)
+Epoch 10/40, Batch 50/79, Loss: 11.1226 (Global: 2.1279, Individual: 8.9947)
+  🔸 Saved new best Expert 0 (test acc 76.51%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+Epoch 10/40:
+  Train Loss: 12.6445, Train Acc: 61.06%
+  Val   Loss: 5.2997, Val   Acc: 79.50%
+  Test Accuracies: Global: 79.47% | Expert 0: 76.51%, Expert 1: 72.60%, Expert 2: 78.61%, Expert 3: 75.80%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/checkpoint_epoch_10.pth
+Epoch 11/40, Batch 0/79, Loss: 13.3241 (Global: 2.5192, Individual: 10.8049)
+Epoch 11/40, Batch 50/79, Loss: 14.4143 (Global: 2.7662, Individual: 11.6481)
+  🔸 Saved new best Expert 0 (test acc 76.65%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 72.89%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 11/40:
+  Train Loss: 12.6814, Train Acc: 60.21%
+  Val   Loss: 5.2482, Val   Acc: 79.31%
+  Test Accuracies: Global: 79.32% | Expert 0: 76.65%, Expert 1: 72.89%, Expert 2: 78.66%, Expert 3: 75.97%
+  📊 Training progress logged to CSV
+Epoch 12/40, Batch 0/79, Loss: 14.4552 (Global: 2.8213, Individual: 11.6339)
+Epoch 12/40, Batch 50/79, Loss: 13.0544 (Global: 2.3954, Individual: 10.6590)
+  🔸 Saved new best Expert 1 (test acc 72.95%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 12/40:
+  Train Loss: 12.4527, Train Acc: 61.84%
+  Val   Loss: 5.3592, Val   Acc: 78.87%
+  Test Accuracies: Global: 78.89% | Expert 0: 76.51%, Expert 1: 72.95%, Expert 2: 78.59%, Expert 3: 75.77%
+  📊 Training progress logged to CSV
+Epoch 13/40, Batch 0/79, Loss: 12.9389 (Global: 2.4676, Individual: 10.4714)
+Epoch 13/40, Batch 50/79, Loss: 11.7593 (Global: 2.1792, Individual: 9.5801)
+  🔸 Saved new best Expert 0 (test acc 76.67%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 73.30%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 13/40:
+  Train Loss: 12.1714, Train Acc: 60.66%
+  Val   Loss: 5.2439, Val   Acc: 79.62%
+  Test Accuracies: Global: 79.62% | Expert 0: 76.67%, Expert 1: 73.30%, Expert 2: 78.60%, Expert 3: 76.17%
+  📊 Training progress logged to CSV
+Epoch 14/40, Batch 0/79, Loss: 13.9853 (Global: 2.6307, Individual: 11.3546)
+Epoch 14/40, Batch 50/79, Loss: 12.2513 (Global: 2.2906, Individual: 9.9607)
+  🔸 Saved new best Expert 0 (test acc 76.75%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+Epoch 14/40:
+  Train Loss: 12.3966, Train Acc: 62.18%
+  Val   Loss: 5.3717, Val   Acc: 79.16%
+  Test Accuracies: Global: 79.16% | Expert 0: 76.75%, Expert 1: 73.29%, Expert 2: 78.40%, Expert 3: 75.79%
+  📊 Training progress logged to CSV
+Epoch 15/40, Batch 0/79, Loss: 8.1502 (Global: 1.3901, Individual: 6.7600)
+Epoch 15/40, Batch 50/79, Loss: 14.3169 (Global: 2.7481, Individual: 11.5688)
+  🔸 Saved new best Expert 1 (test acc 73.43%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 15/40:
+  Train Loss: 11.8359, Train Acc: 67.33%
+  Val   Loss: 5.3102, Val   Acc: 79.15%
+  Test Accuracies: Global: 79.16% | Expert 0: 76.74%, Expert 1: 73.43%, Expert 2: 78.28%, Expert 3: 76.04%
+  📊 Training progress logged to CSV
+Epoch 16/40, Batch 0/79, Loss: 8.1261 (Global: 1.4057, Individual: 6.7204)
+Epoch 16/40, Batch 50/79, Loss: 12.2972 (Global: 2.3115, Individual: 9.9857)
+  🔸 Saved new best Expert 0 (test acc 76.87%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+Epoch 16/40:
+  Train Loss: 11.8452, Train Acc: 66.18%
+  Val   Loss: 5.2713, Val   Acc: 79.30%
+  Test Accuracies: Global: 79.31% | Expert 0: 76.87%, Expert 1: 73.42%, Expert 2: 78.52%, Expert 3: 75.99%
+  📊 Training progress logged to CSV
+Epoch 17/40, Batch 0/79, Loss: 13.7592 (Global: 2.6115, Individual: 11.1477)
+Epoch 17/40, Batch 50/79, Loss: 8.6875 (Global: 1.5135, Individual: 7.1740)
+Epoch 17/40:
+  Train Loss: 11.9725, Train Acc: 63.40%
+  Val   Loss: 5.3111, Val   Acc: 79.10%
+  Test Accuracies: Global: 79.10% | Expert 0: 76.78%, Expert 1: 73.39%, Expert 2: 78.43%, Expert 3: 75.58%
+  📊 Training progress logged to CSV
+Epoch 18/40, Batch 0/79, Loss: 13.1887 (Global: 2.4570, Individual: 10.7318)
+Epoch 18/40, Batch 50/79, Loss: 11.2556 (Global: 2.0920, Individual: 9.1636)
+  🔸 Saved new best Expert 0 (test acc 77.07%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (test acc 73.54%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 18/40:
+  Train Loss: 11.8292, Train Acc: 67.03%
+  Val   Loss: 5.4220, Val   Acc: 78.95%
+  Test Accuracies: Global: 78.97% | Expert 0: 77.07%, Expert 1: 73.54%, Expert 2: 78.41%, Expert 3: 75.55%
+  📊 Training progress logged to CSV
+Epoch 19/40, Batch 0/79, Loss: 9.3770 (Global: 1.6281, Individual: 7.7489)
+Epoch 19/40, Batch 50/79, Loss: 14.6695 (Global: 2.8497, Individual: 11.8198)
+  🔸 Saved new best Expert 0 (test acc 77.13%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+Epoch 19/40:
+  Train Loss: 11.8195, Train Acc: 66.83%
+  Val   Loss: 5.4435, Val   Acc: 78.91%
+  Test Accuracies: Global: 78.92% | Expert 0: 77.13%, Expert 1: 73.54%, Expert 2: 78.17%, Expert 3: 75.02%
+  📊 Training progress logged to CSV
+Epoch 20/40, Batch 0/79, Loss: 9.2747 (Global: 1.6799, Individual: 7.5948)
+Epoch 20/40, Batch 50/79, Loss: 8.1191 (Global: 1.4123, Individual: 6.7068)
+Epoch 20/40:
+  Train Loss: 11.7087, Train Acc: 67.06%
+  Val   Loss: 5.3683, Val   Acc: 79.23%
+  Test Accuracies: Global: 79.27% | Expert 0: 77.11%, Expert 1: 73.54%, Expert 2: 78.34%, Expert 3: 75.33%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/checkpoint_epoch_20.pth
+
+================ STAGE TRANSITION ================
+Loading best expert checkpoints (by test acc) and freezing expert backbones...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_mixed_experts_fusions_alpha_ablation_full_eval.py:473: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+  🔒 Expert 0 frozen (adapter remains trainable)
+  🔒 Expert 1 frozen (adapter remains trainable)
+  🔒 Expert 2 frozen (adapter remains trainable)
+  🔒 Expert 3 frozen (adapter remains trainable)
+Stage 2: Training adapters + fusion + global head only for remaining epochs.
+Epoch 21/40, Batch 0/79, Loss: 7.4438 (Global: 1.3276, Individual: 6.1162)
+Epoch 21/40, Batch 50/79, Loss: 14.1589 (Global: 2.8151, Individual: 11.3437)
+  🔸 Saved new best Expert 3 (test acc 77.48%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_3_best.pth
+Epoch 21/40:
+  Train Loss: 12.2040, Train Acc: 62.45%
+  Val   Loss: 5.0057, Val   Acc: 80.33%
+  Test Accuracies: Global: 80.37% | Expert 0: 77.02%, Expert 1: 73.47%, Expert 2: 79.19%, Expert 3: 77.48%
+  🔸 Saved new best Fusion Module (test acc 80.37%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 80.37%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 80.37%
+Epoch 22/40, Batch 0/79, Loss: 13.9833 (Global: 2.7029, Individual: 11.2805)
+Epoch 22/40, Batch 50/79, Loss: 15.6602 (Global: 3.1177, Individual: 12.5426)
+  🔸 Saved new best Expert 0 (test acc 77.19%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+Epoch 22/40:
+  Train Loss: 12.7115, Train Acc: 56.93%
+  Val   Loss: 5.1906, Val   Acc: 79.77%
+  Test Accuracies: Global: 79.79% | Expert 0: 77.19%, Expert 1: 73.33%, Expert 2: 79.10%, Expert 3: 77.23%
+  📊 Training progress logged to CSV
+Epoch 23/40, Batch 0/79, Loss: 13.8078 (Global: 2.6389, Individual: 11.1689)
+Epoch 23/40, Batch 50/79, Loss: 12.9129 (Global: 2.5162, Individual: 10.3967)
+Epoch 23/40:
+  Train Loss: 12.7708, Train Acc: 60.32%
+  Val   Loss: 5.1271, Val   Acc: 79.96%
+  Test Accuracies: Global: 79.97% | Expert 0: 76.98%, Expert 1: 73.44%, Expert 2: 79.17%, Expert 3: 77.40%
+  📊 Training progress logged to CSV
+Epoch 24/40, Batch 0/79, Loss: 10.0871 (Global: 1.8373, Individual: 8.2498)
+Epoch 24/40, Batch 50/79, Loss: 14.0390 (Global: 2.7463, Individual: 11.2927)
+  🔸 Saved new best Expert 1 (test acc 73.57%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 24/40:
+  Train Loss: 12.5661, Train Acc: 59.88%
+  Val   Loss: 5.1326, Val   Acc: 80.31%
+  Test Accuracies: Global: 80.35% | Expert 0: 77.07%, Expert 1: 73.57%, Expert 2: 79.18%, Expert 3: 77.35%
+  📊 Training progress logged to CSV
+Epoch 25/40, Batch 0/79, Loss: 11.7584 (Global: 2.1800, Individual: 9.5784)
+Epoch 25/40, Batch 50/79, Loss: 9.2040 (Global: 1.6628, Individual: 7.5412)
+Epoch 25/40:
+  Train Loss: 12.6042, Train Acc: 54.04%
+  Val   Loss: 5.1588, Val   Acc: 80.62%
+  Test Accuracies: Global: 80.65% | Expert 0: 77.02%, Expert 1: 73.55%, Expert 2: 79.19%, Expert 3: 77.19%
+  🔸 Saved new best Fusion Module (test acc 80.65%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 80.65%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 80.65%
+Epoch 26/40, Batch 0/79, Loss: 15.8300 (Global: 3.0976, Individual: 12.7324)
+Epoch 26/40, Batch 50/79, Loss: 11.3395 (Global: 2.1007, Individual: 9.2389)
+  🔸 Saved new best Expert 1 (test acc 73.81%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+Epoch 26/40:
+  Train Loss: 12.6669, Train Acc: 57.36%
+  Val   Loss: 5.1222, Val   Acc: 80.32%
+  Test Accuracies: Global: 80.34% | Expert 0: 77.19%, Expert 1: 73.81%, Expert 2: 79.16%, Expert 3: 77.31%
+  📊 Training progress logged to CSV
+Epoch 27/40, Batch 0/79, Loss: 14.5950 (Global: 2.7877, Individual: 11.8073)
+Epoch 27/40, Batch 50/79, Loss: 13.6595 (Global: 2.6433, Individual: 11.0162)
+  🔸 Saved new best Expert 2 (test acc 79.22%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 27/40:
+  Train Loss: 12.6967, Train Acc: 57.20%
+  Val   Loss: 5.1466, Val   Acc: 80.29%
+  Test Accuracies: Global: 80.28% | Expert 0: 76.90%, Expert 1: 73.49%, Expert 2: 79.22%, Expert 3: 77.35%
+  📊 Training progress logged to CSV
+Epoch 28/40, Batch 0/79, Loss: 14.2006 (Global: 2.7660, Individual: 11.4346)
+Epoch 28/40, Batch 50/79, Loss: 9.1119 (Global: 1.5751, Individual: 7.5369)
+Epoch 28/40:
+  Train Loss: 12.1707, Train Acc: 63.64%
+  Val   Loss: 5.0535, Val   Acc: 80.52%
+  Test Accuracies: Global: 80.45% | Expert 0: 77.17%, Expert 1: 73.61%, Expert 2: 78.93%, Expert 3: 77.33%
+  📊 Training progress logged to CSV
+Epoch 29/40, Batch 0/79, Loss: 12.2619 (Global: 2.2728, Individual: 9.9890)
+Epoch 29/40, Batch 50/79, Loss: 13.5387 (Global: 2.6275, Individual: 10.9112)
+Epoch 29/40:
+  Train Loss: 12.4305, Train Acc: 62.20%
+  Val   Loss: 5.1112, Val   Acc: 80.32%
+  Test Accuracies: Global: 80.34% | Expert 0: 77.09%, Expert 1: 73.46%, Expert 2: 79.21%, Expert 3: 77.29%
+  📊 Training progress logged to CSV
+Epoch 30/40, Batch 0/79, Loss: 11.8552 (Global: 2.2718, Individual: 9.5833)
+Epoch 30/40, Batch 50/79, Loss: 7.7891 (Global: 1.3421, Individual: 6.4470)
+Epoch 30/40:
+  Train Loss: 12.1522, Train Acc: 63.01%
+  Val   Loss: 5.1268, Val   Acc: 80.31%
+  Test Accuracies: Global: 80.32% | Expert 0: 76.99%, Expert 1: 73.63%, Expert 2: 79.15%, Expert 3: 77.39%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/checkpoint_epoch_30.pth
+Epoch 31/40, Batch 0/79, Loss: 8.1429 (Global: 1.4329, Individual: 6.7100)
+Epoch 31/40, Batch 50/79, Loss: 13.8598 (Global: 2.6901, Individual: 11.1698)
+Epoch 31/40:
+  Train Loss: 12.3947, Train Acc: 63.97%
+  Val   Loss: 5.0803, Val   Acc: 80.36%
+  Test Accuracies: Global: 80.35% | Expert 0: 77.05%, Expert 1: 73.58%, Expert 2: 79.15%, Expert 3: 77.40%
+  📊 Training progress logged to CSV
+Epoch 32/40, Batch 0/79, Loss: 14.4794 (Global: 2.7646, Individual: 11.7149)
+Epoch 32/40, Batch 50/79, Loss: 9.3991 (Global: 1.6844, Individual: 7.7147)
+  🔸 Saved new best Expert 2 (test acc 79.29%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 32/40:
+  Train Loss: 12.6909, Train Acc: 61.53%
+  Val   Loss: 5.1935, Val   Acc: 80.24%
+  Test Accuracies: Global: 80.25% | Expert 0: 77.18%, Expert 1: 73.33%, Expert 2: 79.29%, Expert 3: 77.23%
+  📊 Training progress logged to CSV
+Epoch 33/40, Batch 0/79, Loss: 14.9795 (Global: 2.9445, Individual: 12.0350)
+Epoch 33/40, Batch 50/79, Loss: 13.4729 (Global: 2.5634, Individual: 10.9094)
+  🔸 Saved new best Expert 3 (test acc 77.52%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_3_best.pth
+Epoch 33/40:
+  Train Loss: 12.6263, Train Acc: 60.06%
+  Val   Loss: 5.0942, Val   Acc: 80.13%
+  Test Accuracies: Global: 80.13% | Expert 0: 77.16%, Expert 1: 73.60%, Expert 2: 79.16%, Expert 3: 77.52%
+  📊 Training progress logged to CSV
+Epoch 34/40, Batch 0/79, Loss: 11.8401 (Global: 2.2433, Individual: 9.5968)
+Epoch 34/40, Batch 50/79, Loss: 14.4254 (Global: 2.8019, Individual: 11.6235)
+Epoch 34/40:
+  Train Loss: 12.4885, Train Acc: 58.81%
+  Val   Loss: 5.1992, Val   Acc: 80.30%
+  Test Accuracies: Global: 80.27% | Expert 0: 76.89%, Expert 1: 73.41%, Expert 2: 79.12%, Expert 3: 77.37%
+  📊 Training progress logged to CSV
+Epoch 35/40, Batch 0/79, Loss: 13.4750 (Global: 2.5979, Individual: 10.8771)
+Epoch 35/40, Batch 50/79, Loss: 9.8555 (Global: 1.7923, Individual: 8.0631)
+Epoch 35/40:
+  Train Loss: 12.6249, Train Acc: 58.05%
+  Val   Loss: 5.0820, Val   Acc: 80.56%
+  Test Accuracies: Global: 80.60% | Expert 0: 77.12%, Expert 1: 73.55%, Expert 2: 79.16%, Expert 3: 77.47%
+  📊 Training progress logged to CSV
+Epoch 36/40, Batch 0/79, Loss: 13.1149 (Global: 2.4692, Individual: 10.6456)
+Epoch 36/40, Batch 50/79, Loss: 13.0216 (Global: 2.4993, Individual: 10.5224)
+Epoch 36/40:
+  Train Loss: 12.1837, Train Acc: 63.10%
+  Val   Loss: 5.0335, Val   Acc: 80.71%
+  Test Accuracies: Global: 80.75% | Expert 0: 77.14%, Expert 1: 73.70%, Expert 2: 79.14%, Expert 3: 77.45%
+  🔸 Saved new best Fusion Module (test acc 80.75%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (test acc 80.75%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best global test accuracy: 80.75%
+Epoch 37/40, Batch 0/79, Loss: 13.9331 (Global: 2.6064, Individual: 11.3267)
+Epoch 37/40, Batch 50/79, Loss: 13.5799 (Global: 2.5655, Individual: 11.0145)
+  🔸 Saved new best Expert 2 (test acc 79.32%) to ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+Epoch 37/40:
+  Train Loss: 12.4256, Train Acc: 59.38%
+  Val   Loss: 5.0695, Val   Acc: 80.35%
+  Test Accuracies: Global: 80.34% | Expert 0: 77.09%, Expert 1: 73.33%, Expert 2: 79.32%, Expert 3: 77.32%
+  📊 Training progress logged to CSV
+Epoch 38/40, Batch 0/79, Loss: 12.9171 (Global: 2.4337, Individual: 10.4835)
+Epoch 38/40, Batch 50/79, Loss: 14.8995 (Global: 2.7918, Individual: 12.1078)
+Epoch 38/40:
+  Train Loss: 12.6025, Train Acc: 59.87%
+  Val   Loss: 5.2084, Val   Acc: 80.44%
+  Test Accuracies: Global: 80.45% | Expert 0: 77.13%, Expert 1: 73.40%, Expert 2: 79.13%, Expert 3: 77.27%
+  📊 Training progress logged to CSV
+Epoch 39/40, Batch 0/79, Loss: 15.0219 (Global: 2.8644, Individual: 12.1575)
+Epoch 39/40, Batch 50/79, Loss: 11.4330 (Global: 2.0997, Individual: 9.3333)
+Epoch 39/40:
+  Train Loss: 12.1254, Train Acc: 62.76%
+  Val   Loss: 5.0628, Val   Acc: 79.95%
+  Test Accuracies: Global: 79.97% | Expert 0: 77.12%, Expert 1: 73.64%, Expert 2: 79.16%, Expert 3: 77.25%
+  📊 Training progress logged to CSV
+Epoch 40/40, Batch 0/79, Loss: 11.1267 (Global: 2.0240, Individual: 9.1027)
+Epoch 40/40, Batch 50/79, Loss: 9.3009 (Global: 1.6780, Individual: 7.6228)
+Epoch 40/40:
+  Train Loss: 12.3740, Train Acc: 57.72%
+  Val   Loss: 5.1230, Val   Acc: 80.58%
+  Test Accuracies: Global: 80.57% | Expert 0: 76.98%, Expert 1: 73.46%, Expert 2: 79.03%, Expert 3: 77.40%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/checkpoint_epoch_40.pth
+  Saved best model: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/best_model.pth
+✅ Training completed! Best validation accuracy: 80.75%
+
+💾 Saving trained model components...
+  Saved expert 0: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts/expert_0_alpha_1.0.pth
+  Saved expert 1: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts/expert_1_alpha_1.0.pth
+  Saved expert 2: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts/expert_2_alpha_1.0.pth
+  Saved expert 3: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts/expert_3_alpha_1.0.pth
+  Saved fusion module: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_module/fusion_module_alpha_1.0.pth
+  Saved global head: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_head/global_head_alpha_1.0.pth
+  Saved complete model: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/complete_model/complete_fusion_model_alpha_1.0.pth
+✅ All model components saved to: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative
+  - Experts: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts
+  - Fusion: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/fusion_module
+  - Global: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_head
+  - Complete: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/complete_model
+✅ Model components saved successfully
+
+================================================================================
+CLEAN TEST-SET EVALUATION (Best Experts + Best Global Head)
+================================================================================
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_mixed_experts_fusions_alpha_ablation_full_eval.py:878: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+🔄 Loaded best Expert 0 weights for clean eval from ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_0_best.pth
+🔄 Loaded best Expert 1 weights for clean eval from ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_1_best.pth
+🔄 Loaded best Expert 2 weights for clean eval from ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_2_best.pth
+🔄 Loaded best Expert 3 weights for clean eval from ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/experts_best/expert_3_best.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_mixed_experts_fusions_alpha_ablation_full_eval.py:893: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(best_global_head_path, map_location=device)
+🔄 Loaded best Global Head for clean eval from ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/mixed_experts_alpha_1.0/multiplicative/global_best/global_head_best.pth
+  Clean Test Accuracy (best experts + best head): 80.77% | Loss: 1.0332
+
+================================================================================
+PHASE 3: POST-TRAINING EVALUATION (α=1.0)
+================================================================================
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_mixed_experts_fusions_alpha_ablation_full_eval.py:933: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+⚠️  Failed to load best expert checkpoints; using current weights. Error: Error(s) in loading state_dict for DenseNet:
+	Missing key(s) in state_dict: "features.0.weight", "features.1.weight", "features.1.bias", "features.1.running_mean", "features.1.running_var", "features.denseblock1.dense_block.0.dense_layer.0.weight", "features.denseblock1.dense_block.0.dense_layer.0.bias", "features.denseblock1.dense_block.0.dense_layer.0.running_mean", "features.denseblock1.dense_block.0.dense_layer.0.running_var", "features.denseblock1.dense_block.0.dense_layer.2.weight", "features.denseblock1.dense_block.0.dense_layer.3.weight", "features.denseblock1.dense_block.0.dense_layer.3.bias", "features.denseblock1.dense_block.0.dense_layer.3.running_mean", "features.denseblock1.dense_block.0.dense_layer.3.running_var", "features.denseblock1.dense_block.0.dense_layer.5.weight", "features.denseblock1.dense_block.1.dense_layer.0.weight", "features.denseblock1.dense_block.1.dense_layer.0.bias", "features.denseblock1.dense_block.1.dense_layer.0.running_mean", "features.denseblock1.dense_block.1.dense_layer.0.running_var", "features.denseblock1.dense_block.1.dense_layer.2.weight", "features.denseblock1.dense_block.1.dense_layer.3.weight", "features.denseblock1.dense_block.1.dense_layer.3.bias", "features.denseblock1.dense_block.1.dense_layer.3.running_mean", "features.denseblock1.dense_block.1.dense_layer.3.running_var", "features.denseblock1.dense_block.1.dense_layer.5.weight", "features.denseblock1.dense_block.2.dense_layer.0.weight", "features.denseblock1.dense_block.2.dense_layer.0.bias", "features.denseblock1.dense_block.2.dense_layer.0.running_mean", "features.denseblock1.dense_block.2.dense_layer.0.running_var", "features.denseblock1.dense_block.2.dense_layer.2.weight", "features.denseblock1.dense_block.2.dense_layer.3.weight", "features.denseblock1.dense_block.2.dense_layer.3.bias", "features.denseblock1.dense_block.2.dense_layer.3.running_mean", "features.denseblock1.dense_block.2.dense_layer.3.running_var", "features.denseblock1.dense_block.2.dense_layer.5.weight", "features.denseblock1.dense_block.3.dense_layer.0.weight", "features.denseblock1.dense_block.3.dense_layer.0.bias", "features.denseblock1.dense_block.3.dense_layer.0.running_mean", "features.denseblock1.dense_block.3.dense_layer.0.running_var", "features.denseblock1.dense_block.3.dense_layer.2.weight", "features.denseblock1.dense_block.3.dense_layer.3.weight", "features.denseblock1.dense_block.3.dense_layer.3.bias", "features.denseblock1.dense_block.3.dense_layer.3.running_mean", "features.denseblock1.dense_block.3.dense_layer.3.running_var", "features.denseblock1.dense_block.3.dense_layer.5.weight", "features.denseblock1.dense_block.4.dense_layer.0.weight", "features.denseblock1.dense_block.4.dense_layer.0.bias", "features.denseblock1.dense_block.4.dense_layer.0.running_mean", "features.denseblock1.dense_block.4.dense_layer.0.running_var", "features.denseblock1.dense_block.4.dense_layer.2.weight", "features.denseblock1.dense_block.4.dense_layer.3.weight", "features.denseblock1.dense_block.4.dense_layer.3.bias", "features.denseblock1.dense_block.4.dense_layer.3.running_mean", "features.denseblock1.dense_block.4.dense_layer.3.running_var", "features.denseblock1.dense_block.4.dense_layer.5.weight", "features.denseblock1.dense_block.5.dense_layer.0.weight", "features.denseblock1.dense_block.5.dense_layer.0.bias", "features.denseblock1.dense_block.5.dense_layer.0.running_mean", "features.denseblock1.dense_block.5.dense_layer.0.running_var", "features.denseblock1.dense_block.5.dense_layer.2.weight", "features.denseblock1.dense_block.5.dense_layer.3.weight", "features.denseblock1.dense_block.5.dense_layer.3.bias", "features.denseblock1.dense_block.5.dense_layer.3.running_mean", "features.denseblock1.dense_block.5.dense_layer.3.running_var", "features.denseblock1.dense_block.5.dense_layer.5.weight", "features.transition1.transition_layer.0.weight", "features.transition1.transition_layer.0.bias", "features.transition1.transition_layer.0.running_mean", "features.transition1.transition_layer.0.running_var", "features.transition1.transition_layer.2.weight", "features.denseblock2.dense_block.0.dense_layer.0.weight", "features.denseblock2.dense_block.0.dense_layer.0.bias", "features.denseblock2.dense_block.0.dense_layer.0.running_mean", "features.denseblock2.dense_block.0.dense_layer.0.running_var", "features.denseblock2.dense_block.0.dense_layer.2.weight", "features.denseblock2.dense_block.0.dense_layer.3.weight", "features.denseblock2.dense_block.0.dense_layer.3.bias", "features.denseblock2.dense_block.0.dense_layer.3.running_mean", "features.denseblock2.dense_block.0.dense_layer.3.running_var", "features.denseblock2.dense_block.0.dense_layer.5.weight", "features.denseblock2.dense_block.1.dense_layer.0.weight", "features.denseblock2.dense_block.1.dense_layer.0.bias", "features.denseblock2.dense_block.1.dense_layer.0.running_mean", "features.denseblock2.dense_block.1.dense_layer.0.running_var", "features.denseblock2.dense_block.1.dense_layer.2.weight", "features.denseblock2.dense_block.1.dense_layer.3.weight", "features.denseblock2.dense_block.1.dense_layer.3.bias", "features.denseblock2.dense_block.1.dense_layer.3.running_mean", "features.denseblock2.dense_block.1.dense_layer.3.running_var", "features.denseblock2.dense_block.1.dense_layer.5.weight", "features.denseblock2.dense_block.2.dense_layer.0.weight", "features.denseblock2.dense_block.2.dense_layer.0.bias", "features.denseblock2.dense_block.2.dense_layer.0.running_mean", "features.denseblock2.dense_block.2.dense_layer.0.running_var", "features.denseblock2.dense_block.2.dense_layer.2.weight", "features.denseblock2.dense_block.2.dense_layer.3.weight", "features.denseblock2.dense_block.2.dense_layer.3.bias", "features.denseblock2.dense_block.2.dense_layer.3.running_mean", "features.denseblock2.dense_block.2.dense_layer.3.running_var", "features.denseblock2.dense_block.2.dense_layer.5.weight", "features.denseblock2.dense_block.3.dense_layer.0.weight", "features.denseblock2.dense_block.3.dense_layer.0.bias", "features.denseblock2.dense_block.3.dense_layer.0.running_mean", "features.denseblock2.dense_block.3.dense_layer.0.running_var", "features.denseblock2.dense_block.3.dense_layer.2.weight", "features.denseblock2.dense_block.3.dense_layer.3.weight", "features.denseblock2.dense_block.3.dense_layer.3.bias", "features.denseblock2.dense_block.3.dense_layer.3.running_mean", "features.denseblock2.dense_block.3.dense_layer.3.running_var", "features.denseblock2.dense_block.3.dense_layer.5.weight", "features.denseblock2.dense_block.4.dense_layer.0.weight", "features.denseblock2.dense_block.4.dense_layer.0.bias", "features.denseblock2.dense_block.4.dense_layer.0.running_mean", "features.denseblock2.dense_block.4.dense_layer.0.running_var", "features.denseblock2.dense_block.4.dense_layer.2.weight", "features.denseblock2.dense_block.4.dense_layer.3.weight", "features.denseblock2.dense_block.4.dense_layer.3.bias", "features.denseblock2.dense_block.4.dense_layer.3.running_mean", "features.denseblock2.dense_block.4.dense_layer.3.running_var", "features.denseblock2.dense_block.4.dense_layer.5.weight", "features.denseblock2.dense_block.5.dense_layer.0.weight", "features.denseblock2.dense_block.5.dense_layer.0.bias", "features.denseblock2.dense_block.5.dense_layer.0.running_mean", "features.denseblock2.dense_block.5.dense_layer.0.running_var", "features.denseblock2.dense_block.5.dense_layer.2.weight", "features.denseblock2.dense_block.5.dense_layer.3.weight", "features.denseblock2.dense_block.5.dense_layer.3.bias", "features.denseblock2.dense_block.5.dense_layer.3.running_mean", "features.denseblock2.dense_block.5.dense_layer.3.running_var", "features.denseblock2.dense_block.5.dense_layer.5.weight", "features.denseblock2.dense_block.6.dense_layer.0.weight", "features.denseblock2.dense_block.6.dense_layer.0.bias", "features.denseblock2.dense_block.6.dense_layer.0.running_mean", "features.denseblock2.dense_block.6.dense_layer.0.running_var", "features.denseblock2.dense_block.6.dense_layer.2.weight", "features.denseblock2.dense_block.6.dense_layer.3.weight", "features.denseblock2.dense_block.6.dense_layer.3.bias", "features.denseblock2.dense_block.6.dense_layer.3.running_mean", "features.denseblock2.dense_block.6.dense_layer.3.running_var", "features.denseblock2.dense_block.6.dense_layer.5.weight", "features.denseblock2.dense_block.7.dense_layer.0.weight", "features.denseblock2.dense_block.7.dense_layer.0.bias", "features.denseblock2.dense_block.7.dense_layer.0.running_mean", "features.denseblock2.dense_block.7.dense_layer.0.running_var", "features.denseblock2.dense_block.7.dense_layer.2.weight", "features.denseblock2.dense_block.7.dense_layer.3.weight", "features.denseblock2.dense_block.7.dense_layer.3.bias", "features.denseblock2.dense_block.7.dense_layer.3.running_mean", "features.denseblock2.dense_block.7.dense_layer.3.running_var", "features.denseblock2.dense_block.7.dense_layer.5.weight", "features.denseblock2.dense_block.8.dense_layer.0.weight", "features.denseblock2.dense_block.8.dense_layer.0.bias", "features.denseblock2.dense_block.8.dense_layer.0.running_mean", "features.denseblock2.dense_block.8.dense_layer.0.running_var", "features.denseblock2.dense_block.8.dense_layer.2.weight", "features.denseblock2.dense_block.8.dense_layer.3.weight", "features.denseblock2.dense_block.8.dense_layer.3.bias", "features.denseblock2.dense_block.8.dense_layer.3.running_mean", "features.denseblock2.dense_block.8.dense_layer.3.running_var", "features.denseblock2.dense_block.8.dense_layer.5.weight", "features.denseblock2.dense_block.9.dense_layer.0.weight", "features.denseblock2.dense_block.9.dense_layer.0.bias", "features.denseblock2.dense_block.9.dense_layer.0.running_mean", "features.denseblock2.dense_block.9.dense_layer.0.running_var", "features.denseblock2.dense_block.9.dense_layer.2.weight", "features.denseblock2.dense_block.9.dense_layer.3.weight", "features.denseblock2.dense_block.9.dense_layer.3.bias", "features.denseblock2.dense_block.9.dense_layer.3.running_mean", "features.denseblock2.dense_block.9.dense_layer.3.running_var", "features.denseblock2.dense_block.9.dense_layer.5.weight", "features.denseblock2.dense_block.10.dense_layer.0.weight", "features.denseblock2.dense_block.10.dense_layer.0.bias", "features.denseblock2.dense_block.10.dense_layer.0.running_mean", "features.denseblock2.dense_block.10.dense_layer.0.running_var", "features.denseblock2.dense_block.10.dense_layer.2.weight", "features.denseblock2.dense_block.10.dense_layer.3.weight", "features.denseblock2.dense_block.10.dense_layer.3.bias", "features.denseblock2.dense_block.10.dense_layer.3.running_mean", "features.denseblock2.dense_block.10.dense_layer.3.running_var", "features.denseblock2.dense_block.10.dense_layer.5.weight", "features.denseblock2.dense_block.11.dense_layer.0.weight", "features.denseblock2.dense_block.11.dense_layer.0.bias", "features.denseblock2.dense_block.11.dense_layer.0.running_mean", "features.denseblock2.dense_block.11.dense_layer.0.running_var", "features.denseblock2.dense_block.11.dense_layer.2.weight", "features.denseblock2.dense_block.11.dense_layer.3.weight", "features.denseblock2.dense_block.11.dense_layer.3.bias", "features.denseblock2.dense_block.11.dense_layer.3.running_mean", "features.denseblock2.dense_block.11.dense_layer.3.running_var", "features.denseblock2.dense_block.11.dense_layer.5.weight", "features.transition2.transition_layer.0.weight", "features.transition2.transition_layer.0.bias", "features.transition2.transition_layer.0.running_mean", "features.transition2.transition_layer.0.running_var", "features.transition2.transition_layer.2.weight", "features.denseblock3.dense_block.0.dense_layer.0.weight", "features.denseblock3.dense_block.0.dense_layer.0.bias", "features.denseblock3.dense_block.0.dense_layer.0.running_mean", "features.denseblock3.dense_block.0.dense_layer.0.running_var", "features.denseblock3.dense_block.0.dense_layer.2.weight", "features.denseblock3.dense_block.0.dense_layer.3.weight", "features.denseblock3.dense_block.0.dense_layer.3.bias", "features.denseblock3.dense_block.0.dense_layer.3.running_mean", "features.denseblock3.dense_block.0.dense_layer.3.running_var", "features.denseblock3.dense_block.0.dense_layer.5.weight", "features.denseblock3.dense_block.1.dense_layer.0.weight", "features.denseblock3.dense_block.1.dense_layer.0.bias", "features.denseblock3.dense_block.1.dense_layer.0.running_mean", "features.denseblock3.dense_block.1.dense_layer.0.running_var", "features.denseblock3.dense_block.1.dense_layer.2.weight", "features.denseblock3.dense_block.1.dense_layer.3.weight", "features.denseblock3.dense_block.1.dense_layer.3.bias", "features.denseblock3.dense_block.1.dense_layer.3.running_mean", "features.denseblock3.dense_block.1.dense_layer.3.running_var", "features.denseblock3.dense_block.1.dense_layer.5.weight", "features.denseblock3.dense_block.2.dense_layer.0.weight", "features.denseblock3.dense_block.2.dense_layer.0.bias", "features.denseblock3.dense_block.2.dense_layer.0.running_mean", "features.denseblock3.dense_block.2.dense_layer.0.running_var", "features.denseblock3.dense_block.2.dense_layer.2.weight", "features.denseblock3.dense_block.2.dense_layer.3.weight", "features.denseblock3.dense_block.2.dense_layer.3.bias", "features.denseblock3.dense_block.2.dense_layer.3.running_mean", "features.denseblock3.dense_block.2.dense_layer.3.running_var", "features.denseblock3.dense_block.2.dense_layer.5.weight", "features.denseblock3.dense_block.3.dense_layer.0.weight", "features.denseblock3.dense_block.3.dense_layer.0.bias", "features.denseblock3.dense_block.3.dense_layer.0.running_mean", "features.denseblock3.dense_block.3.dense_layer.0.running_var", "features.denseblock3.dense_block.3.dense_layer.2.weight", "features.denseblock3.dense_block.3.dense_layer.3.weight", "features.denseblock3.dense_block.3.dense_layer.3.bias", "features.denseblock3.dense_block.3.dense_layer.3.running_mean", "features.denseblock3.dense_block.3.dense_layer.3.running_var", "features.denseblock3.dense_block.3.dense_layer.5.weight", "features.denseblock3.dense_block.4.dense_layer.0.weight", "features.denseblock3.dense_block.4.dense_layer.0.bias", "features.denseblock3.dense_block.4.dense_layer.0.running_mean", "features.denseblock3.dense_block.4.dense_layer.0.running_var", "features.denseblock3.dense_block.4.dense_layer.2.weight", "features.denseblock3.dense_block.4.dense_layer.3.weight", "features.denseblock3.dense_block.4.dense_layer.3.bias", "features.denseblock3.dense_block.4.dense_layer.3.running_mean", "features.denseblock3.dense_block.4.dense_layer.3.running_var", "features.denseblock3.dense_block.4.dense_layer.5.weight", "features.denseblock3.dense_block.5.dense_layer.0.weight", "features.denseblock3.dense_block.5.dense_layer.0.bias", "features.denseblock3.dense_block.5.dense_layer.0.running_mean", "features.denseblock3.dense_block.5.dense_layer.0.running_var", "features.denseblock3.dense_block.5.dense_layer.2.weight", "features.denseblock3.dense_block.5.dense_layer.3.weight", "features.denseblock3.dense_block.5.dense_layer.3.bias", "features.denseblock3.dense_block.5.dense_layer.3.running_mean", "features.denseblock3.dense_block.5.dense_layer.3.running_var", "features.denseblock3.dense_block.5.dense_layer.5.weight", "features.denseblock3.dense_block.6.dense_layer.0.weight", "features.denseblock3.dense_block.6.dense_layer.0.bias", "features.denseblock3.dense_block.6.dense_layer.0.running_mean", "features.denseblock3.dense_block.6.dense_layer.0.running_var", "features.denseblock3.dense_block.6.dense_layer.2.weight", "features.denseblock3.dense_block.6.dense_layer.3.weight", "features.denseblock3.dense_block.6.dense_layer.3.bias", "features.denseblock3.dense_block.6.dense_layer.3.running_mean", "features.denseblock3.dense_block.6.dense_layer.3.running_var", "features.denseblock3.dense_block.6.dense_layer.5.weight", "features.denseblock3.dense_block.7.dense_layer.0.weight", "features.denseblock3.dense_block.7.dense_layer.0.bias", "features.denseblock3.dense_block.7.dense_layer.0.running_mean", "features.denseblock3.dense_block.7.dense_layer.0.running_var", "features.denseblock3.dense_block.7.dense_layer.2.weight", "features.denseblock3.dense_block.7.dense_layer.3.weight", "features.denseblock3.dense_block.7.dense_layer.3.bias", "features.denseblock3.dense_block.7.dense_layer.3.running_mean", "features.denseblock3.dense_block.7.dense_layer.3.running_var", "features.denseblock3.dense_block.7.dense_layer.5.weight", "features.denseblock3.dense_block.8.dense_layer.0.weight", "features.denseblock3.dense_block.8.dense_layer.0.bias", "features.denseblock3.dense_block.8.dense_layer.0.running_mean", "features.denseblock3.dense_block.8.dense_layer.0.running_var", "features.denseblock3.dense_block.8.dense_layer.2.weight", "features.denseblock3.dense_block.8.dense_layer.3.weight", "features.denseblock3.dense_block.8.dense_layer.3.bias", "features.denseblock3.dense_block.8.dense_layer.3.running_mean", "features.denseblock3.dense_block.8.dense_layer.3.running_var", "features.denseblock3.dense_block.8.dense_layer.5.weight", "features.denseblock3.dense_block.9.dense_layer.0.weight", "features.denseblock3.dense_block.9.dense_layer.0.bias", "features.denseblock3.dense_block.9.dense_layer.0.running_mean", "features.denseblock3.dense_block.9.dense_layer.0.running_var", "features.denseblock3.dense_block.9.dense_layer.2.weight", "features.denseblock3.dense_block.9.dense_layer.3.weight", "features.denseblock3.dense_block.9.dense_layer.3.bias", "features.denseblock3.dense_block.9.dense_layer.3.running_mean", "features.denseblock3.dense_block.9.dense_layer.3.running_var", "features.denseblock3.dense_block.9.dense_layer.5.weight", "features.denseblock3.dense_block.10.dense_layer.0.weight", "features.denseblock3.dense_block.10.dense_layer.0.bias", "features.denseblock3.dense_block.10.dense_layer.0.running_mean", "features.denseblock3.dense_block.10.dense_layer.0.running_var", "features.denseblock3.dense_block.10.dense_layer.2.weight", "features.denseblock3.dense_block.10.dense_layer.3.weight", "features.denseblock3.dense_block.10.dense_layer.3.bias", "features.denseblock3.dense_block.10.dense_layer.3.running_mean", "features.denseblock3.dense_block.10.dense_layer.3.running_var", "features.denseblock3.dense_block.10.dense_layer.5.weight", "features.denseblock3.dense_block.11.dense_layer.0.weight", "features.denseblock3.dense_block.11.dense_layer.0.bias", "features.denseblock3.dense_block.11.dense_layer.0.running_mean", "features.denseblock3.dense_block.11.dense_layer.0.running_var", "features.denseblock3.dense_block.11.dense_layer.2.weight", "features.denseblock3.dense_block.11.dense_layer.3.weight", "features.denseblock3.dense_block.11.dense_layer.3.bias", "features.denseblock3.dense_block.11.dense_layer.3.running_mean", "features.denseblock3.dense_block.11.dense_layer.3.running_var", "features.denseblock3.dense_block.11.dense_layer.5.weight", "features.denseblock3.dense_block.12.dense_layer.0.weight", "features.denseblock3.dense_block.12.dense_layer.0.bias", "features.denseblock3.dense_block.12.dense_layer.0.running_mean", "features.denseblock3.dense_block.12.dense_layer.0.running_var", "features.denseblock3.dense_block.12.dense_layer.2.weight", "features.denseblock3.dense_block.12.dense_layer.3.weight", "features.denseblock3.dense_block.12.dense_layer.3.bias", "features.denseblock3.dense_block.12.dense_layer.3.running_mean", "features.denseblock3.dense_block.12.dense_layer.3.running_var", "features.denseblock3.dense_block.12.dense_layer.5.weight", "features.denseblock3.dense_block.13.dense_layer.0.weight", "features.denseblock3.dense_block.13.dense_layer.0.bias", "features.denseblock3.dense_block.13.dense_layer.0.running_mean", "features.denseblock3.dense_block.13.dense_layer.0.running_var", "features.denseblock3.dense_block.13.dense_layer.2.weight", "features.denseblock3.dense_block.13.dense_layer.3.weight", "features.denseblock3.dense_block.13.dense_layer.3.bias", "features.denseblock3.dense_block.13.dense_layer.3.running_mean", "features.denseblock3.dense_block.13.dense_layer.3.running_var", "features.denseblock3.dense_block.13.dense_layer.5.weight", "features.denseblock3.dense_block.14.dense_layer.0.weight", "features.denseblock3.dense_block.14.dense_layer.0.bias", "features.denseblock3.dense_block.14.dense_layer.0.running_mean", "features.denseblock3.dense_block.14.dense_layer.0.running_var", "features.denseblock3.dense_block.14.dense_layer.2.weight", "features.denseblock3.dense_block.14.dense_layer.3.weight", "features.denseblock3.dense_block.14.dense_layer.3.bias", "features.denseblock3.dense_block.14.dense_layer.3.running_mean", "features.denseblock3.dense_block.14.dense_layer.3.running_var", "features.denseblock3.dense_block.14.dense_layer.5.weight", "features.denseblock3.dense_block.15.dense_layer.0.weight", "features.denseblock3.dense_block.15.dense_layer.0.bias", "features.denseblock3.dense_block.15.dense_layer.0.running_mean", "features.denseblock3.dense_block.15.dense_layer.0.running_var", "features.denseblock3.dense_block.15.dense_layer.2.weight", "features.denseblock3.dense_block.15.dense_layer.3.weight", "features.denseblock3.dense_block.15.dense_layer.3.bias", "features.denseblock3.dense_block.15.dense_layer.3.running_mean", "features.denseblock3.dense_block.15.dense_layer.3.running_var", "features.denseblock3.dense_block.15.dense_layer.5.weight", "features.denseblock3.dense_block.16.dense_layer.0.weight", "features.denseblock3.dense_block.16.dense_layer.0.bias", "features.denseblock3.dense_block.16.dense_layer.0.running_mean", "features.denseblock3.dense_block.16.dense_layer.0.running_var", "features.denseblock3.dense_block.16.dense_layer.2.weight", "features.denseblock3.dense_block.16.dense_layer.3.weight", "features.denseblock3.dense_block.16.dense_layer.3.bias", "features.denseblock3.dense_block.16.dense_layer.3.running_mean", "features.denseblock3.dense_block.16.dense_layer.3.running_var", "features.denseblock3.dense_block.16.dense_layer.5.weight", "features.denseblock3.dense_block.17.dense_layer.0.weight", "features.denseblock3.dense_block.17.dense_layer.0.bias", "features.denseblock3.dense_block.17.dense_layer.0.running_mean", "features.denseblock3.dense_block.17.dense_layer.0.running_var", "features.denseblock3.dense_block.17.dense_layer.2.weight", "features.denseblock3.dense_block.17.dense_layer.3.weight", "features.denseblock3.dense_block.17.dense_layer.3.bias", "features.denseblock3.dense_block.17.dense_layer.3.running_mean", "features.denseblock3.dense_block.17.dense_layer.3.running_var", "features.denseblock3.dense_block.17.dense_layer.5.weight", "features.denseblock3.dense_block.18.dense_layer.0.weight", "features.denseblock3.dense_block.18.dense_layer.0.bias", "features.denseblock3.dense_block.18.dense_layer.0.running_mean", "features.denseblock3.dense_block.18.dense_layer.0.running_var", "features.denseblock3.dense_block.18.dense_layer.2.weight", "features.denseblock3.dense_block.18.dense_layer.3.weight", "features.denseblock3.dense_block.18.dense_layer.3.bias", "features.denseblock3.dense_block.18.dense_layer.3.running_mean", "features.denseblock3.dense_block.18.dense_layer.3.running_var", "features.denseblock3.dense_block.18.dense_layer.5.weight", "features.denseblock3.dense_block.19.dense_layer.0.weight", "features.denseblock3.dense_block.19.dense_layer.0.bias", "features.denseblock3.dense_block.19.dense_layer.0.running_mean", "features.denseblock3.dense_block.19.dense_layer.0.running_var", "features.denseblock3.dense_block.19.dense_layer.2.weight", "features.denseblock3.dense_block.19.dense_layer.3.weight", "features.denseblock3.dense_block.19.dense_layer.3.bias", "features.denseblock3.dense_block.19.dense_layer.3.running_mean", "features.denseblock3.dense_block.19.dense_layer.3.running_var", "features.denseblock3.dense_block.19.dense_layer.5.weight", "features.denseblock3.dense_block.20.dense_layer.0.weight", "features.denseblock3.dense_block.20.dense_layer.0.bias", "features.denseblock3.dense_block.20.dense_layer.0.running_mean", "features.denseblock3.dense_block.20.dense_layer.0.running_var", "features.denseblock3.dense_block.20.dense_layer.2.weight", "features.denseblock3.dense_block.20.dense_layer.3.weight", "features.denseblock3.dense_block.20.dense_layer.3.bias", "features.denseblock3.dense_block.20.dense_layer.3.running_mean", "features.denseblock3.dense_block.20.dense_layer.3.running_var", "features.denseblock3.dense_block.20.dense_layer.5.weight", "features.denseblock3.dense_block.21.dense_layer.0.weight", "features.denseblock3.dense_block.21.dense_layer.0.bias", "features.denseblock3.dense_block.21.dense_layer.0.running_mean", "features.denseblock3.dense_block.21.dense_layer.0.running_var", "features.denseblock3.dense_block.21.dense_layer.2.weight", "features.denseblock3.dense_block.21.dense_layer.3.weight", "features.denseblock3.dense_block.21.dense_layer.3.bias", "features.denseblock3.dense_block.21.dense_layer.3.running_mean", "features.denseblock3.dense_block.21.dense_layer.3.running_var", "features.denseblock3.dense_block.21.dense_layer.5.weight", "features.denseblock3.dense_block.22.dense_layer.0.weight", "features.denseblock3.dense_block.22.dense_layer.0.bias", "features.denseblock3.dense_block.22.dense_layer.0.running_mean", "features.denseblock3.dense_block.22.dense_layer.0.running_var", "features.denseblock3.dense_block.22.dense_layer.2.weight", "features.denseblock3.dense_block.22.dense_layer.3.weight", "features.denseblock3.dense_block.22.dense_layer.3.bias", "features.denseblock3.dense_block.22.dense_layer.3.running_mean", "features.denseblock3.dense_block.22.dense_layer.3.running_var", "features.denseblock3.dense_block.22.dense_layer.5.weight", "features.denseblock3.dense_block.23.dense_layer.0.weight", "features.denseblock3.dense_block.23.dense_layer.0.bias", "features.denseblock3.dense_block.23.dense_layer.0.running_mean", "features.denseblock3.dense_block.23.dense_layer.0.running_var", "features.denseblock3.dense_block.23.dense_layer.2.weight", "features.denseblock3.dense_block.23.dense_layer.3.weight", "features.denseblock3.dense_block.23.dense_layer.3.bias", "features.denseblock3.dense_block.23.dense_layer.3.running_mean", "features.denseblock3.dense_block.23.dense_layer.3.running_var", "features.denseblock3.dense_block.23.dense_layer.5.weight", "features.transition3.transition_layer.0.weight", "features.transition3.transition_layer.0.bias", "features.transition3.transition_layer.0.running_mean", "features.transition3.transition_layer.0.running_var", "features.transition3.transition_layer.2.weight", "features.denseblock4.dense_block.0.dense_layer.0.weight", "features.denseblock4.dense_block.0.dense_layer.0.bias", "features.denseblock4.dense_block.0.dense_layer.0.running_mean", "features.denseblock4.dense_block.0.dense_layer.0.running_var", "features.denseblock4.dense_block.0.dense_layer.2.weight", "features.denseblock4.dense_block.0.dense_layer.3.weight", "features.denseblock4.dense_block.0.dense_layer.3.bias", "features.denseblock4.dense_block.0.dense_layer.3.running_mean", "features.denseblock4.dense_block.0.dense_layer.3.running_var", "features.denseblock4.dense_block.0.dense_layer.5.weight", "features.denseblock4.dense_block.1.dense_layer.0.weight", "features.denseblock4.dense_block.1.dense_layer.0.bias", "features.denseblock4.dense_block.1.dense_layer.0.running_mean", "features.denseblock4.dense_block.1.dense_layer.0.running_var", "features.denseblock4.dense_block.1.dense_layer.2.weight", "features.denseblock4.dense_block.1.dense_layer.3.weight", "features.denseblock4.dense_block.1.dense_layer.3.bias", "features.denseblock4.dense_block.1.dense_layer.3.running_mean", "features.denseblock4.dense_block.1.dense_layer.3.running_var", "features.denseblock4.dense_block.1.dense_layer.5.weight", "features.denseblock4.dense_block.2.dense_layer.0.weight", "features.denseblock4.dense_block.2.dense_layer.0.bias", "features.denseblock4.dense_block.2.dense_layer.0.running_mean", "features.denseblock4.dense_block.2.dense_layer.0.running_var", "features.denseblock4.dense_block.2.dense_layer.2.weight", "features.denseblock4.dense_block.2.dense_layer.3.weight", "features.denseblock4.dense_block.2.dense_layer.3.bias", "features.denseblock4.dense_block.2.dense_layer.3.running_mean", "features.denseblock4.dense_block.2.dense_layer.3.running_var", "features.denseblock4.dense_block.2.dense_layer.5.weight", "features.denseblock4.dense_block.3.dense_layer.0.weight", "features.denseblock4.dense_block.3.dense_layer.0.bias", "features.denseblock4.dense_block.3.dense_layer.0.running_mean", "features.denseblock4.dense_block.3.dense_layer.0.running_var", "features.denseblock4.dense_block.3.dense_layer.2.weight", "features.denseblock4.dense_block.3.dense_layer.3.weight", "features.denseblock4.dense_block.3.dense_layer.3.bias", "features.denseblock4.dense_block.3.dense_layer.3.running_mean", "features.denseblock4.dense_block.3.dense_layer.3.running_var", "features.denseblock4.dense_block.3.dense_layer.5.weight", "features.denseblock4.dense_block.4.dense_layer.0.weight", "features.denseblock4.dense_block.4.dense_layer.0.bias", "features.denseblock4.dense_block.4.dense_layer.0.running_mean", "features.denseblock4.dense_block.4.dense_layer.0.running_var", "features.denseblock4.dense_block.4.dense_layer.2.weight", "features.denseblock4.dense_block.4.dense_layer.3.weight", "features.denseblock4.dense_block.4.dense_layer.3.bias", "features.denseblock4.dense_block.4.dense_layer.3.running_mean", "features.denseblock4.dense_block.4.dense_layer.3.running_var", "features.denseblock4.dense_block.4.dense_layer.5.weight", "features.denseblock4.dense_block.5.dense_layer.0.weight", "features.denseblock4.dense_block.5.dense_layer.0.bias", "features.denseblock4.dense_block.5.dense_layer.0.running_mean", "features.denseblock4.dense_block.5.dense_layer.0.running_var", "features.denseblock4.dense_block.5.dense_layer.2.weight", "features.denseblock4.dense_block.5.dense_layer.3.weight", "features.denseblock4.dense_block.5.dense_layer.3.bias", "features.denseblock4.dense_block.5.dense_layer.3.running_mean", "features.denseblock4.dense_block.5.dense_layer.3.running_var", "features.denseblock4.dense_block.5.dense_layer.5.weight", "features.denseblock4.dense_block.6.dense_layer.0.weight", "features.denseblock4.dense_block.6.dense_layer.0.bias", "features.denseblock4.dense_block.6.dense_layer.0.running_mean", "features.denseblock4.dense_block.6.dense_layer.0.running_var", "features.denseblock4.dense_block.6.dense_layer.2.weight", "features.denseblock4.dense_block.6.dense_layer.3.weight", "features.denseblock4.dense_block.6.dense_layer.3.bias", "features.denseblock4.dense_block.6.dense_layer.3.running_mean", "features.denseblock4.dense_block.6.dense_layer.3.running_var", "features.denseblock4.dense_block.6.dense_layer.5.weight", "features.denseblock4.dense_block.7.dense_layer.0.weight", "features.denseblock4.dense_block.7.dense_layer.0.bias", "features.denseblock4.dense_block.7.dense_layer.0.running_mean", "features.denseblock4.dense_block.7.dense_layer.0.running_var", "features.denseblock4.dense_block.7.dense_layer.2.weight", "features.denseblock4.dense_block.7.dense_layer.3.weight", "features.denseblock4.dense_block.7.dense_layer.3.bias", "features.denseblock4.dense_block.7.dense_layer.3.running_mean", "features.denseblock4.dense_block.7.dense_layer.3.running_var", "features.denseblock4.dense_block.7.dense_layer.5.weight", "features.denseblock4.dense_block.8.dense_layer.0.weight", "features.denseblock4.dense_block.8.dense_layer.0.bias", "features.denseblock4.dense_block.8.dense_layer.0.running_mean", "features.denseblock4.dense_block.8.dense_layer.0.running_var", "features.denseblock4.dense_block.8.dense_layer.2.weight", "features.denseblock4.dense_block.8.dense_layer.3.weight", "features.denseblock4.dense_block.8.dense_layer.3.bias", "features.denseblock4.dense_block.8.dense_layer.3.running_mean", "features.denseblock4.dense_block.8.dense_layer.3.running_var", "features.denseblock4.dense_block.8.dense_layer.5.weight", "features.denseblock4.dense_block.9.dense_layer.0.weight", "features.denseblock4.dense_block.9.dense_layer.0.bias", "features.denseblock4.dense_block.9.dense_layer.0.running_mean", "features.denseblock4.dense_block.9.dense_layer.0.running_var", "features.denseblock4.dense_block.9.dense_layer.2.weight", "features.denseblock4.dense_block.9.dense_layer.3.weight", "features.denseblock4.dense_block.9.dense_layer.3.bias", "features.denseblock4.dense_block.9.dense_layer.3.running_mean", "features.denseblock4.dense_block.9.dense_layer.3.running_var", "features.denseblock4.dense_block.9.dense_layer.5.weight", "features.denseblock4.dense_block.10.dense_layer.0.weight", "features.denseblock4.dense_block.10.dense_layer.0.bias", "features.denseblock4.dense_block.10.dense_layer.0.running_mean", "features.denseblock4.dense_block.10.dense_layer.0.running_var", "features.denseblock4.dense_block.10.dense_layer.2.weight", "features.denseblock4.dense_block.10.dense_layer.3.weight", "features.denseblock4.dense_block.10.dense_layer.3.bias", "features.denseblock4.dense_block.10.dense_layer.3.running_mean", "features.denseblock4.dense_block.10.dense_layer.3.running_var", "features.denseblock4.dense_block.10.dense_layer.5.weight", "features.denseblock4.dense_block.11.dense_layer.0.weight", "features.denseblock4.dense_block.11.dense_layer.0.bias", "features.denseblock4.dense_block.11.dense_layer.0.running_mean", "features.denseblock4.dense_block.11.dense_layer.0.running_var", "features.denseblock4.dense_block.11.dense_layer.2.weight", "features.denseblock4.dense_block.11.dense_layer.3.weight", "features.denseblock4.dense_block.11.dense_layer.3.bias", "features.denseblock4.dense_block.11.dense_layer.3.running_mean", "features.denseblock4.dense_block.11.dense_layer.3.running_var", "features.denseblock4.dense_block.11.dense_layer.5.weight", "features.denseblock4.dense_block.12.dense_layer.0.weight", "features.denseblock4.dense_block.12.dense_layer.0.bias", "features.denseblock4.dense_block.12.dense_layer.0.running_mean", "features.denseblock4.dense_block.12.dense_layer.0.running_var", "features.denseblock4.dense_block.12.dense_layer.2.weight", "features.denseblock4.dense_block.12.dense_layer.3.weight", "features.denseblock4.dense_block.12.dense_layer.3.bias", "features.denseblock4.dense_block.12.dense_layer.3.running_mean", "features.denseblock4.dense_block.12.dense_layer.3.running_var", "features.denseblock4.dense_block.12.dense_layer.5.weight", "features.denseblock4.dense_block.13.dense_layer.0.weight", "features.denseblock4.dense_block.13.dense_layer.0.bias", "features.denseblock4.dense_block.13.dense_layer.0.running_mean", "features.denseblock4.dense_block.13.dense_layer.0.running_var", "features.denseblock4.dense_block.13.dense_layer.2.weight", "features.denseblock4.dense_block.13.dense_layer.3.weight", "features.denseblock4.dense_block.13.dense_layer.3.bias", "features.denseblock4.dense_block.13.dense_layer.3.running_mean", "features.denseblock4.dense_block.13.dense_layer.3.running_var", "features.denseblock4.dense_block.13.dense_layer.5.weight", "features.denseblock4.dense_block.14.dense_layer.0.weight", "features.denseblock4.dense_block.14.dense_layer.0.bias", "features.denseblock4.dense_block.14.dense_layer.0.running_mean", "features.denseblock4.dense_block.14.dense_layer.0.running_var", "features.denseblock4.dense_block.14.dense_layer.2.weight", "features.denseblock4.dense_block.14.dense_layer.3.weight", "features.denseblock4.dense_block.14.dense_layer.3.bias", "features.denseblock4.dense_block.14.dense_layer.3.running_mean", "features.denseblock4.dense_block.14.dense_layer.3.running_var", "features.denseblock4.dense_block.14.dense_layer.5.weight", "features.denseblock4.dense_block.15.dense_layer.0.weight", "features.denseblock4.dense_block.15.dense_layer.0.bias", "features.denseblock4.dense_block.15.dense_layer.0.running_mean", "features.denseblock4.dense_block.15.dense_layer.0.running_var", "features.denseblock4.dense_block.15.dense_layer.2.weight", "features.denseblock4.dense_block.15.dense_layer.3.weight", "features.denseblock4.dense_block.15.dense_layer.3.bias", "features.denseblock4.dense_block.15.dense_layer.3.running_mean", "features.denseblock4.dense_block.15.dense_layer.3.running_var", "features.denseblock4.dense_block.15.dense_layer.5.weight", "features.norm_final.weight", "features.norm_final.bias", "features.norm_final.running_mean", "features.norm_final.running_var", "classifier.weight", "classifier.bias". 
+	Unexpected key(s) in state_dict: "expert.features.0.weight", "expert.features.1.weight", "expert.features.1.bias", "expert.features.1.running_mean", "expert.features.1.running_var", "expert.features.1.num_batches_tracked", "expert.features.denseblock1.dense_block.0.dense_layer.0.weight", "expert.features.denseblock1.dense_block.0.dense_layer.0.bias", "expert.features.denseblock1.dense_block.0.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.0.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.0.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.0.dense_layer.2.weight", "expert.features.denseblock1.dense_block.0.dense_layer.3.weight", "expert.features.denseblock1.dense_block.0.dense_layer.3.bias", "expert.features.denseblock1.dense_block.0.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.0.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.0.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.0.dense_layer.5.weight", "expert.features.denseblock1.dense_block.1.dense_layer.0.weight", "expert.features.denseblock1.dense_block.1.dense_layer.0.bias", "expert.features.denseblock1.dense_block.1.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.1.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.1.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.1.dense_layer.2.weight", "expert.features.denseblock1.dense_block.1.dense_layer.3.weight", "expert.features.denseblock1.dense_block.1.dense_layer.3.bias", "expert.features.denseblock1.dense_block.1.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.1.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.1.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.1.dense_layer.5.weight", "expert.features.denseblock1.dense_block.2.dense_layer.0.weight", "expert.features.denseblock1.dense_block.2.dense_layer.0.bias", "expert.features.denseblock1.dense_block.2.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.2.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.2.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.2.dense_layer.2.weight", "expert.features.denseblock1.dense_block.2.dense_layer.3.weight", "expert.features.denseblock1.dense_block.2.dense_layer.3.bias", "expert.features.denseblock1.dense_block.2.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.2.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.2.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.2.dense_layer.5.weight", "expert.features.denseblock1.dense_block.3.dense_layer.0.weight", "expert.features.denseblock1.dense_block.3.dense_layer.0.bias", "expert.features.denseblock1.dense_block.3.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.3.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.3.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.3.dense_layer.2.weight", "expert.features.denseblock1.dense_block.3.dense_layer.3.weight", "expert.features.denseblock1.dense_block.3.dense_layer.3.bias", "expert.features.denseblock1.dense_block.3.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.3.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.3.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.3.dense_layer.5.weight", "expert.features.denseblock1.dense_block.4.dense_layer.0.weight", "expert.features.denseblock1.dense_block.4.dense_layer.0.bias", "expert.features.denseblock1.dense_block.4.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.4.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.4.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.4.dense_layer.2.weight", "expert.features.denseblock1.dense_block.4.dense_layer.3.weight", "expert.features.denseblock1.dense_block.4.dense_layer.3.bias", "expert.features.denseblock1.dense_block.4.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.4.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.4.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.4.dense_layer.5.weight", "expert.features.denseblock1.dense_block.5.dense_layer.0.weight", "expert.features.denseblock1.dense_block.5.dense_layer.0.bias", "expert.features.denseblock1.dense_block.5.dense_layer.0.running_mean", "expert.features.denseblock1.dense_block.5.dense_layer.0.running_var", "expert.features.denseblock1.dense_block.5.dense_layer.0.num_batches_tracked", "expert.features.denseblock1.dense_block.5.dense_layer.2.weight", "expert.features.denseblock1.dense_block.5.dense_layer.3.weight", "expert.features.denseblock1.dense_block.5.dense_layer.3.bias", "expert.features.denseblock1.dense_block.5.dense_layer.3.running_mean", "expert.features.denseblock1.dense_block.5.dense_layer.3.running_var", "expert.features.denseblock1.dense_block.5.dense_layer.3.num_batches_tracked", "expert.features.denseblock1.dense_block.5.dense_layer.5.weight", "expert.features.transition1.transition_layer.0.weight", "expert.features.transition1.transition_layer.0.bias", "expert.features.transition1.transition_layer.0.running_mean", "expert.features.transition1.transition_layer.0.running_var", "expert.features.transition1.transition_layer.0.num_batches_tracked", "expert.features.transition1.transition_layer.2.weight", "expert.features.denseblock2.dense_block.0.dense_layer.0.weight", "expert.features.denseblock2.dense_block.0.dense_layer.0.bias", "expert.features.denseblock2.dense_block.0.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.0.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.0.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.0.dense_layer.2.weight", "expert.features.denseblock2.dense_block.0.dense_layer.3.weight", "expert.features.denseblock2.dense_block.0.dense_layer.3.bias", "expert.features.denseblock2.dense_block.0.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.0.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.0.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.0.dense_layer.5.weight", "expert.features.denseblock2.dense_block.1.dense_layer.0.weight", "expert.features.denseblock2.dense_block.1.dense_layer.0.bias", "expert.features.denseblock2.dense_block.1.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.1.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.1.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.1.dense_layer.2.weight", "expert.features.denseblock2.dense_block.1.dense_layer.3.weight", "expert.features.denseblock2.dense_block.1.dense_layer.3.bias", "expert.features.denseblock2.dense_block.1.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.1.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.1.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.1.dense_layer.5.weight", "expert.features.denseblock2.dense_block.2.dense_layer.0.weight", "expert.features.denseblock2.dense_block.2.dense_layer.0.bias", "expert.features.denseblock2.dense_block.2.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.2.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.2.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.2.dense_layer.2.weight", "expert.features.denseblock2.dense_block.2.dense_layer.3.weight", "expert.features.denseblock2.dense_block.2.dense_layer.3.bias", "expert.features.denseblock2.dense_block.2.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.2.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.2.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.2.dense_layer.5.weight", "expert.features.denseblock2.dense_block.3.dense_layer.0.weight", "expert.features.denseblock2.dense_block.3.dense_layer.0.bias", "expert.features.denseblock2.dense_block.3.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.3.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.3.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.3.dense_layer.2.weight", "expert.features.denseblock2.dense_block.3.dense_layer.3.weight", "expert.features.denseblock2.dense_block.3.dense_layer.3.bias", "expert.features.denseblock2.dense_block.3.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.3.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.3.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.3.dense_layer.5.weight", "expert.features.denseblock2.dense_block.4.dense_layer.0.weight", "expert.features.denseblock2.dense_block.4.dense_layer.0.bias", "expert.features.denseblock2.dense_block.4.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.4.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.4.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.4.dense_layer.2.weight", "expert.features.denseblock2.dense_block.4.dense_layer.3.weight", "expert.features.denseblock2.dense_block.4.dense_layer.3.bias", "expert.features.denseblock2.dense_block.4.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.4.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.4.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.4.dense_layer.5.weight", "expert.features.denseblock2.dense_block.5.dense_layer.0.weight", "expert.features.denseblock2.dense_block.5.dense_layer.0.bias", "expert.features.denseblock2.dense_block.5.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.5.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.5.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.5.dense_layer.2.weight", "expert.features.denseblock2.dense_block.5.dense_layer.3.weight", "expert.features.denseblock2.dense_block.5.dense_layer.3.bias", "expert.features.denseblock2.dense_block.5.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.5.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.5.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.5.dense_layer.5.weight", "expert.features.denseblock2.dense_block.6.dense_layer.0.weight", "expert.features.denseblock2.dense_block.6.dense_layer.0.bias", "expert.features.denseblock2.dense_block.6.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.6.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.6.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.6.dense_layer.2.weight", "expert.features.denseblock2.dense_block.6.dense_layer.3.weight", "expert.features.denseblock2.dense_block.6.dense_layer.3.bias", "expert.features.denseblock2.dense_block.6.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.6.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.6.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.6.dense_layer.5.weight", "expert.features.denseblock2.dense_block.7.dense_layer.0.weight", "expert.features.denseblock2.dense_block.7.dense_layer.0.bias", "expert.features.denseblock2.dense_block.7.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.7.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.7.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.7.dense_layer.2.weight", "expert.features.denseblock2.dense_block.7.dense_layer.3.weight", "expert.features.denseblock2.dense_block.7.dense_layer.3.bias", "expert.features.denseblock2.dense_block.7.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.7.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.7.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.7.dense_layer.5.weight", "expert.features.denseblock2.dense_block.8.dense_layer.0.weight", "expert.features.denseblock2.dense_block.8.dense_layer.0.bias", "expert.features.denseblock2.dense_block.8.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.8.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.8.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.8.dense_layer.2.weight", "expert.features.denseblock2.dense_block.8.dense_layer.3.weight", "expert.features.denseblock2.dense_block.8.dense_layer.3.bias", "expert.features.denseblock2.dense_block.8.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.8.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.8.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.8.dense_layer.5.weight", "expert.features.denseblock2.dense_block.9.dense_layer.0.weight", "expert.features.denseblock2.dense_block.9.dense_layer.0.bias", "expert.features.denseblock2.dense_block.9.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.9.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.9.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.9.dense_layer.2.weight", "expert.features.denseblock2.dense_block.9.dense_layer.3.weight", "expert.features.denseblock2.dense_block.9.dense_layer.3.bias", "expert.features.denseblock2.dense_block.9.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.9.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.9.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.9.dense_layer.5.weight", "expert.features.denseblock2.dense_block.10.dense_layer.0.weight", "expert.features.denseblock2.dense_block.10.dense_layer.0.bias", "expert.features.denseblock2.dense_block.10.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.10.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.10.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.10.dense_layer.2.weight", "expert.features.denseblock2.dense_block.10.dense_layer.3.weight", "expert.features.denseblock2.dense_block.10.dense_layer.3.bias", "expert.features.denseblock2.dense_block.10.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.10.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.10.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.10.dense_layer.5.weight", "expert.features.denseblock2.dense_block.11.dense_layer.0.weight", "expert.features.denseblock2.dense_block.11.dense_layer.0.bias", "expert.features.denseblock2.dense_block.11.dense_layer.0.running_mean", "expert.features.denseblock2.dense_block.11.dense_layer.0.running_var", "expert.features.denseblock2.dense_block.11.dense_layer.0.num_batches_tracked", "expert.features.denseblock2.dense_block.11.dense_layer.2.weight", "expert.features.denseblock2.dense_block.11.dense_layer.3.weight", "expert.features.denseblock2.dense_block.11.dense_layer.3.bias", "expert.features.denseblock2.dense_block.11.dense_layer.3.running_mean", "expert.features.denseblock2.dense_block.11.dense_layer.3.running_var", "expert.features.denseblock2.dense_block.11.dense_layer.3.num_batches_tracked", "expert.features.denseblock2.dense_block.11.dense_layer.5.weight", "expert.features.transition2.transition_layer.0.weight", "expert.features.transition2.transition_layer.0.bias", "expert.features.transition2.transition_layer.0.running_mean", "expert.features.transition2.transition_layer.0.running_var", "expert.features.transition2.transition_layer.0.num_batches_tracked", "expert.features.transition2.transition_layer.2.weight", "expert.features.denseblock3.dense_block.0.dense_layer.0.weight", "expert.features.denseblock3.dense_block.0.dense_layer.0.bias", "expert.features.denseblock3.dense_block.0.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.0.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.0.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.0.dense_layer.2.weight", "expert.features.denseblock3.dense_block.0.dense_layer.3.weight", "expert.features.denseblock3.dense_block.0.dense_layer.3.bias", "expert.features.denseblock3.dense_block.0.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.0.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.0.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.0.dense_layer.5.weight", "expert.features.denseblock3.dense_block.1.dense_layer.0.weight", "expert.features.denseblock3.dense_block.1.dense_layer.0.bias", "expert.features.denseblock3.dense_block.1.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.1.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.1.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.1.dense_layer.2.weight", "expert.features.denseblock3.dense_block.1.dense_layer.3.weight", "expert.features.denseblock3.dense_block.1.dense_layer.3.bias", "expert.features.denseblock3.dense_block.1.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.1.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.1.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.1.dense_layer.5.weight", "expert.features.denseblock3.dense_block.2.dense_layer.0.weight", "expert.features.denseblock3.dense_block.2.dense_layer.0.bias", "expert.features.denseblock3.dense_block.2.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.2.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.2.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.2.dense_layer.2.weight", "expert.features.denseblock3.dense_block.2.dense_layer.3.weight", "expert.features.denseblock3.dense_block.2.dense_layer.3.bias", "expert.features.denseblock3.dense_block.2.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.2.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.2.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.2.dense_layer.5.weight", "expert.features.denseblock3.dense_block.3.dense_layer.0.weight", "expert.features.denseblock3.dense_block.3.dense_layer.0.bias", "expert.features.denseblock3.dense_block.3.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.3.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.3.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.3.dense_layer.2.weight", "expert.features.denseblock3.dense_block.3.dense_layer.3.weight", "expert.features.denseblock3.dense_block.3.dense_layer.3.bias", "expert.features.denseblock3.dense_block.3.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.3.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.3.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.3.dense_layer.5.weight", "expert.features.denseblock3.dense_block.4.dense_layer.0.weight", "expert.features.denseblock3.dense_block.4.dense_layer.0.bias", "expert.features.denseblock3.dense_block.4.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.4.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.4.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.4.dense_layer.2.weight", "expert.features.denseblock3.dense_block.4.dense_layer.3.weight", "expert.features.denseblock3.dense_block.4.dense_layer.3.bias", "expert.features.denseblock3.dense_block.4.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.4.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.4.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.4.dense_layer.5.weight", "expert.features.denseblock3.dense_block.5.dense_layer.0.weight", "expert.features.denseblock3.dense_block.5.dense_layer.0.bias", "expert.features.denseblock3.dense_block.5.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.5.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.5.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.5.dense_layer.2.weight", "expert.features.denseblock3.dense_block.5.dense_layer.3.weight", "expert.features.denseblock3.dense_block.5.dense_layer.3.bias", "expert.features.denseblock3.dense_block.5.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.5.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.5.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.5.dense_layer.5.weight", "expert.features.denseblock3.dense_block.6.dense_layer.0.weight", "expert.features.denseblock3.dense_block.6.dense_layer.0.bias", "expert.features.denseblock3.dense_block.6.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.6.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.6.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.6.dense_layer.2.weight", "expert.features.denseblock3.dense_block.6.dense_layer.3.weight", "expert.features.denseblock3.dense_block.6.dense_layer.3.bias", "expert.features.denseblock3.dense_block.6.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.6.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.6.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.6.dense_layer.5.weight", "expert.features.denseblock3.dense_block.7.dense_layer.0.weight", "expert.features.denseblock3.dense_block.7.dense_layer.0.bias", "expert.features.denseblock3.dense_block.7.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.7.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.7.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.7.dense_layer.2.weight", "expert.features.denseblock3.dense_block.7.dense_layer.3.weight", "expert.features.denseblock3.dense_block.7.dense_layer.3.bias", "expert.features.denseblock3.dense_block.7.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.7.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.7.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.7.dense_layer.5.weight", "expert.features.denseblock3.dense_block.8.dense_layer.0.weight", "expert.features.denseblock3.dense_block.8.dense_layer.0.bias", "expert.features.denseblock3.dense_block.8.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.8.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.8.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.8.dense_layer.2.weight", "expert.features.denseblock3.dense_block.8.dense_layer.3.weight", "expert.features.denseblock3.dense_block.8.dense_layer.3.bias", "expert.features.denseblock3.dense_block.8.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.8.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.8.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.8.dense_layer.5.weight", "expert.features.denseblock3.dense_block.9.dense_layer.0.weight", "expert.features.denseblock3.dense_block.9.dense_layer.0.bias", "expert.features.denseblock3.dense_block.9.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.9.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.9.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.9.dense_layer.2.weight", "expert.features.denseblock3.dense_block.9.dense_layer.3.weight", "expert.features.denseblock3.dense_block.9.dense_layer.3.bias", "expert.features.denseblock3.dense_block.9.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.9.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.9.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.9.dense_layer.5.weight", "expert.features.denseblock3.dense_block.10.dense_layer.0.weight", "expert.features.denseblock3.dense_block.10.dense_layer.0.bias", "expert.features.denseblock3.dense_block.10.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.10.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.10.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.10.dense_layer.2.weight", "expert.features.denseblock3.dense_block.10.dense_layer.3.weight", "expert.features.denseblock3.dense_block.10.dense_layer.3.bias", "expert.features.denseblock3.dense_block.10.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.10.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.10.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.10.dense_layer.5.weight", "expert.features.denseblock3.dense_block.11.dense_layer.0.weight", "expert.features.denseblock3.dense_block.11.dense_layer.0.bias", "expert.features.denseblock3.dense_block.11.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.11.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.11.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.11.dense_layer.2.weight", "expert.features.denseblock3.dense_block.11.dense_layer.3.weight", "expert.features.denseblock3.dense_block.11.dense_layer.3.bias", "expert.features.denseblock3.dense_block.11.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.11.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.11.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.11.dense_layer.5.weight", "expert.features.denseblock3.dense_block.12.dense_layer.0.weight", "expert.features.denseblock3.dense_block.12.dense_layer.0.bias", "expert.features.denseblock3.dense_block.12.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.12.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.12.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.12.dense_layer.2.weight", "expert.features.denseblock3.dense_block.12.dense_layer.3.weight", "expert.features.denseblock3.dense_block.12.dense_layer.3.bias", "expert.features.denseblock3.dense_block.12.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.12.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.12.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.12.dense_layer.5.weight", "expert.features.denseblock3.dense_block.13.dense_layer.0.weight", "expert.features.denseblock3.dense_block.13.dense_layer.0.bias", "expert.features.denseblock3.dense_block.13.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.13.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.13.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.13.dense_layer.2.weight", "expert.features.denseblock3.dense_block.13.dense_layer.3.weight", "expert.features.denseblock3.dense_block.13.dense_layer.3.bias", "expert.features.denseblock3.dense_block.13.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.13.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.13.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.13.dense_layer.5.weight", "expert.features.denseblock3.dense_block.14.dense_layer.0.weight", "expert.features.denseblock3.dense_block.14.dense_layer.0.bias", "expert.features.denseblock3.dense_block.14.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.14.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.14.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.14.dense_layer.2.weight", "expert.features.denseblock3.dense_block.14.dense_layer.3.weight", "expert.features.denseblock3.dense_block.14.dense_layer.3.bias", "expert.features.denseblock3.dense_block.14.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.14.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.14.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.14.dense_layer.5.weight", "expert.features.denseblock3.dense_block.15.dense_layer.0.weight", "expert.features.denseblock3.dense_block.15.dense_layer.0.bias", "expert.features.denseblock3.dense_block.15.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.15.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.15.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.15.dense_layer.2.weight", "expert.features.denseblock3.dense_block.15.dense_layer.3.weight", "expert.features.denseblock3.dense_block.15.dense_layer.3.bias", "expert.features.denseblock3.dense_block.15.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.15.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.15.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.15.dense_layer.5.weight", "expert.features.denseblock3.dense_block.16.dense_layer.0.weight", "expert.features.denseblock3.dense_block.16.dense_layer.0.bias", "expert.features.denseblock3.dense_block.16.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.16.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.16.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.16.dense_layer.2.weight", "expert.features.denseblock3.dense_block.16.dense_layer.3.weight", "expert.features.denseblock3.dense_block.16.dense_layer.3.bias", "expert.features.denseblock3.dense_block.16.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.16.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.16.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.16.dense_layer.5.weight", "expert.features.denseblock3.dense_block.17.dense_layer.0.weight", "expert.features.denseblock3.dense_block.17.dense_layer.0.bias", "expert.features.denseblock3.dense_block.17.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.17.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.17.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.17.dense_layer.2.weight", "expert.features.denseblock3.dense_block.17.dense_layer.3.weight", "expert.features.denseblock3.dense_block.17.dense_layer.3.bias", "expert.features.denseblock3.dense_block.17.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.17.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.17.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.17.dense_layer.5.weight", "expert.features.denseblock3.dense_block.18.dense_layer.0.weight", "expert.features.denseblock3.dense_block.18.dense_layer.0.bias", "expert.features.denseblock3.dense_block.18.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.18.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.18.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.18.dense_layer.2.weight", "expert.features.denseblock3.dense_block.18.dense_layer.3.weight", "expert.features.denseblock3.dense_block.18.dense_layer.3.bias", "expert.features.denseblock3.dense_block.18.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.18.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.18.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.18.dense_layer.5.weight", "expert.features.denseblock3.dense_block.19.dense_layer.0.weight", "expert.features.denseblock3.dense_block.19.dense_layer.0.bias", "expert.features.denseblock3.dense_block.19.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.19.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.19.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.19.dense_layer.2.weight", "expert.features.denseblock3.dense_block.19.dense_layer.3.weight", "expert.features.denseblock3.dense_block.19.dense_layer.3.bias", "expert.features.denseblock3.dense_block.19.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.19.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.19.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.19.dense_layer.5.weight", "expert.features.denseblock3.dense_block.20.dense_layer.0.weight", "expert.features.denseblock3.dense_block.20.dense_layer.0.bias", "expert.features.denseblock3.dense_block.20.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.20.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.20.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.20.dense_layer.2.weight", "expert.features.denseblock3.dense_block.20.dense_layer.3.weight", "expert.features.denseblock3.dense_block.20.dense_layer.3.bias", "expert.features.denseblock3.dense_block.20.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.20.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.20.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.20.dense_layer.5.weight", "expert.features.denseblock3.dense_block.21.dense_layer.0.weight", "expert.features.denseblock3.dense_block.21.dense_layer.0.bias", "expert.features.denseblock3.dense_block.21.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.21.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.21.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.21.dense_layer.2.weight", "expert.features.denseblock3.dense_block.21.dense_layer.3.weight", "expert.features.denseblock3.dense_block.21.dense_layer.3.bias", "expert.features.denseblock3.dense_block.21.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.21.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.21.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.21.dense_layer.5.weight", "expert.features.denseblock3.dense_block.22.dense_layer.0.weight", "expert.features.denseblock3.dense_block.22.dense_layer.0.bias", "expert.features.denseblock3.dense_block.22.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.22.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.22.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.22.dense_layer.2.weight", "expert.features.denseblock3.dense_block.22.dense_layer.3.weight", "expert.features.denseblock3.dense_block.22.dense_layer.3.bias", "expert.features.denseblock3.dense_block.22.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.22.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.22.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.22.dense_layer.5.weight", "expert.features.denseblock3.dense_block.23.dense_layer.0.weight", "expert.features.denseblock3.dense_block.23.dense_layer.0.bias", "expert.features.denseblock3.dense_block.23.dense_layer.0.running_mean", "expert.features.denseblock3.dense_block.23.dense_layer.0.running_var", "expert.features.denseblock3.dense_block.23.dense_layer.0.num_batches_tracked", "expert.features.denseblock3.dense_block.23.dense_layer.2.weight", "expert.features.denseblock3.dense_block.23.dense_layer.3.weight", "expert.features.denseblock3.dense_block.23.dense_layer.3.bias", "expert.features.denseblock3.dense_block.23.dense_layer.3.running_mean", "expert.features.denseblock3.dense_block.23.dense_layer.3.running_var", "expert.features.denseblock3.dense_block.23.dense_layer.3.num_batches_tracked", "expert.features.denseblock3.dense_block.23.dense_layer.5.weight", "expert.features.transition3.transition_layer.0.weight", "expert.features.transition3.transition_layer.0.bias", "expert.features.transition3.transition_layer.0.running_mean", "expert.features.transition3.transition_layer.0.running_var", "expert.features.transition3.transition_layer.0.num_batches_tracked", "expert.features.transition3.transition_layer.2.weight", "expert.features.denseblock4.dense_block.0.dense_layer.0.weight", "expert.features.denseblock4.dense_block.0.dense_layer.0.bias", "expert.features.denseblock4.dense_block.0.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.0.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.0.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.0.dense_layer.2.weight", "expert.features.denseblock4.dense_block.0.dense_layer.3.weight", "expert.features.denseblock4.dense_block.0.dense_layer.3.bias", "expert.features.denseblock4.dense_block.0.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.0.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.0.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.0.dense_layer.5.weight", "expert.features.denseblock4.dense_block.1.dense_layer.0.weight", "expert.features.denseblock4.dense_block.1.dense_layer.0.bias", "expert.features.denseblock4.dense_block.1.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.1.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.1.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.1.dense_layer.2.weight", "expert.features.denseblock4.dense_block.1.dense_layer.3.weight", "expert.features.denseblock4.dense_block.1.dense_layer.3.bias", "expert.features.denseblock4.dense_block.1.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.1.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.1.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.1.dense_layer.5.weight", "expert.features.denseblock4.dense_block.2.dense_layer.0.weight", "expert.features.denseblock4.dense_block.2.dense_layer.0.bias", "expert.features.denseblock4.dense_block.2.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.2.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.2.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.2.dense_layer.2.weight", "expert.features.denseblock4.dense_block.2.dense_layer.3.weight", "expert.features.denseblock4.dense_block.2.dense_layer.3.bias", "expert.features.denseblock4.dense_block.2.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.2.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.2.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.2.dense_layer.5.weight", "expert.features.denseblock4.dense_block.3.dense_layer.0.weight", "expert.features.denseblock4.dense_block.3.dense_layer.0.bias", "expert.features.denseblock4.dense_block.3.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.3.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.3.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.3.dense_layer.2.weight", "expert.features.denseblock4.dense_block.3.dense_layer.3.weight", "expert.features.denseblock4.dense_block.3.dense_layer.3.bias", "expert.features.denseblock4.dense_block.3.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.3.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.3.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.3.dense_layer.5.weight", "expert.features.denseblock4.dense_block.4.dense_layer.0.weight", "expert.features.denseblock4.dense_block.4.dense_layer.0.bias", "expert.features.denseblock4.dense_block.4.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.4.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.4.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.4.dense_layer.2.weight", "expert.features.denseblock4.dense_block.4.dense_layer.3.weight", "expert.features.denseblock4.dense_block.4.dense_layer.3.bias", "expert.features.denseblock4.dense_block.4.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.4.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.4.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.4.dense_layer.5.weight", "expert.features.denseblock4.dense_block.5.dense_layer.0.weight", "expert.features.denseblock4.dense_block.5.dense_layer.0.bias", "expert.features.denseblock4.dense_block.5.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.5.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.5.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.5.dense_layer.2.weight", "expert.features.denseblock4.dense_block.5.dense_layer.3.weight", "expert.features.denseblock4.dense_block.5.dense_layer.3.bias", "expert.features.denseblock4.dense_block.5.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.5.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.5.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.5.dense_layer.5.weight", "expert.features.denseblock4.dense_block.6.dense_layer.0.weight", "expert.features.denseblock4.dense_block.6.dense_layer.0.bias", "expert.features.denseblock4.dense_block.6.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.6.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.6.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.6.dense_layer.2.weight", "expert.features.denseblock4.dense_block.6.dense_layer.3.weight", "expert.features.denseblock4.dense_block.6.dense_layer.3.bias", "expert.features.denseblock4.dense_block.6.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.6.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.6.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.6.dense_layer.5.weight", "expert.features.denseblock4.dense_block.7.dense_layer.0.weight", "expert.features.denseblock4.dense_block.7.dense_layer.0.bias", "expert.features.denseblock4.dense_block.7.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.7.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.7.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.7.dense_layer.2.weight", "expert.features.denseblock4.dense_block.7.dense_layer.3.weight", "expert.features.denseblock4.dense_block.7.dense_layer.3.bias", "expert.features.denseblock4.dense_block.7.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.7.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.7.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.7.dense_layer.5.weight", "expert.features.denseblock4.dense_block.8.dense_layer.0.weight", "expert.features.denseblock4.dense_block.8.dense_layer.0.bias", "expert.features.denseblock4.dense_block.8.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.8.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.8.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.8.dense_layer.2.weight", "expert.features.denseblock4.dense_block.8.dense_layer.3.weight", "expert.features.denseblock4.dense_block.8.dense_layer.3.bias", "expert.features.denseblock4.dense_block.8.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.8.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.8.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.8.dense_layer.5.weight", "expert.features.denseblock4.dense_block.9.dense_layer.0.weight", "expert.features.denseblock4.dense_block.9.dense_layer.0.bias", "expert.features.denseblock4.dense_block.9.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.9.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.9.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.9.dense_layer.2.weight", "expert.features.denseblock4.dense_block.9.dense_layer.3.weight", "expert.features.denseblock4.dense_block.9.dense_layer.3.bias", "expert.features.denseblock4.dense_block.9.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.9.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.9.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.9.dense_layer.5.weight", "expert.features.denseblock4.dense_block.10.dense_layer.0.weight", "expert.features.denseblock4.dense_block.10.dense_layer.0.bias", "expert.features.denseblock4.dense_block.10.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.10.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.10.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.10.dense_layer.2.weight", "expert.features.denseblock4.dense_block.10.dense_layer.3.weight", "expert.features.denseblock4.dense_block.10.dense_layer.3.bias", "expert.features.denseblock4.dense_block.10.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.10.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.10.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.10.dense_layer.5.weight", "expert.features.denseblock4.dense_block.11.dense_layer.0.weight", "expert.features.denseblock4.dense_block.11.dense_layer.0.bias", "expert.features.denseblock4.dense_block.11.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.11.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.11.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.11.dense_layer.2.weight", "expert.features.denseblock4.dense_block.11.dense_layer.3.weight", "expert.features.denseblock4.dense_block.11.dense_layer.3.bias", "expert.features.denseblock4.dense_block.11.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.11.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.11.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.11.dense_layer.5.weight", "expert.features.denseblock4.dense_block.12.dense_layer.0.weight", "expert.features.denseblock4.dense_block.12.dense_layer.0.bias", "expert.features.denseblock4.dense_block.12.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.12.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.12.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.12.dense_layer.2.weight", "expert.features.denseblock4.dense_block.12.dense_layer.3.weight", "expert.features.denseblock4.dense_block.12.dense_layer.3.bias", "expert.features.denseblock4.dense_block.12.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.12.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.12.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.12.dense_layer.5.weight", "expert.features.denseblock4.dense_block.13.dense_layer.0.weight", "expert.features.denseblock4.dense_block.13.dense_layer.0.bias", "expert.features.denseblock4.dense_block.13.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.13.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.13.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.13.dense_layer.2.weight", "expert.features.denseblock4.dense_block.13.dense_layer.3.weight", "expert.features.denseblock4.dense_block.13.dense_layer.3.bias", "expert.features.denseblock4.dense_block.13.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.13.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.13.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.13.dense_layer.5.weight", "expert.features.denseblock4.dense_block.14.dense_layer.0.weight", "expert.features.denseblock4.dense_block.14.dense_layer.0.bias", "expert.features.denseblock4.dense_block.14.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.14.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.14.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.14.dense_layer.2.weight", "expert.features.denseblock4.dense_block.14.dense_layer.3.weight", "expert.features.denseblock4.dense_block.14.dense_layer.3.bias", "expert.features.denseblock4.dense_block.14.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.14.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.14.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.14.dense_layer.5.weight", "expert.features.denseblock4.dense_block.15.dense_layer.0.weight", "expert.features.denseblock4.dense_block.15.dense_layer.0.bias", "expert.features.denseblock4.dense_block.15.dense_layer.0.running_mean", "expert.features.denseblock4.dense_block.15.dense_layer.0.running_var", "expert.features.denseblock4.dense_block.15.dense_layer.0.num_batches_tracked", "expert.features.denseblock4.dense_block.15.dense_layer.2.weight", "expert.features.denseblock4.dense_block.15.dense_layer.3.weight", "expert.features.denseblock4.dense_block.15.dense_layer.3.bias", "expert.features.denseblock4.dense_block.15.dense_layer.3.running_mean", "expert.features.denseblock4.dense_block.15.dense_layer.3.running_var", "expert.features.denseblock4.dense_block.15.dense_layer.3.num_batches_tracked", "expert.features.denseblock4.dense_block.15.dense_layer.5.weight", "expert.features.norm_final.weight", "expert.features.norm_final.bias", "expert.features.norm_final.running_mean", "expert.features.norm_final.running_var", "expert.features.norm_final.num_batches_tracked", "expert.classifier.weight", "expert.classifier.bias". 
+
+============================================================
+POST-TRAINING: Gaussian Noise Robustness
+============================================================
+
+Testing Expert 0 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 1 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 2 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 3 (POST-TRAINING) under Gaussian noise...
+
+Testing Trained Fusion Model under Gaussian noise...
+
+============================================================
+POST-TRAINING: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 29.70% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.24% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.97% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 43.54% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.52% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 62.77% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.16% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.34% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.23% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.28% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.55% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 19.03% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.39% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.51% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.79% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.16% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 4.88% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.87% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.94% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.49% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.05% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.82% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.69% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.07% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 33.93% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 17.67% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.02% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 76.86% accuracy
+
+Testing Expert 1 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 34.98% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 17.23% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 1.76% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 12.07% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 58.98% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 34.36% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 57.44% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 46.31% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 73.68% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 73.32% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 53.94% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 21.94% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 49.47% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 20.74% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 49.18% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 19.11% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.09% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.68% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 73.57% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 73.02% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 73.63% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 73.29% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 72.76% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 70.84% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 29.11% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 14.24% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 73.77% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 73.52% accuracy
+
+Testing Expert 2 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 45.04% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 26.68% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.58% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 31.97% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 70.84% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 55.20% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 65.28% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 55.28% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 79.38% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 79.12% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 49.84% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 18.98% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 57.24% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 27.13% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 57.88% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 27.86% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 10.16% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.28% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 79.20% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 78.81% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 79.05% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 78.94% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 78.53% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 77.40% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 42.09% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 79.16% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 79.17% accuracy
+
+Testing Expert 3 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 53.29% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 37.45% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.54% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 37.74% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.91% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 59.94% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 66.74% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 60.93% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.36% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.69% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 40.53% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 13.70% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 62.79% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 39.14% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 62.79% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 38.95% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 15.86% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.37% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.99% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.39% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.13% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.90% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.57% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.51% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 51.50% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 41.15% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.16% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.11% accuracy
+
+Testing Trained Fusion Model on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 47.71% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 27.84% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.44% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 40.86% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 75.07% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 63.29% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 66.72% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 57.48% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 80.63% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 80.38% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.25% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 18.70% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 59.83% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 29.40% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 60.88% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 29.21% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 10.24% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.25% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 80.84% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 80.32% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 80.73% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 80.55% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 80.02% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 79.22% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 45.24% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 26.73% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 80.54% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 80.47% accuracy
+
+============================================================
+POST-TRAINING: Out-of-Distribution Detection
+============================================================
+
+Testing Expert 0 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 1 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 2 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 3 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Trained Fusion Model on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+✅ POST-TRAINING evaluation completed!
+   Results saved to: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/csv_logs/densenet_fusions/densenet_multiplicative_alpha_1.0_post_training_evaluation.csv
+
+================================================================================
+PHASE 4: COMPREHENSIVE ROBUSTNESS EVALUATION (α=1.0)
+================================================================================
+
+🔍 Running comprehensive robustness evaluation...
+
+================================================================================
+Starting Phase 1, 2 & 3 Robustness Evaluation for DenseNet multiplicative (α=1.0)
+================================================================================
+📊 OOD evaluation CSV created: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/ood_evaluation_multiplicative_alpha_1.0_20250902_184202.csv
+
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Files already downloaded and verified
+
+============================================================
+GAUSSIAN NOISE ROBUSTNESS
+============================================================
+Evaluating sigmas: [0.0, 0.05, 0.1, 0.2, 0.3]
+
+Testing Expert 0 under Gaussian noise...
+  Expert 0 noise results: σ=0.0: 77.19%, σ=0.05: 69.38%, σ=0.1: 48.68%, σ=0.2: 17.34%, σ=0.3: 7.54%
+
+Testing Expert 1 under Gaussian noise...
+  Expert 1 noise results: σ=0.0: 73.81%, σ=0.05: 68.29%, σ=0.1: 51.99%, σ=0.2: 20.54%, σ=0.3: 7.86%
+
+Testing Expert 2 under Gaussian noise...
+  Expert 2 noise results: σ=0.0: 79.32%, σ=0.05: 74.60%, σ=0.1: 60.77%, σ=0.2: 31.10%, σ=0.3: 15.45%
+
+Testing Expert 3 under Gaussian noise...
+  Expert 3 noise results: σ=0.0: 77.52%, σ=0.05: 73.19%, σ=0.1: 64.56%, σ=0.2: 42.36%, σ=0.3: 23.86%
+
+Testing Baseline DenseNet under Gaussian noise...
+  Baseline noise results: σ=0.0: 83.69%, σ=0.05: 76.60%, σ=0.1: 56.68%, σ=0.2: 28.13%, σ=0.3: 16.19%
+
+Testing Global Fusion Model under Gaussian noise...
+  Fusion noise results: σ=0.0: 80.77%, σ=0.05: 76.55%, σ=0.1: 63.43%, σ=0.2: 33.00%, σ=0.3: 15.98%
+
+============================================================
+PHASE 1: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 29.88% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.49% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.46% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 44.29% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.41% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 62.14% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.32% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.43% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.23% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.28% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.55% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 19.03% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 45.24% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.29% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.17% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 14.70% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 4.86% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.82% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.94% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.49% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.05% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.82% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.51% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.98% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 33.93% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 17.67% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 76.78% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 76.78% accuracy
+  Expert 0 Average Corruption Accuracy: 47.88%
+
+Testing Expert 1 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 34.90% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 17.92% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 1.77% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 11.76% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 59.08% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 35.01% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 57.02% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 46.47% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 73.68% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 73.32% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 53.94% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 21.94% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 49.47% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 20.95% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 49.82% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 18.93% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.12% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.69% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 73.57% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 73.02% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 73.63% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 73.29% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 72.35% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 71.06% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 29.11% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 14.24% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 73.77% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 73.71% accuracy
+  Expert 1 Average Corruption Accuracy: 45.02%
+
+Testing Expert 2 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 45.00% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 26.50% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.46% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 32.40% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 70.65% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 54.69% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 64.56% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 55.06% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 79.38% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 79.12% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 49.84% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 18.98% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 57.72% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 27.27% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 58.05% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 27.69% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 9.98% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.39% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 79.20% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 78.81% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 79.05% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 78.94% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 78.48% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 77.16% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 42.09% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 79.18% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 79.06% accuracy
+  Expert 2 Average Corruption Accuracy: 52.05%
+
+Testing Expert 3 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 53.80% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 38.24% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.61% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 38.32% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.99% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 60.05% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 67.01% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 61.22% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.36% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.69% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 40.53% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 13.70% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 62.80% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 38.96% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 63.14% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 38.79% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 15.87% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.54% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.99% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.39% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.13% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.90% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.75% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.52% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 51.50% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 41.15% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.25% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.18% accuracy
+  Expert 3 Average Corruption Accuracy: 54.80%
+
+Testing Baseline DenseNet on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 39.55% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 24.39% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 10.21% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 51.89% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 78.72% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 69.04% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 61.51% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 50.04% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 83.25% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 82.94% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 60.76% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 25.22% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 51.94% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 24.15% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 52.47% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 24.28% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 11.41% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.49% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 83.44% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 83.18% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 83.41% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 83.32% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 83.19% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 82.54% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 43.60% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 83.55% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 83.61% accuracy
+  Baseline DenseNet Average Corruption Accuracy: 54.88%
+
+Testing Global Fusion Model on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 47.86% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 27.81% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.22% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 41.42% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 74.55% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 63.69% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 66.95% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 57.95% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 80.63% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 80.38% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.25% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 18.70% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 60.10% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 29.47% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 60.53% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 29.51% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 10.31% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.16% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 80.84% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 80.32% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 80.73% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 80.55% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 80.12% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 79.59% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 45.24% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 26.73% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 80.75% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 80.58% accuracy
+  Global Fusion Model Average Corruption Accuracy: 54.39%
+
+============================================================
+PHASE 3: Out-of-Distribution Detection
+============================================================
+
+4. OOD Detection Evaluation
+------------------------------------------------------------
+
+Testing Expert 0 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 0 OOD Results:
+    Expert 0 OOD (cifar10): AUROC=0.7202, AUPR=0.7020, FPR95=0.8409
+    Expert 0 OOD (svhn): AUROC=0.8261, AUPR=0.9082, FPR95=0.5905
+    Expert 0 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 0 OOD (synthetic_gaussian): AUROC=0.9534, AUPR=0.9351, FPR95=0.1527
+    Expert 0 OOD (synthetic_uniform): AUROC=0.9644, AUPR=0.9507, FPR95=0.1230
+
+Testing Expert 1 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 1 OOD Results:
+    Expert 1 OOD (cifar10): AUROC=0.7001, AUPR=0.6769, FPR95=0.8298
+    Expert 1 OOD (svhn): AUROC=0.7909, AUPR=0.8929, FPR95=0.6197
+    Expert 1 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 1 OOD (synthetic_gaussian): AUROC=0.9926, AUPR=0.9908, FPR95=0.0308
+    Expert 1 OOD (synthetic_uniform): AUROC=0.9917, AUPR=0.9895, FPR95=0.0355
+
+Testing Expert 2 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 2 OOD Results:
+    Expert 2 OOD (cifar10): AUROC=0.7065, AUPR=0.7015, FPR95=0.8729
+    Expert 2 OOD (svhn): AUROC=0.6003, AUPR=0.8047, FPR95=0.9290
+    Expert 2 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 2 OOD (synthetic_gaussian): AUROC=0.7519, AUPR=0.6930, FPR95=0.6896
+    Expert 2 OOD (synthetic_uniform): AUROC=0.7116, AUPR=0.6500, FPR95=0.7604
+
+Testing Expert 3 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 3 OOD Results:
+    Expert 3 OOD (cifar10): AUROC=0.7650, AUPR=0.7308, FPR95=0.6890
+    Expert 3 OOD (svhn): AUROC=0.8332, AUPR=0.9065, FPR95=0.5147
+    Expert 3 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 3 OOD (synthetic_gaussian): AUROC=0.9144, AUPR=0.8515, FPR95=0.2312
+    Expert 3 OOD (synthetic_uniform): AUROC=0.8449, AUPR=0.7654, FPR95=0.3949
+
+Testing Baseline DenseNet on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Baseline DenseNet OOD Results:
+    Baseline DenseNet OOD (cifar10): AUROC=0.6751, AUPR=0.7001, FPR95=0.9430
+    Baseline DenseNet OOD (svhn): AUROC=0.8385, AUPR=0.9338, FPR95=0.7609
+    Baseline DenseNet OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Baseline DenseNet OOD (synthetic_gaussian): AUROC=0.8120, AUPR=0.7160, FPR95=0.4964
+    Baseline DenseNet OOD (synthetic_uniform): AUROC=0.6909, AUPR=0.6073, FPR95=0.7263
+
+Testing Global Fusion Model on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Global Fusion Model OOD Results:
+    Fusion Model OOD (cifar10): AUROC=0.6187, AUPR=0.6215, FPR95=0.9129
+    Fusion Model OOD (svhn): AUROC=0.6941, AUPR=0.8458, FPR95=0.8698
+    Fusion Model OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Fusion Model OOD (synthetic_gaussian): AUROC=0.9498, AUPR=0.9204, FPR95=0.1636
+    Fusion Model OOD (synthetic_uniform): AUROC=0.9123, AUPR=0.8750, FPR95=0.2807
+
+✅ Robustness evaluation completed!
+   Results saved to: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/csv_logs/densenet_fusions/densenet_multiplicative_alpha_1.0_robustness_evaluation.csv
+   OOD results saved to: ../fusion_checkpoints_mixed_alpha_ablation_full_eval/dn1_rn0_wrn0_rx0/ood_evaluation_multiplicative_alpha_1.0_20250902_184202.csv
+   Model types tested: Experts, Baseline, Global Fusion Model
+   Test types: CIFAR-100-C corruptions + OOD detection + Gaussian noise
+✅ Experiment 2 completed: MIXED multiplicative fusion, alpha=1.0 (Alpha Ablation Full Eval)

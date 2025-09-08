@@ -1,0 +1,108 @@
+==========================================
+SLURM_JOB_ID = 10754
+SLURM_NODELIST = pascal-node09.l3s.intra
+==========================================
+==========================================
+WRN Curriculum+PCGrad: improved_wide_resnet multiplicative, alpha=1.0
+SLURM_JOB_ID = "
+echo SLURM_NODELIST = "
+==========================================
+Starting WRN curriculum+PCGrad training (training-only)...
+Fusion: multiplicative | Alpha: 1.0
+Warm-up epochs: 5 | Total epochs: 40
+Checkpoint dir: ../../expert_training/scripts/checkpoints_expert_iid
+Output dir: ../fusion_checkpoints_curriculum_pcgrad
+Using device: cuda
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_improved_wide_resnet_fusions_curriculum_pcgrad.py:64: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location=device)
+Loading data splits...
+Files already downloaded and verified
+✅ Data ready
+Pre-training evaluation (experts + global)...
+[Pre] Val 4.6332 | Acc 0.70%
+      Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+Warm-up stage: 5 epochs (experts frozen; BN stats not updating)
+[Warm-up] Epoch 1/5 | Train 3.4946 | Val 2.2349 | Acc 61.10%
+          Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+[Warm-up] Epoch 2/5 | Train 1.3049 | Val 1.4217 | Acc 73.20%
+          Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+[Warm-up] Epoch 3/5 | Train 0.7543 | Val 1.3408 | Acc 74.10%
+          Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+[Warm-up] Epoch 4/5 | Train 0.5238 | Val 1.4317 | Acc 74.10%
+          Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+[Warm-up] Epoch 5/5 | Train 0.3736 | Val 1.5251 | Acc 73.00%
+          Experts: E0 76.70%, E1 77.60%, E2 77.40%, E3 77.50%
+Joint stage: 35 epochs (PCGrad for experts)
+[Joint] Epoch 1/35 | Train 5.3306 | Val 1.2539 | Acc 76.00%
+        Experts: E0 76.50%, E1 76.80%, E2 78.20%, E3 77.20%
+[Joint] Epoch 2/35 | Train 4.2117 | Val 1.1263 | Acc 76.90%
+        Experts: E0 77.10%, E1 77.00%, E2 78.90%, E3 77.50%
+[Joint] Epoch 3/35 | Train 3.5232 | Val 1.2240 | Acc 78.70%
+        Experts: E0 77.50%, E1 77.30%, E2 77.90%, E3 78.10%
+[Joint] Epoch 4/35 | Train 3.0448 | Val 1.2729 | Acc 79.00%
+        Experts: E0 78.20%, E1 78.10%, E2 78.40%, E3 78.10%
+[Joint] Epoch 5/35 | Train 2.6626 | Val 1.4494 | Acc 78.90%
+        Experts: E0 76.50%, E1 76.70%, E2 78.80%, E3 77.70%
+[Joint] Epoch 6/35 | Train 2.3192 | Val 1.4790 | Acc 78.20%
+        Experts: E0 78.20%, E1 78.50%, E2 78.80%, E3 78.50%
+[Joint] Epoch 7/35 | Train 2.0816 | Val 1.6088 | Acc 77.50%
+        Experts: E0 77.90%, E1 77.40%, E2 78.90%, E3 78.50%
+[Joint] Epoch 8/35 | Train 1.8376 | Val 1.6448 | Acc 78.90%
+        Experts: E0 78.20%, E1 77.80%, E2 78.70%, E3 79.20%
+[Joint] Epoch 9/35 | Train 1.6092 | Val 1.6511 | Acc 79.10%
+        Experts: E0 78.10%, E1 77.90%, E2 79.50%, E3 78.60%
+[Joint] Epoch 10/35 | Train 1.4721 | Val 1.6978 | Acc 79.50%
+        Experts: E0 78.40%, E1 77.10%, E2 79.10%, E3 78.50%
+[Joint] Epoch 11/35 | Train 1.2997 | Val 1.7582 | Acc 79.10%
+        Experts: E0 77.60%, E1 77.70%, E2 79.10%, E3 78.20%
+[Joint] Epoch 12/35 | Train 1.1759 | Val 1.9102 | Acc 78.70%
+        Experts: E0 77.50%, E1 77.10%, E2 77.80%, E3 77.70%
+[Joint] Epoch 13/35 | Train 1.1114 | Val 2.0179 | Acc 79.10%
+        Experts: E0 76.80%, E1 77.50%, E2 78.50%, E3 77.90%
+[Joint] Epoch 14/35 | Train 1.0252 | Val 2.0999 | Acc 78.60%
+        Experts: E0 77.60%, E1 77.40%, E2 79.40%, E3 77.40%
+[Joint] Epoch 15/35 | Train 0.9374 | Val 2.0543 | Acc 79.10%
+        Experts: E0 77.30%, E1 77.30%, E2 78.50%, E3 78.50%
+[Joint] Epoch 16/35 | Train 0.8658 | Val 2.0364 | Acc 78.80%
+        Experts: E0 77.70%, E1 78.00%, E2 78.20%, E3 77.70%
+[Joint] Epoch 17/35 | Train 0.8094 | Val 2.0635 | Acc 79.40%
+        Experts: E0 77.90%, E1 77.30%, E2 78.70%, E3 78.50%
+[Joint] Epoch 18/35 | Train 0.7587 | Val 1.9743 | Acc 79.20%
+        Experts: E0 78.50%, E1 77.30%, E2 78.90%, E3 77.40%
+[Joint] Epoch 19/35 | Train 0.7136 | Val 1.9940 | Acc 77.80%
+        Experts: E0 78.10%, E1 77.40%, E2 77.60%, E3 77.10%
+[Joint] Epoch 20/35 | Train 0.6794 | Val 2.0860 | Acc 78.50%
+        Experts: E0 77.20%, E1 77.20%, E2 78.50%, E3 77.10%
+[Joint] Epoch 21/35 | Train 0.6349 | Val 2.1721 | Acc 77.00%
+        Experts: E0 77.50%, E1 77.60%, E2 78.40%, E3 76.70%
+[Joint] Epoch 22/35 | Train 0.6312 | Val 2.1527 | Acc 78.10%
+        Experts: E0 77.30%, E1 76.70%, E2 77.90%, E3 77.00%
+[Joint] Epoch 23/35 | Train 0.5802 | Val 2.1322 | Acc 78.20%
+        Experts: E0 76.70%, E1 78.00%, E2 77.70%, E3 76.80%
+[Joint] Epoch 24/35 | Train 0.5637 | Val 2.0773 | Acc 78.40%
+        Experts: E0 77.50%, E1 78.00%, E2 79.40%, E3 77.20%
+[Joint] Epoch 25/35 | Train 0.5214 | Val 2.2003 | Acc 78.40%
+        Experts: E0 76.90%, E1 77.40%, E2 78.40%, E3 76.70%
+[Joint] Epoch 26/35 | Train 0.5071 | Val 2.1167 | Acc 78.50%
+        Experts: E0 77.20%, E1 78.20%, E2 78.90%, E3 77.20%
+[Joint] Epoch 27/35 | Train 0.4830 | Val 2.2459 | Acc 77.60%
+        Experts: E0 76.50%, E1 78.00%, E2 77.80%, E3 77.70%
+[Joint] Epoch 28/35 | Train 0.4594 | Val 2.2417 | Acc 78.30%
+        Experts: E0 77.30%, E1 77.80%, E2 78.30%, E3 77.00%
+[Joint] Epoch 29/35 | Train 0.4381 | Val 2.2259 | Acc 78.20%
+        Experts: E0 77.10%, E1 77.60%, E2 78.70%, E3 77.80%
+[Joint] Epoch 30/35 | Train 0.4247 | Val 2.1585 | Acc 77.60%
+        Experts: E0 77.60%, E1 77.80%, E2 79.10%, E3 76.70%
+[Joint] Epoch 31/35 | Train 0.4126 | Val 2.2029 | Acc 77.90%
+        Experts: E0 76.90%, E1 76.90%, E2 78.10%, E3 77.70%
+[Joint] Epoch 32/35 | Train 0.3937 | Val 2.3038 | Acc 78.40%
+        Experts: E0 76.90%, E1 77.60%, E2 78.60%, E3 76.00%
+[Joint] Epoch 33/35 | Train 0.3728 | Val 2.3597 | Acc 77.90%
+        Experts: E0 77.30%, E1 77.90%, E2 77.90%, E3 76.80%
+[Joint] Epoch 34/35 | Train 0.3641 | Val 2.2586 | Acc 78.90%
+        Experts: E0 76.60%, E1 77.20%, E2 78.80%, E3 76.40%
+[Joint] Epoch 35/35 | Train 0.3585 | Val 2.3261 | Acc 77.50%
+        Experts: E0 76.80%, E1 77.40%, E2 78.20%, E3 76.80%
+✅ Training finished (curriculum + PCGrad). Logs saved to:
+../fusion_checkpoints_curriculum_pcgrad/csv_logs/wideresnet_fusions_curriculum_pcgrad/wideresnet_multiplicative_multiplicative_alpha_1.0_training_log.csv
+✅ Completed: improved_wide_resnet multiplicative, alpha=1.0 (Curriculum+PCGrad)

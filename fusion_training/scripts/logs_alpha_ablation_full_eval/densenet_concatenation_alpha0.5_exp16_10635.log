@@ -1,0 +1,2572 @@
+==========================================
+SLURM_JOB_ID = 10635
+SLURM_NODELIST = pascal-node10.l3s.intra
+==========================================
+==========================================
+Alpha Ablation (Full Eval) Experiment 16: densenet concatenation fusion, alpha=0.5
+SLURM_JOB_ID = 
+SLURM_NODELIST = 
+Alpha: 0.5
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Grad Clip (1.0)
+No LR schedulers (fixed LR); Full evaluation enabled
+==========================================
+Starting DenseNet concatenation fusion training (alpha-ablation, full evaluation, no schedulers)...
+Alpha: 0.5
+Checkpoint directory: ../../expert_training/scripts/checkpoints_expert_iid
+Output directory: ../fusion_checkpoints_alpha_ablation_full_eval
+Using device: cuda
+Loading DenseNet expert backbones...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:75: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Successfully loaded 4 DenseNet experts
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Creating DenseNet MCN fusion model...
+Creating DenseNet MCN model:
+  - Fusion type: concatenation
+  - Input dimension: 1024
+  - Hidden dimension: 1024 (matches feature dimension)
+  - Alpha: 0.5
+✅ Successfully created DenseNet MCN fusion model
+Files already downloaded and verified
+
+================================================================================
+PHASE 1: PRE-TRAINING EVALUATION (α=0.5)
+================================================================================
+
+============================================================
+PRE-TRAINING: Gaussian Noise Robustness
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 74.85%, σ=0.05: 67.13%, σ=0.1: 45.73%, σ=0.2: 16.76%, σ=0.3: 7.78%
+
+Testing Expert 1 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 74.76%, σ=0.05: 68.26%, σ=0.1: 48.91%, σ=0.2: 17.39%, σ=0.3: 7.99%
+
+Testing Expert 2 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 74.95%, σ=0.05: 70.32%, σ=0.1: 49.98%, σ=0.2: 19.54%, σ=0.3: 8.83%
+
+Testing Expert 3 (PRE-TRAINING) under Gaussian noise...
+  Expert noise results: σ=0.0: 75.28%, σ=0.05: 67.66%, σ=0.1: 45.02%, σ=0.2: 16.21%, σ=0.3: 7.54%
+
+Testing Baseline DenseNet (PRE-TRAINING) under Gaussian noise...
+  Baseline noise results: σ=0.0: 83.69%, σ=0.05: 76.31%, σ=0.1: 56.45%, σ=0.2: 27.45%, σ=0.3: 15.89%
+
+============================================================
+PRE-TRAINING: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 27.62% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 13.99% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.74% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 38.81% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 69.75% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 58.41% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 51.04% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 38.05% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 74.94% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 74.45% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 54.37% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 21.34% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 40.85% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 15.05% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 41.29% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 14.99% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.03% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.96% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 74.66% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 74.09% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 74.78% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 74.47% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 74.34% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 73.65% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 38.93% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 19.27% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 74.68% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 74.70% accuracy
+
+Testing Expert 1 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 29.86% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.53% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 6.31% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 43.96% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.23% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.03% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.54% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.72% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 74.65% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 74.52% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 53.64% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 21.78% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.41% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.14% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.17% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 14.91% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.48% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.46% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 74.41% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 74.04% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 74.53% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 74.27% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 74.40% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 73.68% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 34.62% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 18.02% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 74.67% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 74.49% accuracy
+
+Testing Expert 2 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 32.25% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 16.50% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.34% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 44.11% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.35% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 62.30% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 55.63% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 43.10% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 75.22% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 74.67% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 52.14% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 19.16% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 46.23% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 18.66% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 45.83% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 16.42% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.38% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.51% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 74.80% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 74.64% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 74.81% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 74.48% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 74.64% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 73.99% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 34.32% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 15.44% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 75.13% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 75.09% accuracy
+
+Testing Expert 3 (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 26.48% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 13.70% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.43% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 40.52% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 70.97% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.15% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 50.15% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 36.94% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 75.46% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 75.27% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 52.50% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 19.81% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 39.81% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 14.53% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 39.74% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 14.04% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.04% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.28% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 75.11% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 74.46% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 74.97% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 74.78% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 74.88% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 74.23% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 38.09% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.22% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 75.38% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 75.29% accuracy
+
+Testing Baseline DenseNet (PRE-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 39.67% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 24.05% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 10.64% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 52.43% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 79.12% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 68.89% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 61.18% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 50.01% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 83.25% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 82.94% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 60.76% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 25.22% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 51.96% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 24.37% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 52.03% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 24.40% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 11.12% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.71% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 83.44% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 83.18% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 83.41% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 83.32% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 82.75% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 82.38% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 43.60% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 83.59% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 83.43% accuracy
+
+============================================================
+PRE-TRAINING: Out-of-Distribution Detection
+============================================================
+
+Testing Expert 0 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 1 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 2 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 3 (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Baseline DenseNet (PRE-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+✅ PRE-TRAINING evaluation completed!
+   Results saved to: ../fusion_checkpoints_alpha_ablation_full_eval/csv_logs/densenet_fusions/densenet_concatenation_alpha_0.5_pre_training_evaluation.csv
+
+================================================================================
+PHASE 2: FUSION TRAINING (α=0.5)
+================================================================================
+Loading data splits for fusion training...
+Files already downloaded and verified
+Loaded 10000 fusion holdout samples for training.
+✅ Using SOTA augmentation: DenseNet with moderate augmentation for stability
+Files already downloaded and verified
+Files already downloaded and verified
+Using 10000 samples from the official test set for validation.
+✅ Data splits loaded successfully
+CSV logging setup: ../fusion_checkpoints_alpha_ablation_full_eval/csv_logs/densenet_fusions/densenet_concatenation_alpha_0.5_training_log.csv
+  - Experiment Output: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation
+
+🚀 Starting DenseNet concatenation fusion training with alpha=0.5 (no schedulers)...
+   Augmentation: CUTMIX, MixUp α=0.2, CutMix α=1.0, Label Smoothing=0.1, Grad Clip=1.0
+Total parameters: 33,550,324
+Trainable parameters: 33,550,324
+Epoch 1/100, Batch 0/79, Loss: 10.9672 (Global: 4.6362, Individual: 12.6619)
+Epoch 1/100, Batch 50/79, Loss: 6.2344 (Global: 2.1041, Individual: 8.2608)
+  🔸 Saved new best Expert 0 (val acc 75.83%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.19%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 75.86%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 75.71%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 1/100:
+  Train Loss: 8.2158, Train Acc: 46.34%
+  Val   Loss: 3.0167, Val   Acc: 77.59%
+  Expert Accuracies: Expert 0: 75.83%, Expert 1: 75.19%, Expert 2: 75.86%, Expert 3: 75.71%
+  🔸 Saved new best Fusion Module (val acc 77.59%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 77.59%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 77.59%
+Epoch 2/100, Batch 0/79, Loss: 9.0775 (Global: 3.2287, Individual: 11.6977)
+Epoch 2/100, Batch 50/79, Loss: 6.3994 (Global: 2.1238, Individual: 8.5512)
+  🔸 Saved new best Expert 0 (val acc 76.19%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.48%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 76.50%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 75.95%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 2/100:
+  Train Loss: 7.8344, Train Acc: 53.95%
+  Val   Loss: 2.9411, Val   Acc: 78.35%
+  Expert Accuracies: Expert 0: 76.19%, Expert 1: 75.48%, Expert 2: 76.50%, Expert 3: 75.95%
+  🔸 Saved new best Fusion Module (val acc 78.35%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 78.35%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.35%
+Epoch 3/100, Batch 0/79, Loss: 8.4009 (Global: 2.8206, Individual: 11.1606)
+Epoch 3/100, Batch 50/79, Loss: 7.2164 (Global: 2.4433, Individual: 9.5463)
+  🔸 Saved new best Expert 0 (val acc 76.47%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.78%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 76.75%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.36%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 3/100:
+  Train Loss: 7.7218, Train Acc: 54.77%
+  Val   Loss: 2.8848, Val   Acc: 77.95%
+  Expert Accuracies: Expert 0: 76.47%, Expert 1: 75.78%, Expert 2: 76.75%, Expert 3: 76.36%
+  📊 Training progress logged to CSV
+Epoch 4/100, Batch 0/79, Loss: 8.5510 (Global: 2.9062, Individual: 11.2895)
+Epoch 4/100, Batch 50/79, Loss: 8.2200 (Global: 2.7944, Individual: 10.8514)
+  🔸 Saved new best Expert 0 (val acc 76.73%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.96%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.51%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 4/100:
+  Train Loss: 7.8249, Train Acc: 50.15%
+  Val   Loss: 2.8973, Val   Acc: 78.77%
+  Expert Accuracies: Expert 0: 76.73%, Expert 1: 75.96%, Expert 2: 76.71%, Expert 3: 76.51%
+  🔸 Saved new best Fusion Module (val acc 78.77%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 78.77%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.77%
+Epoch 5/100, Batch 0/79, Loss: 8.6076 (Global: 2.9761, Individual: 11.2628)
+Epoch 5/100, Batch 50/79, Loss: 7.9011 (Global: 2.7305, Individual: 10.3412)
+  🔸 Saved new best Expert 0 (val acc 76.76%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.98%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.64%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 5/100:
+  Train Loss: 7.7256, Train Acc: 52.57%
+  Val   Loss: 2.8633, Val   Acc: 79.03%
+  Expert Accuracies: Expert 0: 76.76%, Expert 1: 75.98%, Expert 2: 76.75%, Expert 3: 76.64%
+  🔸 Saved new best Fusion Module (val acc 79.03%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.03%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.03%
+Epoch 6/100, Batch 0/79, Loss: 6.9942 (Global: 2.3050, Individual: 9.3784)
+Epoch 6/100, Batch 50/79, Loss: 6.5118 (Global: 2.1256, Individual: 8.7725)
+  🔸 Saved new best Expert 0 (val acc 76.90%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.99%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 76.97%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+Epoch 6/100:
+  Train Loss: 7.6669, Train Acc: 53.91%
+  Val   Loss: 2.8203, Val   Acc: 79.14%
+  Expert Accuracies: Expert 0: 76.90%, Expert 1: 75.99%, Expert 2: 76.97%, Expert 3: 76.53%
+  🔸 Saved new best Fusion Module (val acc 79.14%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.14%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.14%
+Epoch 7/100, Batch 0/79, Loss: 8.4883 (Global: 2.9125, Individual: 11.1517)
+Epoch 7/100, Batch 50/79, Loss: 7.6786 (Global: 2.6388, Individual: 10.0797)
+  🔸 Saved new best Expert 1 (val acc 76.05%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 77.02%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.85%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 7/100:
+  Train Loss: 7.3811, Train Acc: 57.29%
+  Val   Loss: 2.8398, Val   Acc: 79.10%
+  Expert Accuracies: Expert 0: 76.90%, Expert 1: 76.05%, Expert 2: 77.02%, Expert 3: 76.85%
+  📊 Training progress logged to CSV
+Epoch 8/100, Batch 0/79, Loss: 7.6815 (Global: 2.6575, Individual: 10.0480)
+Epoch 8/100, Batch 50/79, Loss: 6.8967 (Global: 2.3303, Individual: 9.1328)
+  🔸 Saved new best Expert 0 (val acc 77.23%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 76.36%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 77.07%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 77.16%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 8/100:
+  Train Loss: 7.4341, Train Acc: 56.64%
+  Val   Loss: 2.8085, Val   Acc: 79.52%
+  Expert Accuracies: Expert 0: 77.23%, Expert 1: 76.36%, Expert 2: 77.07%, Expert 3: 77.16%
+  🔸 Saved new best Fusion Module (val acc 79.52%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.52%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.52%
+Epoch 9/100, Batch 0/79, Loss: 6.2940 (Global: 2.0341, Individual: 8.5199)
+Epoch 9/100, Batch 50/79, Loss: 7.1331 (Global: 2.3720, Individual: 9.5220)
+Epoch 9/100:
+  Train Loss: 7.2146, Train Acc: 58.81%
+  Val   Loss: 2.8579, Val   Acc: 79.26%
+  Expert Accuracies: Expert 0: 77.15%, Expert 1: 76.14%, Expert 2: 76.98%, Expert 3: 76.77%
+  📊 Training progress logged to CSV
+Epoch 10/100, Batch 0/79, Loss: 5.4368 (Global: 1.7726, Individual: 7.3283)
+Epoch 10/100, Batch 50/79, Loss: 6.6492 (Global: 2.2391, Individual: 8.8203)
+  🔸 Saved new best Expert 0 (val acc 77.26%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 2 (val acc 77.26%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+Epoch 10/100:
+  Train Loss: 7.4306, Train Acc: 55.97%
+  Val   Loss: 2.8572, Val   Acc: 79.39%
+  Expert Accuracies: Expert 0: 77.26%, Expert 1: 76.17%, Expert 2: 77.26%, Expert 3: 77.14%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_10.pth
+Epoch 11/100, Batch 0/79, Loss: 8.3468 (Global: 2.8906, Individual: 10.9125)
+Epoch 11/100, Batch 50/79, Loss: 8.3337 (Global: 2.8799, Individual: 10.9077)
+  🔸 Saved new best Expert 1 (val acc 76.57%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 77.19%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 11/100:
+  Train Loss: 7.4532, Train Acc: 54.27%
+  Val   Loss: 2.8700, Val   Acc: 79.29%
+  Expert Accuracies: Expert 0: 77.15%, Expert 1: 76.57%, Expert 2: 77.26%, Expert 3: 77.19%
+  📊 Training progress logged to CSV
+Epoch 12/100, Batch 0/79, Loss: 8.6561 (Global: 2.9757, Individual: 11.3608)
+Epoch 12/100, Batch 50/79, Loss: 7.5340 (Global: 2.5828, Individual: 9.9025)
+  🔸 Saved new best Expert 0 (val acc 77.28%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+Epoch 12/100:
+  Train Loss: 7.3010, Train Acc: 56.14%
+  Val   Loss: 2.8644, Val   Acc: 79.03%
+  Expert Accuracies: Expert 0: 77.28%, Expert 1: 76.50%, Expert 2: 77.26%, Expert 3: 77.13%
+  📊 Training progress logged to CSV
+Epoch 13/100, Batch 0/79, Loss: 7.7396 (Global: 2.5773, Individual: 10.3247)
+Epoch 13/100, Batch 50/79, Loss: 6.4402 (Global: 2.1703, Individual: 8.5397)
+  🔸 Saved new best Expert 0 (val acc 77.32%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 2 (val acc 77.38%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+Epoch 13/100:
+  Train Loss: 7.1908, Train Acc: 56.50%
+  Val   Loss: 2.8977, Val   Acc: 79.18%
+  Expert Accuracies: Expert 0: 77.32%, Expert 1: 76.34%, Expert 2: 77.38%, Expert 3: 77.19%
+  📊 Training progress logged to CSV
+Epoch 14/100, Batch 0/79, Loss: 8.6701 (Global: 3.0359, Individual: 11.2685)
+Epoch 14/100, Batch 50/79, Loss: 6.8491 (Global: 2.2413, Individual: 9.2155)
+Epoch 14/100:
+  Train Loss: 7.2668, Train Acc: 56.82%
+  Val   Loss: 2.8822, Val   Acc: 79.28%
+  Expert Accuracies: Expert 0: 77.15%, Expert 1: 76.47%, Expert 2: 77.25%, Expert 3: 77.12%
+  📊 Training progress logged to CSV
+Epoch 15/100, Batch 0/79, Loss: 5.0237 (Global: 1.6170, Individual: 6.8135)
+Epoch 15/100, Batch 50/79, Loss: 8.5794 (Global: 2.9335, Individual: 11.2917)
+  🔸 Saved new best Expert 0 (val acc 77.39%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 76.66%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+Epoch 15/100:
+  Train Loss: 6.9793, Train Acc: 62.21%
+  Val   Loss: 2.8802, Val   Acc: 79.19%
+  Expert Accuracies: Expert 0: 77.39%, Expert 1: 76.66%, Expert 2: 77.26%, Expert 3: 77.15%
+  📊 Training progress logged to CSV
+Epoch 16/100, Batch 0/79, Loss: 4.5508 (Global: 1.5037, Individual: 6.0943)
+Epoch 16/100, Batch 50/79, Loss: 7.7677 (Global: 2.6568, Individual: 10.2218)
+  🔸 Saved new best Expert 0 (val acc 77.54%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 76.78%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 77.20%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 16/100:
+  Train Loss: 6.9747, Train Acc: 60.54%
+  Val   Loss: 2.8730, Val   Acc: 79.50%
+  Expert Accuracies: Expert 0: 77.54%, Expert 1: 76.78%, Expert 2: 77.36%, Expert 3: 77.20%
+  📊 Training progress logged to CSV
+Epoch 17/100, Batch 0/79, Loss: 8.3900 (Global: 2.8390, Individual: 11.1019)
+Epoch 17/100, Batch 50/79, Loss: 4.9156 (Global: 1.6543, Individual: 6.5226)
+  🔸 Saved new best Expert 3 (val acc 77.38%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 17/100:
+  Train Loss: 7.0488, Train Acc: 57.36%
+  Val   Loss: 2.9434, Val   Acc: 79.25%
+  Expert Accuracies: Expert 0: 77.50%, Expert 1: 76.57%, Expert 2: 77.36%, Expert 3: 77.38%
+  📊 Training progress logged to CSV
+Epoch 18/100, Batch 0/79, Loss: 7.5156 (Global: 2.6094, Individual: 9.8124)
+Epoch 18/100, Batch 50/79, Loss: 6.7658 (Global: 2.3265, Individual: 8.8786)
+  🔸 Saved new best Expert 2 (val acc 77.44%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+Epoch 18/100:
+  Train Loss: 6.9670, Train Acc: 61.23%
+  Val   Loss: 2.9230, Val   Acc: 78.97%
+  Expert Accuracies: Expert 0: 77.25%, Expert 1: 76.63%, Expert 2: 77.44%, Expert 3: 77.21%
+  📊 Training progress logged to CSV
+Epoch 19/100, Batch 0/79, Loss: 5.1364 (Global: 1.6799, Individual: 6.9130)
+Epoch 19/100, Batch 50/79, Loss: 8.4704 (Global: 2.8876, Individual: 11.1656)
+Epoch 19/100:
+  Train Loss: 6.9635, Train Acc: 61.02%
+  Val   Loss: 2.9251, Val   Acc: 79.21%
+  Expert Accuracies: Expert 0: 77.35%, Expert 1: 76.56%, Expert 2: 77.35%, Expert 3: 77.10%
+  📊 Training progress logged to CSV
+Epoch 20/100, Batch 0/79, Loss: 5.5430 (Global: 1.8624, Individual: 7.3612)
+Epoch 20/100, Batch 50/79, Loss: 4.7623 (Global: 1.5867, Individual: 6.3513)
+Epoch 20/100:
+  Train Loss: 6.9208, Train Acc: 61.61%
+  Val   Loss: 2.9297, Val   Acc: 79.50%
+  Expert Accuracies: Expert 0: 77.36%, Expert 1: 76.66%, Expert 2: 77.20%, Expert 3: 77.15%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_20.pth
+Epoch 21/100, Batch 0/79, Loss: 3.6050 (Global: 1.2293, Individual: 4.7514)
+Epoch 21/100, Batch 50/79, Loss: 7.7023 (Global: 2.5505, Individual: 10.3036)
+  🔸 Saved new best Expert 1 (val acc 76.79%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 77.50%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+Epoch 21/100:
+  Train Loss: 6.7295, Train Acc: 64.20%
+  Val   Loss: 2.8754, Val   Acc: 79.49%
+  Expert Accuracies: Expert 0: 77.38%, Expert 1: 76.79%, Expert 2: 77.50%, Expert 3: 77.25%
+  📊 Training progress logged to CSV
+Epoch 22/100, Batch 0/79, Loss: 7.2155 (Global: 2.4470, Individual: 9.5369)
+Epoch 22/100, Batch 50/79, Loss: 8.6351 (Global: 2.8931, Individual: 11.4840)
+Epoch 22/100:
+  Train Loss: 6.9822, Train Acc: 58.81%
+  Val   Loss: 2.9297, Val   Acc: 79.62%
+  Expert Accuracies: Expert 0: 77.43%, Expert 1: 76.68%, Expert 2: 77.14%, Expert 3: 77.18%
+  🔸 Saved new best Fusion Module (val acc 79.62%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.62%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.62%
+Epoch 23/100, Batch 0/79, Loss: 8.0791 (Global: 2.6636, Individual: 10.8310)
+Epoch 23/100, Batch 50/79, Loss: 7.2840 (Global: 2.4302, Individual: 9.7077)
+Epoch 23/100:
+  Train Loss: 7.0299, Train Acc: 61.64%
+  Val   Loss: 2.8869, Val   Acc: 79.45%
+  Expert Accuracies: Expert 0: 77.46%, Expert 1: 76.65%, Expert 2: 77.23%, Expert 3: 77.11%
+  📊 Training progress logged to CSV
+Epoch 24/100, Batch 0/79, Loss: 5.3966 (Global: 1.7841, Individual: 7.2250)
+Epoch 24/100, Batch 50/79, Loss: 7.1716 (Global: 2.4710, Individual: 9.4012)
+Epoch 24/100:
+  Train Loss: 6.8507, Train Acc: 61.71%
+  Val   Loss: 2.9217, Val   Acc: 79.39%
+  Expert Accuracies: Expert 0: 77.38%, Expert 1: 76.66%, Expert 2: 77.34%, Expert 3: 77.18%
+  📊 Training progress logged to CSV
+Epoch 25/100, Batch 0/79, Loss: 6.1539 (Global: 2.0696, Individual: 8.1686)
+Epoch 25/100, Batch 50/79, Loss: 4.4967 (Global: 1.5039, Individual: 5.9855)
+Epoch 25/100:
+  Train Loss: 6.8901, Train Acc: 55.56%
+  Val   Loss: 2.9361, Val   Acc: 79.15%
+  Expert Accuracies: Expert 0: 77.48%, Expert 1: 76.48%, Expert 2: 77.32%, Expert 3: 77.10%
+  📊 Training progress logged to CSV
+Epoch 26/100, Batch 0/79, Loss: 8.2942 (Global: 2.8572, Individual: 10.8740)
+Epoch 26/100, Batch 50/79, Loss: 6.1009 (Global: 2.0655, Individual: 8.0707)
+  🔸 Saved new best Expert 1 (val acc 76.88%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 77.46%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+Epoch 26/100:
+  Train Loss: 6.8782, Train Acc: 58.74%
+  Val   Loss: 2.9563, Val   Acc: 78.79%
+  Expert Accuracies: Expert 0: 77.16%, Expert 1: 76.88%, Expert 2: 76.99%, Expert 3: 77.46%
+  📊 Training progress logged to CSV
+Epoch 27/100, Batch 0/79, Loss: 8.3465 (Global: 2.8489, Individual: 10.9953)
+Epoch 27/100, Batch 50/79, Loss: 7.5766 (Global: 2.6150, Individual: 9.9231)
+Epoch 27/100:
+  Train Loss: 6.8798, Train Acc: 60.17%
+  Val   Loss: 2.9657, Val   Acc: 79.59%
+  Expert Accuracies: Expert 0: 77.28%, Expert 1: 76.87%, Expert 2: 77.09%, Expert 3: 77.25%
+  📊 Training progress logged to CSV
+Epoch 28/100, Batch 0/79, Loss: 7.6944 (Global: 2.6182, Individual: 10.1524)
+Epoch 28/100, Batch 50/79, Loss: 4.9863 (Global: 1.6039, Individual: 6.7649)
+Epoch 28/100:
+  Train Loss: 6.5498, Train Acc: 66.20%
+  Val   Loss: 2.9367, Val   Acc: 79.31%
+  Expert Accuracies: Expert 0: 77.24%, Expert 1: 76.80%, Expert 2: 77.10%, Expert 3: 77.24%
+  📊 Training progress logged to CSV
+Epoch 29/100, Batch 0/79, Loss: 6.4095 (Global: 2.1515, Individual: 8.5160)
+Epoch 29/100, Batch 50/79, Loss: 7.3475 (Global: 2.4714, Individual: 9.7522)
+Epoch 29/100:
+  Train Loss: 6.6472, Train Acc: 65.06%
+  Val   Loss: 2.9349, Val   Acc: 79.60%
+  Expert Accuracies: Expert 0: 77.25%, Expert 1: 76.79%, Expert 2: 77.12%, Expert 3: 77.15%
+  📊 Training progress logged to CSV
+Epoch 30/100, Batch 0/79, Loss: 6.5647 (Global: 2.1621, Individual: 8.8052)
+Epoch 30/100, Batch 50/79, Loss: 3.4842 (Global: 1.1292, Individual: 4.7100)
+Epoch 30/100:
+  Train Loss: 6.5114, Train Acc: 65.32%
+  Val   Loss: 2.9998, Val   Acc: 79.70%
+  Expert Accuracies: Expert 0: 77.24%, Expert 1: 76.72%, Expert 2: 77.31%, Expert 3: 77.08%
+  🔸 Saved new best Fusion Module (val acc 79.70%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.70%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.70%
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_30.pth
+Epoch 31/100, Batch 0/79, Loss: 4.4941 (Global: 1.4519, Individual: 6.0844)
+Epoch 31/100, Batch 50/79, Loss: 7.6738 (Global: 2.6169, Individual: 10.1138)
+Epoch 31/100:
+  Train Loss: 6.6022, Train Acc: 67.45%
+  Val   Loss: 2.9441, Val   Acc: 79.46%
+  Expert Accuracies: Expert 0: 77.47%, Expert 1: 76.76%, Expert 2: 77.09%, Expert 3: 77.19%
+  📊 Training progress logged to CSV
+Epoch 32/100, Batch 0/79, Loss: 7.5163 (Global: 2.5810, Individual: 9.8706)
+Epoch 32/100, Batch 50/79, Loss: 4.9785 (Global: 1.6584, Individual: 6.6401)
+Epoch 32/100:
+  Train Loss: 6.8090, Train Acc: 64.35%
+  Val   Loss: 2.9595, Val   Acc: 79.63%
+  Expert Accuracies: Expert 0: 77.27%, Expert 1: 76.76%, Expert 2: 77.33%, Expert 3: 77.36%
+  📊 Training progress logged to CSV
+Epoch 33/100, Batch 0/79, Loss: 8.2814 (Global: 2.8164, Individual: 10.9299)
+Epoch 33/100, Batch 50/79, Loss: 7.2141 (Global: 2.4317, Individual: 9.5648)
+Epoch 33/100:
+  Train Loss: 6.7285, Train Acc: 61.80%
+  Val   Loss: 3.0399, Val   Acc: 78.64%
+  Expert Accuracies: Expert 0: 77.15%, Expert 1: 76.58%, Expert 2: 77.16%, Expert 3: 77.06%
+  📊 Training progress logged to CSV
+Epoch 34/100, Batch 0/79, Loss: 6.0752 (Global: 2.0660, Individual: 8.0184)
+Epoch 34/100, Batch 50/79, Loss: 7.7008 (Global: 2.6389, Individual: 10.1237)
+Epoch 34/100:
+  Train Loss: 6.6458, Train Acc: 61.86%
+  Val   Loss: 2.9385, Val   Acc: 79.19%
+  Expert Accuracies: Expert 0: 76.92%, Expert 1: 76.57%, Expert 2: 77.11%, Expert 3: 76.91%
+  📊 Training progress logged to CSV
+Epoch 35/100, Batch 0/79, Loss: 6.9738 (Global: 2.3911, Individual: 9.1654)
+Epoch 35/100, Batch 50/79, Loss: 5.1215 (Global: 1.6753, Individual: 6.8924)
+Epoch 35/100:
+  Train Loss: 6.6969, Train Acc: 61.82%
+  Val   Loss: 2.9501, Val   Acc: 79.43%
+  Expert Accuracies: Expert 0: 77.20%, Expert 1: 76.28%, Expert 2: 76.90%, Expert 3: 77.22%
+  📊 Training progress logged to CSV
+Epoch 36/100, Batch 0/79, Loss: 6.9770 (Global: 2.3504, Individual: 9.2533)
+Epoch 36/100, Batch 50/79, Loss: 7.4333 (Global: 2.4981, Individual: 9.8703)
+Epoch 36/100:
+  Train Loss: 6.4037, Train Acc: 67.16%
+  Val   Loss: 2.9448, Val   Acc: 79.16%
+  Expert Accuracies: Expert 0: 76.97%, Expert 1: 76.44%, Expert 2: 77.16%, Expert 3: 76.99%
+  📊 Training progress logged to CSV
+Epoch 37/100, Batch 0/79, Loss: 7.4288 (Global: 2.5469, Individual: 9.7638)
+Epoch 37/100, Batch 50/79, Loss: 7.4482 (Global: 2.4780, Individual: 9.9405)
+Epoch 37/100:
+  Train Loss: 6.5624, Train Acc: 62.30%
+  Val   Loss: 3.0199, Val   Acc: 79.49%
+  Expert Accuracies: Expert 0: 76.88%, Expert 1: 76.45%, Expert 2: 77.17%, Expert 3: 77.22%
+  📊 Training progress logged to CSV
+Epoch 38/100, Batch 0/79, Loss: 6.9189 (Global: 2.3261, Individual: 9.1855)
+Epoch 38/100, Batch 50/79, Loss: 8.2173 (Global: 2.8058, Individual: 10.8230)
+Epoch 38/100:
+  Train Loss: 6.6493, Train Acc: 63.87%
+  Val   Loss: 3.0324, Val   Acc: 79.42%
+  Expert Accuracies: Expert 0: 76.89%, Expert 1: 76.54%, Expert 2: 77.21%, Expert 3: 77.12%
+  📊 Training progress logged to CSV
+Epoch 39/100, Batch 0/79, Loss: 7.7404 (Global: 2.6262, Individual: 10.2284)
+Epoch 39/100, Batch 50/79, Loss: 5.9417 (Global: 2.0018, Individual: 7.8798)
+Epoch 39/100:
+  Train Loss: 6.3678, Train Acc: 67.05%
+  Val   Loss: 3.0235, Val   Acc: 79.15%
+  Expert Accuracies: Expert 0: 77.03%, Expert 1: 76.48%, Expert 2: 77.04%, Expert 3: 77.05%
+  📊 Training progress logged to CSV
+Epoch 40/100, Batch 0/79, Loss: 5.7261 (Global: 1.9018, Individual: 7.6485)
+Epoch 40/100, Batch 50/79, Loss: 4.7273 (Global: 1.5589, Individual: 6.3369)
+Epoch 40/100:
+  Train Loss: 6.4629, Train Acc: 60.58%
+  Val   Loss: 3.0631, Val   Acc: 79.41%
+  Expert Accuracies: Expert 0: 77.13%, Expert 1: 76.45%, Expert 2: 77.23%, Expert 3: 76.99%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_40.pth
+Epoch 41/100, Batch 0/79, Loss: 7.3494 (Global: 2.4974, Individual: 9.7040)
+Epoch 41/100, Batch 50/79, Loss: 6.9440 (Global: 2.3785, Individual: 9.1309)
+Epoch 41/100:
+  Train Loss: 6.5451, Train Acc: 63.59%
+  Val   Loss: 3.0547, Val   Acc: 79.22%
+  Expert Accuracies: Expert 0: 76.95%, Expert 1: 76.16%, Expert 2: 77.04%, Expert 3: 77.05%
+  📊 Training progress logged to CSV
+Epoch 42/100, Batch 0/79, Loss: 7.3566 (Global: 2.5083, Individual: 9.6966)
+Epoch 42/100, Batch 50/79, Loss: 5.1314 (Global: 1.6980, Individual: 6.8668)
+Epoch 42/100:
+  Train Loss: 6.2775, Train Acc: 70.02%
+  Val   Loss: 2.9961, Val   Acc: 79.34%
+  Expert Accuracies: Expert 0: 76.88%, Expert 1: 76.24%, Expert 2: 77.02%, Expert 3: 77.08%
+  📊 Training progress logged to CSV
+Epoch 43/100, Batch 0/79, Loss: 7.5339 (Global: 2.5221, Individual: 10.0235)
+Epoch 43/100, Batch 50/79, Loss: 7.8330 (Global: 2.6206, Individual: 10.4248)
+Epoch 43/100:
+  Train Loss: 6.5721, Train Acc: 62.35%
+  Val   Loss: 3.0518, Val   Acc: 79.60%
+  Expert Accuracies: Expert 0: 76.78%, Expert 1: 76.25%, Expert 2: 76.97%, Expert 3: 77.13%
+  📊 Training progress logged to CSV
+Epoch 44/100, Batch 0/79, Loss: 8.0163 (Global: 2.7541, Individual: 10.5245)
+Epoch 44/100, Batch 50/79, Loss: 7.9370 (Global: 2.6911, Individual: 10.4918)
+Epoch 44/100:
+  Train Loss: 6.5877, Train Acc: 57.24%
+  Val   Loss: 2.9994, Val   Acc: 79.64%
+  Expert Accuracies: Expert 0: 77.06%, Expert 1: 76.21%, Expert 2: 76.96%, Expert 3: 76.94%
+  📊 Training progress logged to CSV
+Epoch 45/100, Batch 0/79, Loss: 6.9006 (Global: 2.3374, Individual: 9.1265)
+Epoch 45/100, Batch 50/79, Loss: 5.5019 (Global: 1.8218, Individual: 7.3603)
+Epoch 45/100:
+  Train Loss: 6.6000, Train Acc: 61.86%
+  Val   Loss: 3.0619, Val   Acc: 79.24%
+  Expert Accuracies: Expert 0: 76.90%, Expert 1: 76.22%, Expert 2: 77.04%, Expert 3: 76.83%
+  📊 Training progress logged to CSV
+Epoch 46/100, Batch 0/79, Loss: 3.9435 (Global: 1.3111, Individual: 5.2648)
+Epoch 46/100, Batch 50/79, Loss: 7.2993 (Global: 2.4295, Individual: 9.7397)
+Epoch 46/100:
+  Train Loss: 6.3415, Train Acc: 63.29%
+  Val   Loss: 2.9614, Val   Acc: 79.77%
+  Expert Accuracies: Expert 0: 77.13%, Expert 1: 76.42%, Expert 2: 77.07%, Expert 3: 77.22%
+  🔸 Saved new best Fusion Module (val acc 79.77%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.77%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.77%
+Epoch 47/100, Batch 0/79, Loss: 6.8098 (Global: 2.2283, Individual: 9.1630)
+Epoch 47/100, Batch 50/79, Loss: 6.7325 (Global: 2.2178, Individual: 9.0295)
+Epoch 47/100:
+  Train Loss: 6.1933, Train Acc: 70.73%
+  Val   Loss: 3.0341, Val   Acc: 79.71%
+  Expert Accuracies: Expert 0: 76.73%, Expert 1: 76.27%, Expert 2: 76.82%, Expert 3: 76.89%
+  📊 Training progress logged to CSV
+Epoch 48/100, Batch 0/79, Loss: 6.3708 (Global: 2.1504, Individual: 8.4407)
+Epoch 48/100, Batch 50/79, Loss: 5.0528 (Global: 1.6244, Individual: 6.8568)
+Epoch 48/100:
+  Train Loss: 6.1925, Train Acc: 69.26%
+  Val   Loss: 3.0229, Val   Acc: 79.36%
+  Expert Accuracies: Expert 0: 76.79%, Expert 1: 76.12%, Expert 2: 76.75%, Expert 3: 77.07%
+  📊 Training progress logged to CSV
+Epoch 49/100, Batch 0/79, Loss: 7.5940 (Global: 2.5810, Individual: 10.0260)
+Epoch 49/100, Batch 50/79, Loss: 6.6679 (Global: 2.2317, Individual: 8.8724)
+Epoch 49/100:
+  Train Loss: 6.3477, Train Acc: 61.16%
+  Val   Loss: 3.0219, Val   Acc: 79.49%
+  Expert Accuracies: Expert 0: 76.87%, Expert 1: 76.36%, Expert 2: 76.93%, Expert 3: 76.74%
+  📊 Training progress logged to CSV
+Epoch 50/100, Batch 0/79, Loss: 6.0659 (Global: 1.9955, Individual: 8.1409)
+Epoch 50/100, Batch 50/79, Loss: 6.4388 (Global: 2.1257, Individual: 8.6263)
+Epoch 50/100:
+  Train Loss: 6.4246, Train Acc: 66.93%
+  Val   Loss: 3.0237, Val   Acc: 79.24%
+  Expert Accuracies: Expert 0: 76.91%, Expert 1: 76.07%, Expert 2: 76.68%, Expert 3: 77.04%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_50.pth
+Epoch 51/100, Batch 0/79, Loss: 6.8772 (Global: 2.3181, Individual: 9.1182)
+Epoch 51/100, Batch 50/79, Loss: 3.9360 (Global: 1.2975, Individual: 5.2770)
+Epoch 51/100:
+  Train Loss: 6.3199, Train Acc: 69.74%
+  Val   Loss: 3.0380, Val   Acc: 79.41%
+  Expert Accuracies: Expert 0: 76.96%, Expert 1: 76.12%, Expert 2: 76.98%, Expert 3: 77.13%
+  📊 Training progress logged to CSV
+Epoch 52/100, Batch 0/79, Loss: 7.6629 (Global: 2.6053, Individual: 10.1152)
+Epoch 52/100, Batch 50/79, Loss: 6.5320 (Global: 2.2121, Individual: 8.6399)
+Epoch 52/100:
+  Train Loss: 6.4697, Train Acc: 64.08%
+  Val   Loss: 3.0002, Val   Acc: 79.51%
+  Expert Accuracies: Expert 0: 76.89%, Expert 1: 76.09%, Expert 2: 76.91%, Expert 3: 76.96%
+  📊 Training progress logged to CSV
+Epoch 53/100, Batch 0/79, Loss: 7.3999 (Global: 2.4425, Individual: 9.9148)
+Epoch 53/100, Batch 50/79, Loss: 7.3251 (Global: 2.4740, Individual: 9.7021)
+Epoch 53/100:
+  Train Loss: 6.4000, Train Acc: 63.80%
+  Val   Loss: 3.0240, Val   Acc: 79.81%
+  Expert Accuracies: Expert 0: 77.01%, Expert 1: 76.26%, Expert 2: 76.81%, Expert 3: 77.10%
+  🔸 Saved new best Fusion Module (val acc 79.81%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_best/fusion_module_best.pth
+  🔸 Saved new best Global Head (val acc 79.81%) to ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  📊 Training progress logged to CSV
+  New best validation accuracy: 79.81%
+Epoch 54/100, Batch 0/79, Loss: 6.2322 (Global: 2.0823, Individual: 8.2998)
+Epoch 54/100, Batch 50/79, Loss: 6.9284 (Global: 2.3451, Individual: 9.1665)
+Epoch 54/100:
+  Train Loss: 5.9273, Train Acc: 71.32%
+  Val   Loss: 3.0451, Val   Acc: 79.21%
+  Expert Accuracies: Expert 0: 76.90%, Expert 1: 76.21%, Expert 2: 76.69%, Expert 3: 76.86%
+  📊 Training progress logged to CSV
+Epoch 55/100, Batch 0/79, Loss: 6.7580 (Global: 2.2044, Individual: 9.1073)
+Epoch 55/100, Batch 50/79, Loss: 7.3757 (Global: 2.4531, Individual: 9.8451)
+Epoch 55/100:
+  Train Loss: 6.2985, Train Acc: 67.09%
+  Val   Loss: 3.0295, Val   Acc: 79.66%
+  Expert Accuracies: Expert 0: 77.17%, Expert 1: 76.09%, Expert 2: 77.05%, Expert 3: 77.01%
+  📊 Training progress logged to CSV
+Epoch 56/100, Batch 0/79, Loss: 7.8094 (Global: 2.5970, Individual: 10.4250)
+Epoch 56/100, Batch 50/79, Loss: 6.9152 (Global: 2.3396, Individual: 9.1511)
+Epoch 56/100:
+  Train Loss: 6.1826, Train Acc: 68.16%
+  Val   Loss: 3.0345, Val   Acc: 79.37%
+  Expert Accuracies: Expert 0: 76.82%, Expert 1: 75.77%, Expert 2: 76.84%, Expert 3: 76.74%
+  📊 Training progress logged to CSV
+Epoch 57/100, Batch 0/79, Loss: 5.9311 (Global: 1.9908, Individual: 7.8806)
+Epoch 57/100, Batch 50/79, Loss: 5.3327 (Global: 1.7632, Individual: 7.1391)
+Epoch 57/100:
+  Train Loss: 5.9599, Train Acc: 75.80%
+  Val   Loss: 3.0518, Val   Acc: 79.59%
+  Expert Accuracies: Expert 0: 77.00%, Expert 1: 75.94%, Expert 2: 76.91%, Expert 3: 76.91%
+  📊 Training progress logged to CSV
+Epoch 58/100, Batch 0/79, Loss: 6.4688 (Global: 2.0990, Individual: 8.7397)
+Epoch 58/100, Batch 50/79, Loss: 7.4898 (Global: 2.5057, Individual: 9.9682)
+Epoch 58/100:
+  Train Loss: 6.2727, Train Acc: 68.86%
+  Val   Loss: 3.0887, Val   Acc: 79.47%
+  Expert Accuracies: Expert 0: 77.11%, Expert 1: 76.03%, Expert 2: 77.03%, Expert 3: 76.70%
+  📊 Training progress logged to CSV
+Epoch 59/100, Batch 0/79, Loss: 7.5357 (Global: 2.5406, Individual: 9.9902)
+Epoch 59/100, Batch 50/79, Loss: 6.8145 (Global: 2.3120, Individual: 9.0051)
+Epoch 59/100:
+  Train Loss: 6.5568, Train Acc: 58.21%
+  Val   Loss: 3.0780, Val   Acc: 79.51%
+  Expert Accuracies: Expert 0: 77.01%, Expert 1: 75.78%, Expert 2: 76.80%, Expert 3: 76.77%
+  📊 Training progress logged to CSV
+Epoch 60/100, Batch 0/79, Loss: 6.5694 (Global: 2.1183, Individual: 8.9022)
+Epoch 60/100, Batch 50/79, Loss: 3.4665 (Global: 1.1215, Individual: 4.6901)
+Epoch 60/100:
+  Train Loss: 6.2769, Train Acc: 63.90%
+  Val   Loss: 3.0884, Val   Acc: 79.31%
+  Expert Accuracies: Expert 0: 77.00%, Expert 1: 76.14%, Expert 2: 76.79%, Expert 3: 76.81%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_60.pth
+Epoch 61/100, Batch 0/79, Loss: 4.9150 (Global: 1.6263, Individual: 6.5774)
+Epoch 61/100, Batch 50/79, Loss: 5.0335 (Global: 1.6008, Individual: 6.8654)
+Epoch 61/100:
+  Train Loss: 6.2658, Train Acc: 68.61%
+  Val   Loss: 3.0919, Val   Acc: 79.30%
+  Expert Accuracies: Expert 0: 76.59%, Expert 1: 76.04%, Expert 2: 76.43%, Expert 3: 76.64%
+  📊 Training progress logged to CSV
+Epoch 62/100, Batch 0/79, Loss: 6.6616 (Global: 2.2108, Individual: 8.9016)
+Epoch 62/100, Batch 50/79, Loss: 6.6095 (Global: 2.1933, Individual: 8.8325)
+Epoch 62/100:
+  Train Loss: 5.8558, Train Acc: 73.53%
+  Val   Loss: 3.1148, Val   Acc: 79.60%
+  Expert Accuracies: Expert 0: 76.65%, Expert 1: 76.00%, Expert 2: 76.72%, Expert 3: 76.60%
+  📊 Training progress logged to CSV
+Epoch 63/100, Batch 0/79, Loss: 6.5620 (Global: 2.2052, Individual: 8.7137)
+Epoch 63/100, Batch 50/79, Loss: 5.1435 (Global: 1.6947, Individual: 6.8976)
+Epoch 63/100:
+  Train Loss: 6.2399, Train Acc: 65.72%
+  Val   Loss: 3.1291, Val   Acc: 79.39%
+  Expert Accuracies: Expert 0: 76.80%, Expert 1: 75.78%, Expert 2: 76.72%, Expert 3: 76.58%
+  📊 Training progress logged to CSV
+Epoch 64/100, Batch 0/79, Loss: 6.8028 (Global: 2.2634, Individual: 9.0790)
+Epoch 64/100, Batch 50/79, Loss: 7.9547 (Global: 2.6262, Individual: 10.6570)
+Epoch 64/100:
+  Train Loss: 5.9693, Train Acc: 73.10%
+  Val   Loss: 3.0690, Val   Acc: 79.36%
+  Expert Accuracies: Expert 0: 76.75%, Expert 1: 75.94%, Expert 2: 76.68%, Expert 3: 76.62%
+  📊 Training progress logged to CSV
+Epoch 65/100, Batch 0/79, Loss: 7.4359 (Global: 2.4707, Individual: 9.9304)
+Epoch 65/100, Batch 50/79, Loss: 7.0101 (Global: 2.3346, Individual: 9.3510)
+Epoch 65/100:
+  Train Loss: 6.3417, Train Acc: 65.58%
+  Val   Loss: 3.1454, Val   Acc: 79.34%
+  Expert Accuracies: Expert 0: 76.69%, Expert 1: 75.90%, Expert 2: 76.73%, Expert 3: 76.54%
+  📊 Training progress logged to CSV
+Epoch 66/100, Batch 0/79, Loss: 6.9862 (Global: 2.3109, Individual: 9.3506)
+Epoch 66/100, Batch 50/79, Loss: 7.0661 (Global: 2.2994, Individual: 9.5334)
+Epoch 66/100:
+  Train Loss: 6.2651, Train Acc: 67.46%
+  Val   Loss: 3.1529, Val   Acc: 79.50%
+  Expert Accuracies: Expert 0: 76.53%, Expert 1: 75.89%, Expert 2: 76.83%, Expert 3: 76.64%
+  📊 Training progress logged to CSV
+Epoch 67/100, Batch 0/79, Loss: 5.2833 (Global: 1.7324, Individual: 7.1016)
+Epoch 67/100, Batch 50/79, Loss: 6.1048 (Global: 1.9999, Individual: 8.2097)
+Epoch 67/100:
+  Train Loss: 6.0912, Train Acc: 69.51%
+  Val   Loss: 3.0692, Val   Acc: 79.31%
+  Expert Accuracies: Expert 0: 76.71%, Expert 1: 75.85%, Expert 2: 76.57%, Expert 3: 76.74%
+  📊 Training progress logged to CSV
+Epoch 68/100, Batch 0/79, Loss: 6.9101 (Global: 2.2961, Individual: 9.2279)
+Epoch 68/100, Batch 50/79, Loss: 6.7921 (Global: 2.2211, Individual: 9.1420)
+Epoch 68/100:
+  Train Loss: 6.1565, Train Acc: 66.58%
+  Val   Loss: 3.0892, Val   Acc: 79.64%
+  Expert Accuracies: Expert 0: 76.44%, Expert 1: 75.82%, Expert 2: 76.75%, Expert 3: 76.54%
+  📊 Training progress logged to CSV
+Epoch 69/100, Batch 0/79, Loss: 6.9925 (Global: 2.3106, Individual: 9.3637)
+Epoch 69/100, Batch 50/79, Loss: 7.2953 (Global: 2.3916, Individual: 9.8074)
+Epoch 69/100:
+  Train Loss: 6.3120, Train Acc: 63.87%
+  Val   Loss: 3.0672, Val   Acc: 79.53%
+  Expert Accuracies: Expert 0: 76.48%, Expert 1: 75.77%, Expert 2: 76.54%, Expert 3: 76.60%
+  📊 Training progress logged to CSV
+Epoch 70/100, Batch 0/79, Loss: 7.0971 (Global: 2.3402, Individual: 9.5139)
+Epoch 70/100, Batch 50/79, Loss: 5.9975 (Global: 2.0101, Individual: 7.9749)
+Epoch 70/100:
+  Train Loss: 5.9172, Train Acc: 71.69%
+  Val   Loss: 3.0995, Val   Acc: 79.32%
+  Expert Accuracies: Expert 0: 76.34%, Expert 1: 75.86%, Expert 2: 76.45%, Expert 3: 76.63%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_70.pth
+Epoch 71/100, Batch 0/79, Loss: 5.7087 (Global: 1.8977, Individual: 7.6219)
+Epoch 71/100, Batch 50/79, Loss: 5.2141 (Global: 1.7416, Individual: 6.9451)
+Epoch 71/100:
+  Train Loss: 5.9004, Train Acc: 70.44%
+  Val   Loss: 3.1855, Val   Acc: 79.41%
+  Expert Accuracies: Expert 0: 76.41%, Expert 1: 75.78%, Expert 2: 76.53%, Expert 3: 76.28%
+  📊 Training progress logged to CSV
+Epoch 72/100, Batch 0/79, Loss: 7.4294 (Global: 2.4498, Individual: 9.9593)
+Epoch 72/100, Batch 50/79, Loss: 5.4866 (Global: 1.8332, Individual: 7.3068)
+Epoch 72/100:
+  Train Loss: 5.9874, Train Acc: 67.16%
+  Val   Loss: 3.1096, Val   Acc: 79.48%
+  Expert Accuracies: Expert 0: 76.37%, Expert 1: 75.71%, Expert 2: 76.74%, Expert 3: 76.41%
+  📊 Training progress logged to CSV
+Epoch 73/100, Batch 0/79, Loss: 6.5009 (Global: 2.1251, Individual: 8.7515)
+Epoch 73/100, Batch 50/79, Loss: 6.0913 (Global: 1.9957, Individual: 8.1911)
+Epoch 73/100:
+  Train Loss: 5.9948, Train Acc: 75.63%
+  Val   Loss: 3.1005, Val   Acc: 79.57%
+  Expert Accuracies: Expert 0: 76.32%, Expert 1: 75.64%, Expert 2: 76.71%, Expert 3: 76.41%
+  📊 Training progress logged to CSV
+Epoch 74/100, Batch 0/79, Loss: 5.8642 (Global: 1.9133, Individual: 7.9018)
+Epoch 74/100, Batch 50/79, Loss: 6.5433 (Global: 2.1893, Individual: 8.7080)
+Epoch 74/100:
+  Train Loss: 5.8730, Train Acc: 70.96%
+  Val   Loss: 3.0941, Val   Acc: 79.20%
+  Expert Accuracies: Expert 0: 76.33%, Expert 1: 75.88%, Expert 2: 76.43%, Expert 3: 76.57%
+  📊 Training progress logged to CSV
+Epoch 75/100, Batch 0/79, Loss: 4.7702 (Global: 1.5949, Individual: 6.3507)
+Epoch 75/100, Batch 50/79, Loss: 7.4295 (Global: 2.4578, Individual: 9.9435)
+Epoch 75/100:
+  Train Loss: 5.9096, Train Acc: 69.77%
+  Val   Loss: 3.1223, Val   Acc: 79.52%
+  Expert Accuracies: Expert 0: 76.16%, Expert 1: 75.52%, Expert 2: 76.26%, Expert 3: 76.37%
+  📊 Training progress logged to CSV
+Epoch 76/100, Batch 0/79, Loss: 3.8960 (Global: 1.2733, Individual: 5.2455)
+Epoch 76/100, Batch 50/79, Loss: 7.1451 (Global: 2.3302, Individual: 9.6299)
+Epoch 76/100:
+  Train Loss: 5.9254, Train Acc: 72.18%
+  Val   Loss: 3.1086, Val   Acc: 79.48%
+  Expert Accuracies: Expert 0: 76.15%, Expert 1: 75.51%, Expert 2: 76.44%, Expert 3: 76.41%
+  📊 Training progress logged to CSV
+Epoch 77/100, Batch 0/79, Loss: 6.0740 (Global: 2.0018, Individual: 8.1443)
+Epoch 77/100, Batch 50/79, Loss: 6.7181 (Global: 2.2539, Individual: 8.9286)
+Epoch 77/100:
+  Train Loss: 6.1404, Train Acc: 67.86%
+  Val   Loss: 3.1820, Val   Acc: 79.21%
+  Expert Accuracies: Expert 0: 76.02%, Expert 1: 75.62%, Expert 2: 76.33%, Expert 3: 76.14%
+  📊 Training progress logged to CSV
+Epoch 78/100, Batch 0/79, Loss: 6.9654 (Global: 2.2784, Individual: 9.3741)
+Epoch 78/100, Batch 50/79, Loss: 5.2237 (Global: 1.7227, Individual: 7.0020)
+Epoch 78/100:
+  Train Loss: 5.8514, Train Acc: 71.01%
+  Val   Loss: 3.1527, Val   Acc: 79.31%
+  Expert Accuracies: Expert 0: 76.02%, Expert 1: 75.68%, Expert 2: 76.16%, Expert 3: 76.03%
+  📊 Training progress logged to CSV
+Epoch 79/100, Batch 0/79, Loss: 5.9894 (Global: 1.9510, Individual: 8.0767)
+Epoch 79/100, Batch 50/79, Loss: 2.7813 (Global: 0.9243, Individual: 3.7140)
+Epoch 79/100:
+  Train Loss: 6.1010, Train Acc: 68.28%
+  Val   Loss: 3.1302, Val   Acc: 79.31%
+  Expert Accuracies: Expert 0: 76.01%, Expert 1: 75.79%, Expert 2: 76.38%, Expert 3: 76.30%
+  📊 Training progress logged to CSV
+Epoch 80/100, Batch 0/79, Loss: 6.9084 (Global: 2.2919, Individual: 9.2330)
+Epoch 80/100, Batch 50/79, Loss: 5.0161 (Global: 1.6651, Individual: 6.7021)
+Epoch 80/100:
+  Train Loss: 5.9293, Train Acc: 73.78%
+  Val   Loss: 3.1746, Val   Acc: 79.39%
+  Expert Accuracies: Expert 0: 76.17%, Expert 1: 75.82%, Expert 2: 76.46%, Expert 3: 76.31%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_80.pth
+Epoch 81/100, Batch 0/79, Loss: 6.5219 (Global: 2.1440, Individual: 8.7557)
+Epoch 81/100, Batch 50/79, Loss: 6.9175 (Global: 2.2718, Individual: 9.2914)
+Epoch 81/100:
+  Train Loss: 5.8432, Train Acc: 67.82%
+  Val   Loss: 3.1112, Val   Acc: 79.56%
+  Expert Accuracies: Expert 0: 76.39%, Expert 1: 76.07%, Expert 2: 76.42%, Expert 3: 76.40%
+  📊 Training progress logged to CSV
+Epoch 82/100, Batch 0/79, Loss: 4.5326 (Global: 1.5077, Individual: 6.0498)
+Epoch 82/100, Batch 50/79, Loss: 4.5024 (Global: 1.4922, Individual: 6.0203)
+Epoch 82/100:
+  Train Loss: 5.8568, Train Acc: 71.72%
+  Val   Loss: 3.1798, Val   Acc: 79.12%
+  Expert Accuracies: Expert 0: 76.08%, Expert 1: 75.97%, Expert 2: 76.35%, Expert 3: 76.21%
+  📊 Training progress logged to CSV
+Epoch 83/100, Batch 0/79, Loss: 7.1711 (Global: 2.3427, Individual: 9.6567)
+Epoch 83/100, Batch 50/79, Loss: 6.5506 (Global: 2.1702, Individual: 8.7606)
+Epoch 83/100:
+  Train Loss: 5.6600, Train Acc: 73.66%
+  Val   Loss: 3.1328, Val   Acc: 79.57%
+  Expert Accuracies: Expert 0: 75.93%, Expert 1: 76.02%, Expert 2: 76.36%, Expert 3: 76.14%
+  📊 Training progress logged to CSV
+Epoch 84/100, Batch 0/79, Loss: 6.8044 (Global: 2.2498, Individual: 9.1090)
+Epoch 84/100, Batch 50/79, Loss: 6.8685 (Global: 2.2433, Individual: 9.2505)
+Epoch 84/100:
+  Train Loss: 5.7735, Train Acc: 72.38%
+  Val   Loss: 3.1397, Val   Acc: 79.20%
+  Expert Accuracies: Expert 0: 75.80%, Expert 1: 75.86%, Expert 2: 76.32%, Expert 3: 75.84%
+  📊 Training progress logged to CSV
+Epoch 85/100, Batch 0/79, Loss: 3.8918 (Global: 1.2820, Individual: 5.2197)
+Epoch 85/100, Batch 50/79, Loss: 7.5480 (Global: 2.4387, Individual: 10.2186)
+Epoch 85/100:
+  Train Loss: 5.6744, Train Acc: 72.28%
+  Val   Loss: 3.1296, Val   Acc: 79.69%
+  Expert Accuracies: Expert 0: 76.12%, Expert 1: 75.53%, Expert 2: 76.24%, Expert 3: 76.06%
+  📊 Training progress logged to CSV
+Epoch 86/100, Batch 0/79, Loss: 7.0811 (Global: 2.3066, Individual: 9.5488)
+Epoch 86/100, Batch 50/79, Loss: 6.7968 (Global: 2.2252, Individual: 9.1432)
+Epoch 86/100:
+  Train Loss: 6.0503, Train Acc: 68.65%
+  Val   Loss: 3.1419, Val   Acc: 79.18%
+  Expert Accuracies: Expert 0: 76.08%, Expert 1: 75.86%, Expert 2: 76.26%, Expert 3: 76.09%
+  📊 Training progress logged to CSV
+Epoch 87/100, Batch 0/79, Loss: 7.5449 (Global: 2.4880, Individual: 10.1139)
+Epoch 87/100, Batch 50/79, Loss: 6.3478 (Global: 2.0673, Individual: 8.5611)
+Epoch 87/100:
+  Train Loss: 6.1757, Train Acc: 66.03%
+  Val   Loss: 3.1808, Val   Acc: 79.21%
+  Expert Accuracies: Expert 0: 76.12%, Expert 1: 75.36%, Expert 2: 76.09%, Expert 3: 76.39%
+  📊 Training progress logged to CSV
+Epoch 88/100, Batch 0/79, Loss: 4.4664 (Global: 1.5127, Individual: 5.9074)
+Epoch 88/100, Batch 50/79, Loss: 5.9366 (Global: 1.9698, Individual: 7.9335)
+Epoch 88/100:
+  Train Loss: 5.9843, Train Acc: 67.56%
+  Val   Loss: 3.1953, Val   Acc: 79.20%
+  Expert Accuracies: Expert 0: 75.81%, Expert 1: 75.18%, Expert 2: 76.22%, Expert 3: 76.21%
+  📊 Training progress logged to CSV
+Epoch 89/100, Batch 0/79, Loss: 5.3833 (Global: 1.7684, Individual: 7.2299)
+Epoch 89/100, Batch 50/79, Loss: 6.8489 (Global: 2.2590, Individual: 9.1799)
+Epoch 89/100:
+  Train Loss: 5.9933, Train Acc: 66.65%
+  Val   Loss: 3.1843, Val   Acc: 79.37%
+  Expert Accuracies: Expert 0: 75.73%, Expert 1: 75.18%, Expert 2: 76.06%, Expert 3: 76.05%
+  📊 Training progress logged to CSV
+Epoch 90/100, Batch 0/79, Loss: 6.4403 (Global: 2.1269, Individual: 8.6267)
+Epoch 90/100, Batch 50/79, Loss: 2.9014 (Global: 0.9644, Individual: 3.8739)
+Epoch 90/100:
+  Train Loss: 5.9391, Train Acc: 71.09%
+  Val   Loss: 3.1647, Val   Acc: 79.18%
+  Expert Accuracies: Expert 0: 75.84%, Expert 1: 75.40%, Expert 2: 76.20%, Expert 3: 76.22%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_90.pth
+Epoch 91/100, Batch 0/79, Loss: 6.7703 (Global: 2.2506, Individual: 9.0395)
+Epoch 91/100, Batch 50/79, Loss: 2.7256 (Global: 0.9060, Individual: 3.6392)
+Epoch 91/100:
+  Train Loss: 5.7686, Train Acc: 70.48%
+  Val   Loss: 3.1095, Val   Acc: 79.34%
+  Expert Accuracies: Expert 0: 75.85%, Expert 1: 75.50%, Expert 2: 76.22%, Expert 3: 76.41%
+  📊 Training progress logged to CSV
+Epoch 92/100, Batch 0/79, Loss: 4.4833 (Global: 1.4774, Individual: 6.0119)
+Epoch 92/100, Batch 50/79, Loss: 6.9481 (Global: 2.2373, Individual: 9.4216)
+Epoch 92/100:
+  Train Loss: 5.8590, Train Acc: 68.21%
+  Val   Loss: 3.1364, Val   Acc: 79.45%
+  Expert Accuracies: Expert 0: 75.71%, Expert 1: 75.27%, Expert 2: 76.19%, Expert 3: 76.31%
+  📊 Training progress logged to CSV
+Epoch 93/100, Batch 0/79, Loss: 6.1449 (Global: 1.9820, Individual: 8.3257)
+Epoch 93/100, Batch 50/79, Loss: 7.1490 (Global: 2.3506, Individual: 9.5969)
+Epoch 93/100:
+  Train Loss: 6.0015, Train Acc: 71.33%
+  Val   Loss: 3.1829, Val   Acc: 79.28%
+  Expert Accuracies: Expert 0: 75.83%, Expert 1: 75.41%, Expert 2: 76.38%, Expert 3: 76.07%
+  📊 Training progress logged to CSV
+Epoch 94/100, Batch 0/79, Loss: 6.2511 (Global: 2.0448, Individual: 8.4127)
+Epoch 94/100, Batch 50/79, Loss: 6.7067 (Global: 2.1744, Individual: 9.0647)
+Epoch 94/100:
+  Train Loss: 6.2253, Train Acc: 63.24%
+  Val   Loss: 3.2406, Val   Acc: 79.25%
+  Expert Accuracies: Expert 0: 75.73%, Expert 1: 75.31%, Expert 2: 76.21%, Expert 3: 76.16%
+  📊 Training progress logged to CSV
+Epoch 95/100, Batch 0/79, Loss: 6.3798 (Global: 2.0870, Individual: 8.5855)
+Epoch 95/100, Batch 50/79, Loss: 6.3004 (Global: 2.0655, Individual: 8.4697)
+Epoch 95/100:
+  Train Loss: 6.0755, Train Acc: 67.52%
+  Val   Loss: 3.1969, Val   Acc: 79.42%
+  Expert Accuracies: Expert 0: 75.66%, Expert 1: 75.50%, Expert 2: 76.20%, Expert 3: 76.36%
+  📊 Training progress logged to CSV
+Epoch 96/100, Batch 0/79, Loss: 5.2996 (Global: 1.7434, Individual: 7.1125)
+Epoch 96/100, Batch 50/79, Loss: 6.9004 (Global: 2.2546, Individual: 9.2916)
+Epoch 96/100:
+  Train Loss: 6.1225, Train Acc: 64.87%
+  Val   Loss: 3.1549, Val   Acc: 79.20%
+  Expert Accuracies: Expert 0: 75.86%, Expert 1: 75.20%, Expert 2: 76.06%, Expert 3: 76.18%
+  📊 Training progress logged to CSV
+Epoch 97/100, Batch 0/79, Loss: 5.7052 (Global: 1.8438, Individual: 7.7228)
+Epoch 97/100, Batch 50/79, Loss: 6.8357 (Global: 2.2736, Individual: 9.1242)
+Epoch 97/100:
+  Train Loss: 5.8455, Train Acc: 72.68%
+  Val   Loss: 3.1752, Val   Acc: 79.58%
+  Expert Accuracies: Expert 0: 75.66%, Expert 1: 75.50%, Expert 2: 76.15%, Expert 3: 76.24%
+  📊 Training progress logged to CSV
+Epoch 98/100, Batch 0/79, Loss: 4.7433 (Global: 1.5657, Individual: 6.3551)
+Epoch 98/100, Batch 50/79, Loss: 6.2433 (Global: 2.0423, Individual: 8.4020)
+Epoch 98/100:
+  Train Loss: 5.6609, Train Acc: 73.16%
+  Val   Loss: 3.1397, Val   Acc: 79.55%
+  Expert Accuracies: Expert 0: 75.94%, Expert 1: 75.38%, Expert 2: 76.12%, Expert 3: 76.39%
+  📊 Training progress logged to CSV
+Epoch 99/100, Batch 0/79, Loss: 5.9871 (Global: 1.9851, Individual: 8.0042)
+Epoch 99/100, Batch 50/79, Loss: 4.9184 (Global: 1.6065, Individual: 6.6238)
+Epoch 99/100:
+  Train Loss: 5.6076, Train Acc: 76.48%
+  Val   Loss: 3.1568, Val   Acc: 79.41%
+  Expert Accuracies: Expert 0: 75.93%, Expert 1: 75.34%, Expert 2: 75.96%, Expert 3: 76.20%
+  📊 Training progress logged to CSV
+Epoch 100/100, Batch 0/79, Loss: 6.1313 (Global: 2.0068, Individual: 8.2488)
+Epoch 100/100, Batch 50/79, Loss: 7.1215 (Global: 2.3372, Individual: 9.5686)
+Epoch 100/100:
+  Train Loss: 5.9519, Train Acc: 69.71%
+  Val   Loss: 3.2361, Val   Acc: 79.34%
+  Expert Accuracies: Expert 0: 75.43%, Expert 1: 75.42%, Expert 2: 76.04%, Expert 3: 76.04%
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/checkpoint_epoch_100.pth
+  Saved best model: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/best_model.pth
+✅ Training completed! Best validation accuracy: 79.81%
+
+💾 Saving trained model components...
+  Saved expert 0: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts/expert_0_alpha_0.5.pth
+  Saved expert 1: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts/expert_1_alpha_0.5.pth
+  Saved expert 2: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts/expert_2_alpha_0.5.pth
+  Saved expert 3: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts/expert_3_alpha_0.5.pth
+  Saved fusion module: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_module/fusion_module_alpha_0.5.pth
+  Saved global head: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_head/global_head_alpha_0.5.pth
+  Saved complete model: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/complete_model/complete_fusion_model_alpha_0.5.pth
+✅ All model components saved to: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation
+  - Experts: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts
+  - Fusion: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/fusion_module
+  - Global: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_head
+  - Complete: ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/complete_model
+✅ Model components saved successfully
+
+================================================================================
+CLEAN TEST-SET EVALUATION (Best Experts + Best Global Head)
+================================================================================
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions_alpha_ablation_full_eval.py:629: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+🔄 Loaded best Expert 0 weights for clean eval from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+🔄 Loaded best Expert 1 weights for clean eval from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+🔄 Loaded best Expert 2 weights for clean eval from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+🔄 Loaded best Expert 3 weights for clean eval from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions_alpha_ablation_full_eval.py:644: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(best_global_head_path, map_location=device)
+🔄 Loaded best Global Head for clean eval from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/global_best/global_head_best.pth
+  Clean Test Accuracy (best experts + best head): 80.34% | Loss: 1.4729
+
+================================================================================
+PHASE 3: POST-TRAINING EVALUATION (α=0.5)
+================================================================================
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions_alpha_ablation_full_eval.py:684: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+🔄 Loaded best Expert 0 from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_0_best.pth
+🔄 Loaded best Expert 1 from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_1_best.pth
+🔄 Loaded best Expert 2 from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_2_best.pth
+🔄 Loaded best Expert 3 from ../fusion_checkpoints_alpha_ablation_full_eval/densenet_fusions_alpha_0.5/concatenation/experts_best/expert_3_best.pth
+
+============================================================
+POST-TRAINING: Gaussian Noise Robustness
+============================================================
+
+Testing Expert 0 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 1 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 2 (POST-TRAINING) under Gaussian noise...
+
+Testing Expert 3 (POST-TRAINING) under Gaussian noise...
+
+Testing Trained Fusion Model under Gaussian noise...
+
+============================================================
+POST-TRAINING: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 31.29% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 16.72% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.19% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 38.95% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 71.81% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 60.05% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 52.96% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.52% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.51% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.09% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 48.88% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 16.21% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.17% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 17.93% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.15% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 18.06% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.92% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.53% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.25% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.89% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.53% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 77.12% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 77.20% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.34% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 34.14% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 16.95% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.44% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.26% accuracy
+
+Testing Expert 1 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 30.89% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 15.54% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.40% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 43.87% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.58% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 62.83% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.39% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 42.68% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 76.90% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.52% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 46.67% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 17.18% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.97% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 17.32% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 45.81% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.42% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.35% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.98% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.62% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 75.82% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 76.72% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.44% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.39% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.76% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 32.20% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 15.43% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 76.73% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 76.61% accuracy
+
+Testing Expert 2 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 30.01% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 15.10% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.02% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 39.78% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.37% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 60.55% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 53.96% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.25% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.78% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.99% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 45.26% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 16.46% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 43.76% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.85% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 43.74% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.39% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.02% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.36% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.34% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.71% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.35% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 77.11% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 77.35% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.41% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 33.14% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 13.85% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.20% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.38% accuracy
+
+Testing Expert 3 (POST-TRAINING) on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 28.18% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.50% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.52% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 41.28% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.71% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.55% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 51.81% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 38.69% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.26% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.18% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 45.72% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 15.92% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 41.66% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.33% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 41.72% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.00% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.41% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.85% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.33% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.73% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.32% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.77% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.70% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.34% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 31.61% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 15.72% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.27% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.13% accuracy
+
+Testing Trained Fusion Model on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 33.24% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 16.89% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.34% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 44.16% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 75.92% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 65.81% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 57.91% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 45.31% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 80.62% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 80.56% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.31% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 17.99% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 47.67% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 18.71% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 47.93% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 17.65% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 6.10% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.66% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 80.17% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 79.85% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 80.17% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 79.82% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 80.06% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 79.47% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 35.79% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 16.56% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 80.35% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 80.19% accuracy
+
+============================================================
+POST-TRAINING: Out-of-Distribution Detection
+============================================================
+
+Testing Expert 0 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 1 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 2 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Expert 3 (POST-TRAINING) on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+Testing Trained Fusion Model on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+
+✅ POST-TRAINING evaluation completed!
+   Results saved to: ../fusion_checkpoints_alpha_ablation_full_eval/csv_logs/densenet_fusions/densenet_concatenation_alpha_0.5_post_training_evaluation.csv
+
+================================================================================
+PHASE 4: COMPREHENSIVE ROBUSTNESS EVALUATION (α=0.5)
+================================================================================
+
+🔍 Running comprehensive robustness evaluation...
+
+================================================================================
+Starting Phase 1, 2 & 3 Robustness Evaluation for DenseNet concatenation (α=0.5)
+================================================================================
+📊 OOD evaluation CSV created: ../fusion_checkpoints_alpha_ablation_full_eval/ood_evaluation_concatenation_alpha_0.5_20250901_122507.csv
+
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Files already downloaded and verified
+
+============================================================
+GAUSSIAN NOISE ROBUSTNESS
+============================================================
+Evaluating sigmas: [0.0, 0.05, 0.1, 0.2, 0.3]
+
+Testing Expert 0 under Gaussian noise...
+  Expert 0 noise results: σ=0.0: 77.54%, σ=0.05: 68.92%, σ=0.1: 48.43%, σ=0.2: 19.55%, σ=0.3: 9.38%
+
+Testing Expert 1 under Gaussian noise...
+  Expert 1 noise results: σ=0.0: 76.88%, σ=0.05: 68.98%, σ=0.1: 49.66%, σ=0.2: 18.79%, σ=0.3: 8.07%
+
+Testing Expert 2 under Gaussian noise...
+  Expert 2 noise results: σ=0.0: 77.50%, σ=0.05: 70.49%, σ=0.1: 48.99%, σ=0.2: 18.02%, σ=0.3: 8.28%
+
+Testing Expert 3 under Gaussian noise...
+  Expert 3 noise results: σ=0.0: 77.46%, σ=0.05: 68.36%, σ=0.1: 46.29%, σ=0.2: 17.19%, σ=0.3: 8.72%
+
+Testing Baseline DenseNet under Gaussian noise...
+  Baseline noise results: σ=0.0: 83.69%, σ=0.05: 76.26%, σ=0.1: 57.13%, σ=0.2: 27.74%, σ=0.3: 15.56%
+
+Testing Global Fusion Model under Gaussian noise...
+  Fusion noise results: σ=0.0: 80.34%, σ=0.05: 72.82%, σ=0.1: 52.63%, σ=0.2: 20.00%, σ=0.3: 9.43%
+
+============================================================
+PHASE 1: CIFAR-100-C Corruption Robustness
+============================================================
+
+Testing Expert 0 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 31.13% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 16.64% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.23% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 38.81% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.07% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 60.01% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 53.28% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.49% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.51% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.09% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 48.88% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 16.21% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 43.78% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 18.27% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.38% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 18.26% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.98% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 2.48% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.25% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.89% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.53% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 77.12% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 77.22% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.53% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 34.14% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 16.95% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.67% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.14% accuracy
+  Expert 0 Average Corruption Accuracy: 47.82%
+
+Testing Expert 1 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 31.35% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 15.48% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 5.49% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 43.30% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.09% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 62.84% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 54.61% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 42.58% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 76.90% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.52% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 46.67% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 17.18% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 45.04% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 17.72% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 44.80% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.35% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.54% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.96% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 76.62% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 75.82% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 76.72% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.44% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.52% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.94% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 32.20% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 15.43% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 76.57% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 76.59% accuracy
+  Expert 1 Average Corruption Accuracy: 47.65%
+
+Testing Expert 2 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 29.89% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.73% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.16% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 39.24% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.22% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.40% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 53.87% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 41.32% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.78% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 76.99% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 45.26% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 16.46% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 44.21% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 17.28% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 43.90% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.30% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.02% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.33% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.34% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.71% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.35% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 77.11% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 77.38% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 76.54% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 33.14% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 13.85% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.36% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.37% accuracy
+  Expert 2 Average Corruption Accuracy: 47.27%
+
+Testing Expert 3 on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 27.89% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 14.88% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 3.53% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 41.04% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 72.82% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 61.80% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 51.41% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 39.14% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 77.26% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 77.18% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 45.72% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 15.92% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 41.37% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 16.63% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 41.77% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 15.30% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 5.55% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.78% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 77.33% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 76.73% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 77.32% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 76.77% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 76.83% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 75.99% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 31.61% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 15.72% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 77.02% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 77.19% accuracy
+  Expert 3 Average Corruption Accuracy: 46.91%
+
+Testing Baseline DenseNet on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 39.53% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 24.20% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 10.16% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 52.19% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 79.09% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 69.81% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 61.61% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 49.13% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 83.25% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 82.94% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 60.76% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 25.22% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 51.76% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 24.40% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 52.49% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 24.44% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 11.33% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 3.52% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 83.44% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 83.18% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 83.41% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 83.32% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 82.86% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 82.52% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 43.60% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 21.61% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 83.50% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 83.47% accuracy
+  Baseline DenseNet Average Corruption Accuracy: 54.88%
+
+Testing Global Fusion Model on corruptions...
+  Testing gaussian_noise at severity 1...
+Files already downloaded and verified
+    gaussian_noise severity 1: 33.54% accuracy
+  Testing gaussian_noise at severity 2...
+Files already downloaded and verified
+    gaussian_noise severity 2: 16.90% accuracy
+  Testing shot_noise at severity 1...
+Files already downloaded and verified
+    shot_noise severity 1: 4.18% accuracy
+  Testing shot_noise at severity 2...
+Files already downloaded and verified
+    shot_noise severity 2: 44.46% accuracy
+  Testing impulse_noise at severity 1...
+Files already downloaded and verified
+    impulse_noise severity 1: 75.60% accuracy
+  Testing impulse_noise at severity 2...
+Files already downloaded and verified
+    impulse_noise severity 2: 65.39% accuracy
+  Testing defocus_blur at severity 1...
+Files already downloaded and verified
+    defocus_blur severity 1: 57.98% accuracy
+  Testing defocus_blur at severity 2...
+Files already downloaded and verified
+    defocus_blur severity 2: 44.89% accuracy
+  Testing motion_blur at severity 1...
+Files already downloaded and verified
+    motion_blur severity 1: 80.62% accuracy
+  Testing motion_blur at severity 2...
+Files already downloaded and verified
+    motion_blur severity 2: 80.56% accuracy
+  Testing zoom_blur at severity 1...
+Files already downloaded and verified
+    zoom_blur severity 1: 50.31% accuracy
+  Testing zoom_blur at severity 2...
+Files already downloaded and verified
+    zoom_blur severity 2: 17.99% accuracy
+  Testing snow at severity 1...
+Files already downloaded and verified
+    snow severity 1: 47.85% accuracy
+  Testing snow at severity 2...
+Files already downloaded and verified
+    snow severity 2: 18.58% accuracy
+  Testing frost at severity 1...
+Files already downloaded and verified
+    frost severity 1: 47.70% accuracy
+  Testing frost at severity 2...
+Files already downloaded and verified
+    frost severity 2: 17.87% accuracy
+  Testing fog at severity 1...
+Files already downloaded and verified
+    fog severity 1: 6.10% accuracy
+  Testing fog at severity 2...
+Files already downloaded and verified
+    fog severity 2: 1.67% accuracy
+  Testing brightness at severity 1...
+Files already downloaded and verified
+    brightness severity 1: 80.17% accuracy
+  Testing brightness at severity 2...
+Files already downloaded and verified
+    brightness severity 2: 79.85% accuracy
+  Testing contrast at severity 1...
+Files already downloaded and verified
+    contrast severity 1: 80.17% accuracy
+  Testing contrast at severity 2...
+Files already downloaded and verified
+    contrast severity 2: 79.82% accuracy
+  Testing elastic_transform at severity 1...
+Files already downloaded and verified
+    elastic_transform severity 1: 79.95% accuracy
+  Testing elastic_transform at severity 2...
+Files already downloaded and verified
+    elastic_transform severity 2: 79.41% accuracy
+  Testing pixelate at severity 1...
+Files already downloaded and verified
+    pixelate severity 1: 35.79% accuracy
+  Testing pixelate at severity 2...
+Files already downloaded and verified
+    pixelate severity 2: 16.56% accuracy
+  Testing jpeg_compression at severity 1...
+Files already downloaded and verified
+    jpeg_compression severity 1: 80.32% accuracy
+  Testing jpeg_compression at severity 2...
+Files already downloaded and verified
+    jpeg_compression severity 2: 80.13% accuracy
+  Global Fusion Model Average Corruption Accuracy: 50.16%
+
+============================================================
+PHASE 3: Out-of-Distribution Detection
+============================================================
+
+4. OOD Detection Evaluation
+------------------------------------------------------------
+
+Testing Expert 0 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 0 OOD Results:
+    Expert 0 OOD (cifar10): AUROC=0.7179, AUPR=0.6958, FPR95=0.8202
+    Expert 0 OOD (svhn): AUROC=0.7197, AUPR=0.8598, FPR95=0.8470
+    Expert 0 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 0 OOD (synthetic_gaussian): AUROC=0.8682, AUPR=0.8128, FPR95=0.3352
+    Expert 0 OOD (synthetic_uniform): AUROC=0.8883, AUPR=0.8375, FPR95=0.2861
+
+Testing Expert 1 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 1 OOD Results:
+    Expert 1 OOD (cifar10): AUROC=0.7141, AUPR=0.6934, FPR95=0.8577
+    Expert 1 OOD (svhn): AUROC=0.7994, AUPR=0.8909, FPR95=0.6402
+    Expert 1 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 1 OOD (synthetic_gaussian): AUROC=0.8327, AUPR=0.8009, FPR95=0.6454
+    Expert 1 OOD (synthetic_uniform): AUROC=0.8635, AUPR=0.8229, FPR95=0.4938
+
+Testing Expert 2 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 2 OOD Results:
+    Expert 2 OOD (cifar10): AUROC=0.7233, AUPR=0.7023, FPR95=0.8148
+    Expert 2 OOD (svhn): AUROC=0.7375, AUPR=0.8557, FPR95=0.7673
+    Expert 2 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 2 OOD (synthetic_gaussian): AUROC=0.4873, AUPR=0.4428, FPR95=0.6970
+    Expert 2 OOD (synthetic_uniform): AUROC=0.4614, AUPR=0.4315, FPR95=0.7082
+
+Testing Expert 3 on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Expert 3 OOD Results:
+    Expert 3 OOD (cifar10): AUROC=0.7287, AUPR=0.7068, FPR95=0.8077
+    Expert 3 OOD (svhn): AUROC=0.8459, AUPR=0.9261, FPR95=0.6139
+    Expert 3 OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Expert 3 OOD (synthetic_gaussian): AUROC=0.9687, AUPR=0.9508, FPR95=0.0928
+    Expert 3 OOD (synthetic_uniform): AUROC=0.9773, AUPR=0.9698, FPR95=0.0818
+
+Testing Baseline DenseNet on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Baseline DenseNet OOD Results:
+    Baseline DenseNet OOD (cifar10): AUROC=0.6751, AUPR=0.7001, FPR95=0.9430
+    Baseline DenseNet OOD (svhn): AUROC=0.8385, AUPR=0.9338, FPR95=0.7609
+    Baseline DenseNet OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Baseline DenseNet OOD (synthetic_gaussian): AUROC=0.8120, AUPR=0.7145, FPR95=0.4882
+    Baseline DenseNet OOD (synthetic_uniform): AUROC=0.6871, AUPR=0.6047, FPR95=0.7380
+
+Testing Global Fusion Model on OOD detection...
+    Computing in-distribution scores...
+    Testing on CIFAR-10...
+Files already downloaded and verified
+    Testing on SVHN...
+Using downloaded and verified file: ../data/test_32x32.mat
+    Testing on TinyImageNet...
+    Testing on synthetic Gaussian noise...
+    Testing on synthetic uniform noise...
+  Global Fusion Model OOD Results:
+    Fusion Model OOD (cifar10): AUROC=0.6681, AUPR=0.6611, FPR95=0.8859
+    Fusion Model OOD (svhn): AUROC=0.8366, AUPR=0.9220, FPR95=0.6633
+    Fusion Model OOD (tinyimagenet): AUROC=0.7500, AUPR=0.7000, FPR95=0.2500
+    Fusion Model OOD (synthetic_gaussian): AUROC=0.9932, AUPR=0.9878, FPR95=0.0205
+    Fusion Model OOD (synthetic_uniform): AUROC=0.9940, AUPR=0.9896, FPR95=0.0186
+
+✅ Robustness evaluation completed!
+   Results saved to: ../fusion_checkpoints_alpha_ablation_full_eval/csv_logs/densenet_fusions/densenet_concatenation_alpha_0.5_robustness_evaluation.csv
+   OOD results saved to: ../fusion_checkpoints_alpha_ablation_full_eval/ood_evaluation_concatenation_alpha_0.5_20250901_122507.csv
+   Model types tested: Experts, Baseline, Global Fusion Model
+   Test types: CIFAR-100-C corruptions + OOD detection + Gaussian noise
+✅ Experiment 16 completed: densenet concatenation fusion, alpha=0.5 (Alpha Ablation Full Eval)

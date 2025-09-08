@@ -1,0 +1,5 @@
+==========================================
+SLURM_JOB_ID = 10872
+SLURM_NODELIST = pascal-node10.l3s.intra
+==========================================
+slurmstepd: error: *** JOB 10872 ON pascal-node10.l3s.intra CANCELLED AT 2025-09-02T08:36:36 ***

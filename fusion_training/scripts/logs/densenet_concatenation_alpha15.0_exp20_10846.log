@@ -1,0 +1,59 @@
+==========================================
+SLURM_JOB_ID = 10846
+SLURM_NODELIST = pascal-node10.l3s.intra
+==========================================
+Starting DenseNet concatenation fusion training...
+Alpha: 15.0
+Checkpoint directory: ../../expert_training/scripts/checkpoints_expert_iid
+Output directory: ../fusion_checkpoints
+Using device: cuda
+Loading DenseNet expert backbones...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:75: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Successfully loaded 4 DenseNet experts
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Creating DenseNet MCN fusion model...
+Creating DenseNet MCN model:
+  - Fusion type: concatenation
+  - Input dimension: 1024
+  - Hidden dimension: 1024 (matches feature dimension)
+  - Alpha: 15.0
+✅ Successfully created DenseNet MCN fusion model
+⏭️  Skipping Phase 1 pre-training evaluation by flag --skip_pre_eval
+
+================================================================================
+PHASE 2: FUSION TRAINING (α=15.0)
+================================================================================
+Loading data splits for fusion training...
+Files already downloaded and verified
+Loaded 10000 fusion holdout samples for training.
+✅ Using SOTA augmentation: DenseNet with moderate augmentation for stability
+Files already downloaded and verified
+Files already downloaded and verified
+Using 10000 samples from the official test set for validation.
+✅ Data splits loaded successfully
+CSV logging setup: ../fusion_checkpoints/csv_logs/densenet_fusions/densenet_concatenation_alpha_15.0_training_log.csv
+
+DenseNet concatenation fusion training configuration:
+  - Alpha: 15.0
+  - Epochs: 100
+  - Batch Size: 128
+  - CSV Logging: ../fusion_checkpoints/csv_logs/densenet_fusions/densenet_concatenation_alpha_15.0_training_log.csv
+  - Output Directory: ../fusion_checkpoints
+  - Experiment Output: ../fusion_checkpoints/densenet_fusions_alpha_15.0/concatenation
+
+🚀 Starting DenseNet concatenation fusion training with alpha=15.0...
+   Advanced Augmentation: CUTMIX
+   CutMix α=1.0, Label Smoothing=0.1, Grad Clip=1.0
+Large input_dim (1024): Reducing LRs for stability
+Large input_dim (1024): Reducing LRs for stability
+Training fusion model with alpha=15.0
+Fusion type: concatenation
+Learning rates: base_lr=7.00e-05, head_lr=8.00e-04
+Rationale: Feature concatenation with balanced learning
+Total parameters: 33,550,324
+Trainable parameters: 33,550,324
+Epoch 1/100, Batch 0/79, Loss: 182.3329 (Global: 4.6124, Individual: 11.8480)
+slurmstepd: error: *** JOB 10846 ON pascal-node10.l3s.intra CANCELLED AT 2025-09-02T08:33:48 ***

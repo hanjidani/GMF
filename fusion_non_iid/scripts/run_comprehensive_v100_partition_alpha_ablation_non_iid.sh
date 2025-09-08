@@ -6,7 +6,7 @@
 set -eo pipefail
 
 ALPHAS=(0.5 1.0 5.0 10.0 15.0)
-FUSION_TYPES=("multiplicative" "multiplicativeAddition" "TransformerBase" "concatenation" "simpleAddition")
+FUSION_TYPES=("multiplicative" "multiplicativeAddition" "multiplicativeShifted" "TransformerBase" "concatenation" "simpleAddition")
 
 SLURM_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOGS_DIR="$SLURM_SCRIPTS_DIR/logs_alpha_ablation_non_iid"
@@ -70,7 +70,7 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 
 exp_id=1
-BATCH_SIZE=13
+BATCH_SIZE=15
 
 # Create array of all experiment combinations
 experiments=()

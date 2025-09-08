@@ -1,0 +1,50 @@
+==========================================
+SLURM_JOB_ID = 10729
+SLURM_NODELIST = pascal-node10.l3s.intra
+==========================================
+==========================================
+Alpha Ablation (Full Eval) Experiment 7: improved_wide_resnet multiplicativeAddition fusion, alpha=1.0
+SLURM_JOB_ID = 
+SLURM_NODELIST = 
+Alpha: 1.0
+Augmentation: CutMix (α=1.0) + Label Smoothing (0.1) + Grad Clip (1.0)
+No LR schedulers (fixed LR); Full evaluation enabled
+==========================================
+Starting WideResNet multiplicativeAddition fusion training (alpha-ablation, full evaluation, no schedulers)...
+Alpha: 1.0
+Checkpoint directory: ../../expert_training/scripts/checkpoints_expert_iid
+Output directory: ../fusion_checkpoints_alpha_ablation_full_eval
+Using device: cuda
+Loading Improved WideResNet expert backbones...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_improved_wide_resnet_fusions_alpha_ablation_full_eval.py:83: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Traceback (most recent call last):
+  File "/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_improved_wide_resnet_fusions_alpha_ablation_full_eval.py", line 1212, in <module>
+    main()
+  File "/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_improved_wide_resnet_fusions_alpha_ablation_full_eval.py", line 787, in main
+    expert_backbones = load_wideresnet_experts(args.checkpoint_dir, 4, device)
+  File "/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_improved_wide_resnet_fusions_alpha_ablation_full_eval.py", line 83, in load_wideresnet_experts
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 1360, in load
+    return _load(
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 1848, in _load
+    result = unpickler.load()
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 1812, in persistent_load
+    typed_storage = load_tensor(
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 1784, in load_tensor
+    wrap_storage=restore_location(storage, location),
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 1690, in restore_location
+    return default_restore_location(storage, str(map_location))
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 601, in default_restore_location
+    result = fn(storage, location)
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/serialization.py", line 540, in _deserialize
+    return obj.to(device=device)
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/storage.py", line 279, in to
+    return _to(self, device, non_blocking)
+  File "/home/ali.rasekh/miniconda3/envs/newenv/envs/orm/lib/python3.10/site-packages/torch/_utils.py", line 88, in _to
+    untyped_storage = torch.UntypedStorage(self.size(), device=device)
+RuntimeError: CUDA error: uncorrectable ECC error encountered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

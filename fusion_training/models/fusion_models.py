@@ -125,6 +125,37 @@ class MultiplicativeAdditionFusion(nn.Module):
         return fused
 
 
+class MultiplicativeShiftedFusion(nn.Module):
+    """
+    Multiplicative fusion with +1 shift: element-wise product of (LayerNorm(f_k) + 1)
+    followed by an MLP for nonlinearity.
+    """
+    def __init__(self, num_experts, input_dim, hidden_dim=None):
+        super().__init__()
+        self.num_experts = num_experts
+        self.input_dim = input_dim
+        
+        if hidden_dim is None:
+            hidden_dim = input_dim
+        else:
+            hidden_dim = input_dim
+        
+        self.norms = nn.ModuleList([nn.LayerNorm(input_dim) for _ in range(num_experts)])
+        
+        self.mlp = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(hidden_dim, input_dim)
+        )
+    
+    def forward(self, features_list):
+        normalized = [norm(f) for norm, f in zip(self.norms, features_list)]
+        shifted = [f + 1 for f in normalized]
+        fused = torch.stack(shifted, dim=0).prod(dim=0)
+        fused = self.mlp(fused)
+        return fused
+
 class TransformerBaseFusion(nn.Module):
     """
     Transformer-based fusion: uses attention mechanism for feature fusion
@@ -225,6 +256,8 @@ class MCNFusionModel(nn.Module):
             self.fusion_module = MultiplicativeFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "multiplicativeAddition":
             self.fusion_module = MultiplicativeAdditionFusion(len(expert_backbones), input_dim, hidden_dim)
+        elif fusion_type == "multiplicativeShifted":
+            self.fusion_module = MultiplicativeShiftedFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "TransformerBase":
             self.fusion_module = TransformerBaseFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "concatenation":
@@ -232,7 +265,7 @@ class MCNFusionModel(nn.Module):
         elif fusion_type == "simpleAddition":
             self.fusion_module = SimpleAdditionFusion(len(expert_backbones), input_dim, hidden_dim)
         else:
-            raise ValueError(f"Unknown fusion type: {fusion_type}. Available: ['multiplicative', 'multiplicativeAddition', 'TransformerBase', 'concatenation', 'simpleAddition']")
+            raise ValueError(f"Unknown fusion type: {fusion_type}. Available: ['multiplicative', 'multiplicativeAddition', 'multiplicativeShifted', 'TransformerBase', 'concatenation', 'simpleAddition']")
         
         self.global_head = nn.Linear(input_dim, num_classes)
 

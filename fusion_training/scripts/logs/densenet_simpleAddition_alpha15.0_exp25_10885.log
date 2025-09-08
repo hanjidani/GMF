@@ -1,0 +1,939 @@
+==========================================
+SLURM_JOB_ID = 10885
+SLURM_NODELIST = pascal-node10.l3s.intra
+==========================================
+Starting DenseNet simpleAddition fusion training...
+Alpha: 15.0
+Checkpoint directory: ../../expert_training/scripts/checkpoints_expert_iid
+Output directory: ../fusion_checkpoints
+Using device: cuda
+Loading DenseNet expert backbones...
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:75: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Successfully loaded 4 DenseNet experts
+Loading baseline DenseNet model from: ../../expert_training/scripts/checkpoints_expert_full_dataset_benchmark_250/best_full_dataset_densenet121_benchmark_250.pth
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:95: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Creating DenseNet MCN fusion model...
+Creating DenseNet MCN model:
+  - Fusion type: simpleAddition
+  - Input dimension: 1024
+  - Hidden dimension: 1024 (matches feature dimension)
+  - Alpha: 15.0
+✅ Successfully created DenseNet MCN fusion model
+⏭️  Skipping Phase 1 pre-training evaluation by flag --skip_pre_eval
+
+================================================================================
+PHASE 2: FUSION TRAINING (α=15.0)
+================================================================================
+Loading data splits for fusion training...
+Files already downloaded and verified
+Loaded 10000 fusion holdout samples for training.
+✅ Using SOTA augmentation: DenseNet with moderate augmentation for stability
+Files already downloaded and verified
+Files already downloaded and verified
+Using 10000 samples from the official test set for validation.
+✅ Data splits loaded successfully
+CSV logging setup: ../fusion_checkpoints/csv_logs/densenet_fusions/densenet_simpleAddition_alpha_15.0_training_log.csv
+
+DenseNet simpleAddition fusion training configuration:
+  - Alpha: 15.0
+  - Epochs: 100
+  - Batch Size: 128
+  - CSV Logging: ../fusion_checkpoints/csv_logs/densenet_fusions/densenet_simpleAddition_alpha_15.0_training_log.csv
+  - Output Directory: ../fusion_checkpoints
+  - Experiment Output: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition
+
+🚀 Starting DenseNet simpleAddition fusion training with alpha=15.0...
+   Advanced Augmentation: CUTMIX
+   CutMix α=1.0, Label Smoothing=0.1, Grad Clip=1.0
+Large input_dim (1024): Reducing LRs for stability
+Large input_dim (1024): Reducing LRs for stability
+Training fusion model with alpha=15.0
+Fusion type: simpleAddition
+Learning rates: base_lr=7.00e-05, head_lr=8.00e-04
+Rationale: Direct feature addition with MLP processing for nonlinearity
+Total parameters: 30,396,408
+Trainable parameters: 30,396,408
+Epoch 1/100, Batch 0/79, Loss: 193.2107 (Global: 4.6054, Individual: 12.5737)
+Epoch 1/100, Batch 50/79, Loss: 127.4579 (Global: 3.5758, Individual: 8.2588)
+  🔸 Saved new best Expert 0 (val acc 75.32%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.15%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 75.48%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 75.45%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_3_best.pth
+Epoch 1/100:
+  Train Loss: 159.8135, Train Acc: 15.28%
+  Val Loss: 64.5757, Val Acc: 54.38%
+  Expert Accuracies: Expert 0: 75.32%, Expert 1: 75.15%, Expert 2: 75.48%, Expert 3: 75.45%
+  Current LRs: Experts=7.00e-05, Fusion=8.00e-04, Global=8.00e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 54.38%
+Epoch 2/100, Batch 0/79, Loss: 171.0006 (Global: 3.5699, Individual: 11.1620)
+Epoch 2/100, Batch 50/79, Loss: 113.5707 (Global: 2.2646, Individual: 7.4204)
+  🔸 Saved new best Expert 0 (val acc 76.01%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.30%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 75.87%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_2_best.pth
+Epoch 2/100:
+  Train Loss: 151.5935, Train Acc: 43.02%
+  Val Loss: 62.1890, Val Acc: 73.53%
+  Expert Accuracies: Expert 0: 76.01%, Expert 1: 75.30%, Expert 2: 75.87%, Expert 3: 75.38%
+  Current LRs: Experts=6.99e-05, Fusion=7.99e-04, Global=7.99e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 73.53%
+Epoch 3/100, Batch 0/79, Loss: 153.3907 (Global: 2.9435, Individual: 10.0298)
+Epoch 3/100, Batch 50/79, Loss: 142.6816 (Global: 2.6069, Individual: 9.3383)
+  🔸 Saved new best Expert 0 (val acc 76.20%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.47%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 76.26%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_2_best.pth
+  🔸 Saved new best Expert 3 (val acc 75.79%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_3_best.pth
+Epoch 3/100:
+  Train Loss: 144.6060, Train Acc: 53.10%
+  Val Loss: 61.3164, Val Acc: 76.04%
+  Expert Accuracies: Expert 0: 76.20%, Expert 1: 75.47%, Expert 2: 76.26%, Expert 3: 75.79%
+  Current LRs: Experts=6.99e-05, Fusion=7.98e-04, Global=7.98e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 76.04%
+Epoch 4/100, Batch 0/79, Loss: 163.9085 (Global: 3.0204, Individual: 10.7259)
+Epoch 4/100, Batch 50/79, Loss: 149.6950 (Global: 2.7366, Individual: 9.7972)
+  🔸 Saved new best Expert 1 (val acc 75.54%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 2 (val acc 76.39%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_2_best.pth
+Epoch 4/100:
+  Train Loss: 146.4817, Train Acc: 51.14%
+  Val Loss: 60.9597, Val Acc: 77.00%
+  Expert Accuracies: Expert 0: 76.20%, Expert 1: 75.54%, Expert 2: 76.39%, Expert 3: 75.54%
+  Current LRs: Experts=6.98e-05, Fusion=7.97e-04, Global=7.97e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 77.00%
+Epoch 5/100, Batch 0/79, Loss: 176.5453 (Global: 3.0831, Individual: 11.5641)
+Epoch 5/100, Batch 50/79, Loss: 152.9740 (Global: 2.7517, Individual: 10.0148)
+  🔸 Saved new best Expert 0 (val acc 76.33%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 1 (val acc 75.84%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.20%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_3_best.pth
+Epoch 5/100:
+  Train Loss: 142.6839, Train Acc: 54.65%
+  Val Loss: 61.6696, Val Acc: 77.25%
+  Expert Accuracies: Expert 0: 76.33%, Expert 1: 75.84%, Expert 2: 76.04%, Expert 3: 76.20%
+  Current LRs: Experts=6.96e-05, Fusion=7.96e-04, Global=7.96e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 77.25%
+Epoch 6/100, Batch 0/79, Loss: 115.2707 (Global: 2.0827, Individual: 7.5459)
+Epoch 6/100, Batch 50/79, Loss: 112.1661 (Global: 2.0032, Individual: 7.3442)
+Epoch 6/100:
+  Train Loss: 140.9576, Train Acc: 56.80%
+  Val Loss: 61.7377, Val Acc: 78.02%
+  Expert Accuracies: Expert 0: 76.04%, Expert 1: 75.49%, Expert 2: 75.69%, Expert 3: 76.11%
+  Current LRs: Experts=6.94e-05, Fusion=7.94e-04, Global=7.94e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.02%
+Epoch 7/100, Batch 0/79, Loss: 169.1009 (Global: 3.0196, Individual: 11.0721)
+Epoch 7/100, Batch 50/79, Loss: 141.7244 (Global: 2.4627, Individual: 9.2841)
+Epoch 7/100:
+  Train Loss: 135.3109, Train Acc: 61.55%
+  Val Loss: 62.1722, Val Acc: 77.86%
+  Expert Accuracies: Expert 0: 76.14%, Expert 1: 75.55%, Expert 2: 75.66%, Expert 3: 75.55%
+  Current LRs: Experts=6.92e-05, Fusion=7.91e-04, Global=7.91e-04
+  📊 Training progress logged to CSV
+Epoch 8/100, Batch 0/79, Loss: 163.2124 (Global: 2.9352, Individual: 10.6851)
+Epoch 8/100, Batch 50/79, Loss: 124.3867 (Global: 2.2005, Individual: 8.1457)
+  🔸 Saved new best Expert 0 (val acc 76.40%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+  🔸 Saved new best Expert 3 (val acc 76.31%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_3_best.pth
+Epoch 8/100:
+  Train Loss: 135.2581, Train Acc: 60.83%
+  Val Loss: 61.2084, Val Acc: 78.07%
+  Expert Accuracies: Expert 0: 76.40%, Expert 1: 75.83%, Expert 2: 75.85%, Expert 3: 76.31%
+  Current LRs: Experts=6.90e-05, Fusion=7.89e-04, Global=7.89e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.07%
+Epoch 9/100, Batch 0/79, Loss: 115.0869 (Global: 2.0075, Individual: 7.5386)
+Epoch 9/100, Batch 50/79, Loss: 135.4261 (Global: 2.3064, Individual: 8.8746)
+  🔸 Saved new best Expert 0 (val acc 76.51%) to ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+Epoch 9/100:
+  Train Loss: 130.0325, Train Acc: 64.70%
+  Val Loss: 62.1934, Val Acc: 78.37%
+  Expert Accuracies: Expert 0: 76.51%, Expert 1: 74.96%, Expert 2: 75.71%, Expert 3: 75.58%
+  Current LRs: Experts=6.87e-05, Fusion=7.86e-04, Global=7.86e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.37%
+Epoch 10/100, Batch 0/79, Loss: 86.6525 (Global: 1.4682, Individual: 5.6789)
+Epoch 10/100, Batch 50/79, Loss: 115.2938 (Global: 2.0122, Individual: 7.5521)
+Epoch 10/100:
+  Train Loss: 133.7336, Train Acc: 62.36%
+  Val Loss: 63.1071, Val Acc: 78.29%
+  Expert Accuracies: Expert 0: 75.81%, Expert 1: 75.26%, Expert 2: 75.35%, Expert 3: 75.36%
+  Current LRs: Experts=6.85e-05, Fusion=7.82e-04, Global=7.82e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_10.pth
+Epoch 11/100, Batch 0/79, Loss: 145.0034 (Global: 2.5548, Individual: 9.4966)
+Epoch 11/100, Batch 50/79, Loss: 153.8084 (Global: 2.6769, Individual: 10.0754)
+Epoch 11/100:
+  Train Loss: 133.1521, Train Acc: 61.98%
+  Val Loss: 63.3831, Val Acc: 77.82%
+  Expert Accuracies: Expert 0: 75.79%, Expert 1: 75.15%, Expert 2: 75.75%, Expert 3: 75.41%
+  Current LRs: Experts=6.81e-05, Fusion=7.79e-04, Global=7.79e-04
+  📊 Training progress logged to CSV
+Epoch 12/100, Batch 0/79, Loss: 151.0342 (Global: 2.6447, Individual: 9.8926)
+Epoch 12/100, Batch 50/79, Loss: 132.0649 (Global: 2.3554, Individual: 8.6473)
+Epoch 12/100:
+  Train Loss: 130.5274, Train Acc: 63.30%
+  Val Loss: 63.6717, Val Acc: 78.89%
+  Expert Accuracies: Expert 0: 76.14%, Expert 1: 75.51%, Expert 2: 76.04%, Expert 3: 75.46%
+  Current LRs: Experts=6.78e-05, Fusion=7.75e-04, Global=7.75e-04
+  📊 Training progress logged to CSV
+  New best validation accuracy: 78.89%
+Epoch 13/100, Batch 0/79, Loss: 146.2938 (Global: 2.4931, Individual: 9.5867)
+Epoch 13/100, Batch 50/79, Loss: 116.5551 (Global: 2.0259, Individual: 7.6353)
+Epoch 13/100:
+  Train Loss: 127.3861, Train Acc: 62.71%
+  Val Loss: 63.8304, Val Acc: 78.08%
+  Expert Accuracies: Expert 0: 75.75%, Expert 1: 74.92%, Expert 2: 75.70%, Expert 3: 75.65%
+  Current LRs: Experts=6.74e-05, Fusion=7.70e-04, Global=7.70e-04
+  📊 Training progress logged to CSV
+Epoch 14/100, Batch 0/79, Loss: 146.9087 (Global: 2.5439, Individual: 9.6243)
+Epoch 14/100, Batch 50/79, Loss: 122.3726 (Global: 2.0998, Individual: 8.0182)
+Epoch 14/100:
+  Train Loss: 129.6747, Train Acc: 64.19%
+  Val Loss: 65.0633, Val Acc: 78.32%
+  Expert Accuracies: Expert 0: 75.59%, Expert 1: 74.93%, Expert 2: 75.09%, Expert 3: 75.46%
+  Current LRs: Experts=6.70e-05, Fusion=7.66e-04, Global=7.66e-04
+  📊 Training progress logged to CSV
+Epoch 15/100, Batch 0/79, Loss: 69.5123 (Global: 1.1901, Individual: 4.5548)
+Epoch 15/100, Batch 50/79, Loss: 151.8356 (Global: 2.6383, Individual: 9.9465)
+Epoch 15/100:
+  Train Loss: 122.7000, Train Acc: 70.68%
+  Val Loss: 65.8358, Val Acc: 78.23%
+  Expert Accuracies: Expert 0: 75.57%, Expert 1: 74.95%, Expert 2: 75.57%, Expert 3: 75.35%
+  Current LRs: Experts=6.66e-05, Fusion=7.61e-04, Global=7.61e-04
+  📊 Training progress logged to CSV
+Epoch 16/100, Batch 0/79, Loss: 74.7515 (Global: 1.2966, Individual: 4.8970)
+Epoch 16/100, Batch 50/79, Loss: 132.6105 (Global: 2.2632, Individual: 8.6898)
+Epoch 16/100:
+  Train Loss: 122.3798, Train Acc: 68.59%
+  Val Loss: 66.1597, Val Acc: 77.85%
+  Expert Accuracies: Expert 0: 74.97%, Expert 1: 74.45%, Expert 2: 75.06%, Expert 3: 75.24%
+  Current LRs: Experts=6.61e-05, Fusion=7.55e-04, Global=7.55e-04
+  📊 Training progress logged to CSV
+Epoch 17/100, Batch 0/79, Loss: 157.5961 (Global: 2.6687, Individual: 10.3285)
+Epoch 17/100, Batch 50/79, Loss: 85.3094 (Global: 1.4387, Individual: 5.5914)
+Epoch 17/100:
+  Train Loss: 123.5888, Train Acc: 65.67%
+  Val Loss: 66.9157, Val Acc: 78.31%
+  Expert Accuracies: Expert 0: 74.90%, Expert 1: 74.29%, Expert 2: 74.89%, Expert 3: 75.46%
+  Current LRs: Experts=6.56e-05, Fusion=7.50e-04, Global=7.50e-04
+  📊 Training progress logged to CSV
+Epoch 18/100, Batch 0/79, Loss: 138.7128 (Global: 2.3271, Individual: 9.0924)
+Epoch 18/100, Batch 50/79, Loss: 119.5427 (Global: 2.0095, Individual: 7.8356)
+Epoch 18/100:
+  Train Loss: 123.1027, Train Acc: 69.26%
+  Val Loss: 66.6502, Val Acc: 78.41%
+  Expert Accuracies: Expert 0: 75.48%, Expert 1: 74.41%, Expert 2: 74.98%, Expert 3: 75.05%
+  Current LRs: Experts=6.51e-05, Fusion=7.44e-04, Global=7.44e-04
+  📊 Training progress logged to CSV
+Epoch 19/100, Batch 0/79, Loss: 83.1465 (Global: 1.4368, Individual: 5.4473)
+Epoch 19/100, Batch 50/79, Loss: 144.9082 (Global: 2.4643, Individual: 9.4963)
+Epoch 19/100:
+  Train Loss: 121.1115, Train Acc: 70.21%
+  Val Loss: 67.0550, Val Acc: 78.08%
+  Expert Accuracies: Expert 0: 74.86%, Expert 1: 74.50%, Expert 2: 74.92%, Expert 3: 74.75%
+  Current LRs: Experts=6.46e-05, Fusion=7.38e-04, Global=7.38e-04
+  📊 Training progress logged to CSV
+Epoch 20/100, Batch 0/79, Loss: 95.3264 (Global: 1.6319, Individual: 6.2463)
+Epoch 20/100, Batch 50/79, Loss: 83.0808 (Global: 1.3594, Individual: 5.4481)
+Epoch 20/100:
+  Train Loss: 121.4253, Train Acc: 69.82%
+  Val Loss: 68.1074, Val Acc: 78.18%
+  Expert Accuracies: Expert 0: 74.63%, Expert 1: 74.38%, Expert 2: 74.68%, Expert 3: 74.67%
+  Current LRs: Experts=6.40e-05, Fusion=7.31e-04, Global=7.31e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_20.pth
+Epoch 21/100, Batch 0/79, Loss: 56.8740 (Global: 0.9766, Individual: 3.7265)
+Epoch 21/100, Batch 50/79, Loss: 143.1771 (Global: 2.3424, Individual: 9.3890)
+Epoch 21/100:
+  Train Loss: 117.0360, Train Acc: 73.47%
+  Val Loss: 68.1213, Val Acc: 77.83%
+  Expert Accuracies: Expert 0: 74.72%, Expert 1: 73.86%, Expert 2: 74.45%, Expert 3: 74.69%
+  Current LRs: Experts=6.34e-05, Fusion=7.24e-04, Global=7.24e-04
+  📊 Training progress logged to CSV
+Epoch 22/100, Batch 0/79, Loss: 131.9456 (Global: 2.2257, Individual: 8.6480)
+Epoch 22/100, Batch 50/79, Loss: 151.2871 (Global: 2.5578, Individual: 9.9153)
+Epoch 22/100:
+  Train Loss: 123.3659, Train Acc: 65.79%
+  Val Loss: 69.5674, Val Acc: 77.87%
+  Expert Accuracies: Expert 0: 74.61%, Expert 1: 74.14%, Expert 2: 74.09%, Expert 3: 74.26%
+  Current LRs: Experts=6.28e-05, Fusion=7.17e-04, Global=7.17e-04
+  📊 Training progress logged to CSV
+Epoch 23/100, Batch 0/79, Loss: 131.5757 (Global: 2.2137, Individual: 8.6241)
+Epoch 23/100, Batch 50/79, Loss: 131.4449 (Global: 2.2191, Individual: 8.6151)
+Epoch 23/100:
+  Train Loss: 122.6329, Train Acc: 71.37%
+  Val Loss: 68.5946, Val Acc: 77.44%
+  Expert Accuracies: Expert 0: 74.79%, Expert 1: 73.92%, Expert 2: 74.47%, Expert 3: 74.42%
+  Current LRs: Experts=6.21e-05, Fusion=7.10e-04, Global=7.10e-04
+  📊 Training progress logged to CSV
+Epoch 24/100, Batch 0/79, Loss: 98.8531 (Global: 1.5994, Individual: 6.4836)
+Epoch 24/100, Batch 50/79, Loss: 126.5124 (Global: 2.1178, Individual: 8.2930)
+Epoch 24/100:
+  Train Loss: 119.7624, Train Acc: 69.61%
+  Val Loss: 68.3929, Val Acc: 78.14%
+  Expert Accuracies: Expert 0: 74.57%, Expert 1: 73.48%, Expert 2: 74.44%, Expert 3: 74.92%
+  Current LRs: Experts=6.15e-05, Fusion=7.02e-04, Global=7.02e-04
+  📊 Training progress logged to CSV
+Epoch 25/100, Batch 0/79, Loss: 104.0306 (Global: 1.7335, Individual: 6.8198)
+Epoch 25/100, Batch 50/79, Loss: 76.3892 (Global: 1.2498, Individual: 5.0093)
+Epoch 25/100:
+  Train Loss: 119.6871, Train Acc: 63.40%
+  Val Loss: 69.0192, Val Acc: 78.25%
+  Expert Accuracies: Expert 0: 75.02%, Expert 1: 73.44%, Expert 2: 74.34%, Expert 3: 74.84%
+  Current LRs: Experts=6.08e-05, Fusion=6.95e-04, Global=6.95e-04
+  📊 Training progress logged to CSV
+Epoch 26/100, Batch 0/79, Loss: 162.8051 (Global: 2.6805, Individual: 10.6750)
+Epoch 26/100, Batch 50/79, Loss: 109.3845 (Global: 1.7757, Individual: 7.1739)
+Epoch 26/100:
+  Train Loss: 120.2590, Train Acc: 67.34%
+  Val Loss: 68.6940, Val Acc: 78.49%
+  Expert Accuracies: Expert 0: 75.01%, Expert 1: 73.81%, Expert 2: 74.29%, Expert 3: 74.61%
+  Current LRs: Experts=6.01e-05, Fusion=6.86e-04, Global=6.86e-04
+  📊 Training progress logged to CSV
+Epoch 27/100, Batch 0/79, Loss: 141.5127 (Global: 2.3601, Individual: 9.2768)
+Epoch 27/100, Batch 50/79, Loss: 130.7775 (Global: 2.1884, Individual: 8.5726)
+Epoch 27/100:
+  Train Loss: 119.7691, Train Acc: 68.31%
+  Val Loss: 70.0663, Val Acc: 78.36%
+  Expert Accuracies: Expert 0: 74.04%, Expert 1: 73.29%, Expert 2: 74.21%, Expert 3: 74.54%
+  Current LRs: Experts=5.93e-05, Fusion=6.78e-04, Global=6.78e-04
+  📊 Training progress logged to CSV
+Epoch 28/100, Batch 0/79, Loss: 138.2186 (Global: 2.3205, Individual: 9.0599)
+Epoch 28/100, Batch 50/79, Loss: 76.8451 (Global: 1.2815, Individual: 5.0376)
+Epoch 28/100:
+  Train Loss: 113.7378, Train Acc: 75.21%
+  Val Loss: 68.6519, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 74.34%, Expert 1: 73.19%, Expert 2: 74.18%, Expert 3: 74.83%
+  Current LRs: Experts=5.86e-05, Fusion=6.69e-04, Global=6.69e-04
+  📊 Training progress logged to CSV
+Epoch 29/100, Batch 0/79, Loss: 114.7347 (Global: 1.8724, Individual: 7.5242)
+Epoch 29/100, Batch 50/79, Loss: 117.8391 (Global: 1.9565, Individual: 7.7255)
+Epoch 29/100:
+  Train Loss: 115.6665, Train Acc: 74.14%
+  Val Loss: 69.8253, Val Acc: 77.70%
+  Expert Accuracies: Expert 0: 74.03%, Expert 1: 73.50%, Expert 2: 74.47%, Expert 3: 73.83%
+  Current LRs: Experts=5.78e-05, Fusion=6.61e-04, Global=6.61e-04
+  📊 Training progress logged to CSV
+Epoch 30/100, Batch 0/79, Loss: 115.0491 (Global: 1.9176, Individual: 7.5421)
+Epoch 30/100, Batch 50/79, Loss: 55.2940 (Global: 0.9216, Individual: 3.6248)
+Epoch 30/100:
+  Train Loss: 112.8184, Train Acc: 73.89%
+  Val Loss: 70.6378, Val Acc: 78.14%
+  Expert Accuracies: Expert 0: 74.19%, Expert 1: 73.98%, Expert 2: 73.67%, Expert 3: 74.41%
+  Current LRs: Experts=5.70e-05, Fusion=6.52e-04, Global=6.52e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_30.pth
+Epoch 31/100, Batch 0/79, Loss: 70.4588 (Global: 1.1835, Individual: 4.6184)
+Epoch 31/100, Batch 50/79, Loss: 139.1568 (Global: 2.3262, Individual: 9.1220)
+Epoch 31/100:
+  Train Loss: 114.7397, Train Acc: 75.70%
+  Val Loss: 70.5768, Val Acc: 78.11%
+  Expert Accuracies: Expert 0: 74.25%, Expert 1: 73.54%, Expert 2: 73.71%, Expert 3: 74.29%
+  Current LRs: Experts=5.62e-05, Fusion=6.42e-04, Global=6.42e-04
+  📊 Training progress logged to CSV
+Epoch 32/100, Batch 0/79, Loss: 141.8885 (Global: 2.3592, Individual: 9.3020)
+Epoch 32/100, Batch 50/79, Loss: 88.9632 (Global: 1.4628, Individual: 5.8334)
+Epoch 32/100:
+  Train Loss: 118.5030, Train Acc: 72.38%
+  Val Loss: 69.2729, Val Acc: 77.80%
+  Expert Accuracies: Expert 0: 74.25%, Expert 1: 73.79%, Expert 2: 74.33%, Expert 3: 74.26%
+  Current LRs: Experts=5.54e-05, Fusion=6.33e-04, Global=6.33e-04
+  📊 Training progress logged to CSV
+Epoch 33/100, Batch 0/79, Loss: 132.7553 (Global: 2.2204, Individual: 8.7023)
+Epoch 33/100, Batch 50/79, Loss: 123.5033 (Global: 2.0626, Individual: 8.0960)
+Epoch 33/100:
+  Train Loss: 116.9509, Train Acc: 71.11%
+  Val Loss: 70.5023, Val Acc: 77.59%
+  Expert Accuracies: Expert 0: 74.32%, Expert 1: 73.02%, Expert 2: 74.31%, Expert 3: 74.17%
+  Current LRs: Experts=5.45e-05, Fusion=6.23e-04, Global=6.23e-04
+  📊 Training progress logged to CSV
+Epoch 34/100, Batch 0/79, Loss: 104.3839 (Global: 1.7247, Individual: 6.8439)
+Epoch 34/100, Batch 50/79, Loss: 129.6590 (Global: 2.1000, Individual: 8.5039)
+Epoch 34/100:
+  Train Loss: 114.5294, Train Acc: 70.44%
+  Val Loss: 71.4028, Val Acc: 77.93%
+  Expert Accuracies: Expert 0: 74.20%, Expert 1: 73.25%, Expert 2: 73.89%, Expert 3: 73.44%
+  Current LRs: Experts=5.37e-05, Fusion=6.13e-04, Global=6.13e-04
+  📊 Training progress logged to CSV
+Epoch 35/100, Batch 0/79, Loss: 122.7184 (Global: 2.0096, Individual: 8.0472)
+Epoch 35/100, Batch 50/79, Loss: 87.6062 (Global: 1.4517, Individual: 5.7436)
+Epoch 35/100:
+  Train Loss: 115.8607, Train Acc: 68.74%
+  Val Loss: 70.9157, Val Acc: 77.83%
+  Expert Accuracies: Expert 0: 74.30%, Expert 1: 73.36%, Expert 2: 73.95%, Expert 3: 73.95%
+  Current LRs: Experts=5.28e-05, Fusion=6.03e-04, Global=6.03e-04
+  📊 Training progress logged to CSV
+Epoch 36/100, Batch 0/79, Loss: 130.5603 (Global: 2.1603, Individual: 8.5600)
+Epoch 36/100, Batch 50/79, Loss: 125.9326 (Global: 2.0757, Individual: 8.2571)
+Epoch 36/100:
+  Train Loss: 111.4148, Train Acc: 74.86%
+  Val Loss: 70.2008, Val Acc: 77.92%
+  Expert Accuracies: Expert 0: 73.95%, Expert 1: 73.45%, Expert 2: 73.93%, Expert 3: 74.07%
+  Current LRs: Experts=5.19e-05, Fusion=5.93e-04, Global=5.93e-04
+  📊 Training progress logged to CSV
+Epoch 37/100, Batch 0/79, Loss: 137.2649 (Global: 2.2520, Individual: 9.0009)
+Epoch 37/100, Batch 50/79, Loss: 129.1252 (Global: 2.1612, Individual: 8.4643)
+Epoch 37/100:
+  Train Loss: 113.4151, Train Acc: 70.57%
+  Val Loss: 71.6442, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 73.89%, Expert 1: 73.47%, Expert 2: 74.22%, Expert 3: 74.23%
+  Current LRs: Experts=5.10e-05, Fusion=5.83e-04, Global=5.83e-04
+  📊 Training progress logged to CSV
+Epoch 38/100, Batch 0/79, Loss: 115.5715 (Global: 1.9182, Individual: 7.5769)
+Epoch 38/100, Batch 50/79, Loss: 151.7039 (Global: 2.5137, Individual: 9.9460)
+Epoch 38/100:
+  Train Loss: 115.6293, Train Acc: 71.19%
+  Val Loss: 72.4288, Val Acc: 77.52%
+  Expert Accuracies: Expert 0: 73.74%, Expert 1: 73.07%, Expert 2: 73.43%, Expert 3: 74.10%
+  Current LRs: Experts=5.01e-05, Fusion=5.73e-04, Global=5.73e-04
+  📊 Training progress logged to CSV
+Epoch 39/100, Batch 0/79, Loss: 139.0974 (Global: 2.3092, Individual: 9.1192)
+Epoch 39/100, Batch 50/79, Loss: 100.0835 (Global: 1.6622, Individual: 6.5614)
+Epoch 39/100:
+  Train Loss: 109.6486, Train Acc: 74.07%
+  Val Loss: 71.1213, Val Acc: 77.78%
+  Expert Accuracies: Expert 0: 74.40%, Expert 1: 73.24%, Expert 2: 73.65%, Expert 3: 73.83%
+  Current LRs: Experts=4.92e-05, Fusion=5.62e-04, Global=5.62e-04
+  📊 Training progress logged to CSV
+Epoch 40/100, Batch 0/79, Loss: 97.6650 (Global: 1.6145, Individual: 6.4034)
+Epoch 40/100, Batch 50/79, Loss: 82.5284 (Global: 1.3818, Individual: 5.4098)
+Epoch 40/100:
+  Train Loss: 112.1801, Train Acc: 67.83%
+  Val Loss: 71.1885, Val Acc: 78.10%
+  Expert Accuracies: Expert 0: 73.93%, Expert 1: 73.64%, Expert 2: 73.87%, Expert 3: 74.09%
+  Current LRs: Experts=4.82e-05, Fusion=5.51e-04, Global=5.51e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_40.pth
+Epoch 41/100, Batch 0/79, Loss: 128.6144 (Global: 2.0899, Individual: 8.4350)
+Epoch 41/100, Batch 50/79, Loss: 114.7129 (Global: 1.9341, Individual: 7.5186)
+Epoch 41/100:
+  Train Loss: 114.0829, Train Acc: 70.75%
+  Val Loss: 72.2177, Val Acc: 77.92%
+  Expert Accuracies: Expert 0: 73.72%, Expert 1: 73.32%, Expert 2: 73.79%, Expert 3: 74.51%
+  Current LRs: Experts=4.73e-05, Fusion=5.40e-04, Global=5.40e-04
+  📊 Training progress logged to CSV
+Epoch 42/100, Batch 0/79, Loss: 124.7646 (Global: 2.0292, Individual: 8.1824)
+Epoch 42/100, Batch 50/79, Loss: 91.7056 (Global: 1.5497, Individual: 6.0104)
+Epoch 42/100:
+  Train Loss: 108.5782, Train Acc: 77.91%
+  Val Loss: 72.0227, Val Acc: 77.63%
+  Expert Accuracies: Expert 0: 73.80%, Expert 1: 73.35%, Expert 2: 73.78%, Expert 3: 73.76%
+  Current LRs: Experts=4.63e-05, Fusion=5.30e-04, Global=5.30e-04
+  📊 Training progress logged to CSV
+Epoch 43/100, Batch 0/79, Loss: 124.3432 (Global: 2.0098, Individual: 8.1556)
+Epoch 43/100, Batch 50/79, Loss: 134.7258 (Global: 2.1722, Individual: 8.8369)
+Epoch 43/100:
+  Train Loss: 113.8658, Train Acc: 69.61%
+  Val Loss: 72.4801, Val Acc: 78.16%
+  Expert Accuracies: Expert 0: 73.87%, Expert 1: 72.58%, Expert 2: 73.71%, Expert 3: 73.75%
+  Current LRs: Experts=4.54e-05, Fusion=5.19e-04, Global=5.19e-04
+  📊 Training progress logged to CSV
+Epoch 44/100, Batch 0/79, Loss: 130.3372 (Global: 2.1327, Individual: 8.5470)
+Epoch 44/100, Batch 50/79, Loss: 129.2930 (Global: 2.0672, Individual: 8.4817)
+Epoch 44/100:
+  Train Loss: 114.2271, Train Acc: 63.81%
+  Val Loss: 71.6446, Val Acc: 77.85%
+  Expert Accuracies: Expert 0: 74.04%, Expert 1: 73.55%, Expert 2: 73.89%, Expert 3: 74.61%
+  Current LRs: Experts=4.44e-05, Fusion=5.07e-04, Global=5.07e-04
+  📊 Training progress logged to CSV
+Epoch 45/100, Batch 0/79, Loss: 120.1594 (Global: 1.9655, Individual: 7.8796)
+Epoch 45/100, Batch 50/79, Loss: 94.7848 (Global: 1.5522, Individual: 6.2155)
+Epoch 45/100:
+  Train Loss: 113.5853, Train Acc: 68.90%
+  Val Loss: 72.1070, Val Acc: 77.81%
+  Expert Accuracies: Expert 0: 73.60%, Expert 1: 72.79%, Expert 2: 74.08%, Expert 3: 74.12%
+  Current LRs: Experts=4.34e-05, Fusion=4.96e-04, Global=4.96e-04
+  📊 Training progress logged to CSV
+Epoch 46/100, Batch 0/79, Loss: 67.3943 (Global: 1.0868, Individual: 4.4205)
+Epoch 46/100, Batch 50/79, Loss: 130.6946 (Global: 2.1590, Individual: 8.5690)
+Epoch 46/100:
+  Train Loss: 109.9489, Train Acc: 69.85%
+  Val Loss: 72.0177, Val Acc: 78.03%
+  Expert Accuracies: Expert 0: 73.74%, Expert 1: 72.72%, Expert 2: 74.11%, Expert 3: 74.10%
+  Current LRs: Experts=4.24e-05, Fusion=4.85e-04, Global=4.85e-04
+  📊 Training progress logged to CSV
+Epoch 47/100, Batch 0/79, Loss: 112.1495 (Global: 1.7936, Individual: 7.3571)
+Epoch 47/100, Batch 50/79, Loss: 113.4889 (Global: 1.8580, Individual: 7.4421)
+Epoch 47/100:
+  Train Loss: 108.1715, Train Acc: 77.97%
+  Val Loss: 71.8510, Val Acc: 77.82%
+  Expert Accuracies: Expert 0: 73.87%, Expert 1: 73.20%, Expert 2: 74.05%, Expert 3: 74.10%
+  Current LRs: Experts=4.15e-05, Fusion=4.74e-04, Global=4.74e-04
+  📊 Training progress logged to CSV
+Epoch 48/100, Batch 0/79, Loss: 108.2591 (Global: 1.7975, Individual: 7.0974)
+Epoch 48/100, Batch 50/79, Loss: 84.9414 (Global: 1.3964, Individual: 5.5697)
+Epoch 48/100:
+  Train Loss: 106.8929, Train Acc: 76.52%
+  Val Loss: 72.0467, Val Acc: 77.93%
+  Expert Accuracies: Expert 0: 73.93%, Expert 1: 73.15%, Expert 2: 73.94%, Expert 3: 74.23%
+  Current LRs: Experts=4.05e-05, Fusion=4.63e-04, Global=4.63e-04
+  📊 Training progress logged to CSV
+Epoch 49/100, Batch 0/79, Loss: 132.2265 (Global: 2.1316, Individual: 8.6730)
+Epoch 49/100, Batch 50/79, Loss: 116.2099 (Global: 1.8750, Individual: 7.6223)
+Epoch 49/100:
+  Train Loss: 109.5920, Train Acc: 67.06%
+  Val Loss: 71.2734, Val Acc: 77.66%
+  Expert Accuracies: Expert 0: 74.22%, Expert 1: 73.24%, Expert 2: 73.92%, Expert 3: 74.46%
+  Current LRs: Experts=3.95e-05, Fusion=4.51e-04, Global=4.51e-04
+  📊 Training progress logged to CSV
+Epoch 50/100, Batch 0/79, Loss: 102.4586 (Global: 1.6940, Individual: 6.7176)
+Epoch 50/100, Batch 50/79, Loss: 111.6240 (Global: 1.7999, Individual: 7.3216)
+Epoch 50/100:
+  Train Loss: 110.8447, Train Acc: 74.42%
+  Val Loss: 71.0911, Val Acc: 78.37%
+  Expert Accuracies: Expert 0: 74.16%, Expert 1: 73.35%, Expert 2: 73.98%, Expert 3: 74.08%
+  Current LRs: Experts=3.85e-05, Fusion=4.40e-04, Global=4.40e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_50.pth
+Epoch 51/100, Batch 0/79, Loss: 115.8712 (Global: 1.8652, Individual: 7.6004)
+Epoch 51/100, Batch 50/79, Loss: 67.9454 (Global: 1.1552, Individual: 4.4527)
+Epoch 51/100:
+  Train Loss: 109.1209, Train Acc: 77.36%
+  Val Loss: 71.4615, Val Acc: 78.16%
+  Expert Accuracies: Expert 0: 74.34%, Expert 1: 73.51%, Expert 2: 73.81%, Expert 3: 73.83%
+  Current LRs: Experts=3.75e-05, Fusion=4.29e-04, Global=4.29e-04
+  📊 Training progress logged to CSV
+Epoch 52/100, Batch 0/79, Loss: 127.1995 (Global: 2.0946, Individual: 8.3403)
+Epoch 52/100, Batch 50/79, Loss: 116.3308 (Global: 1.9229, Individual: 7.6272)
+Epoch 52/100:
+  Train Loss: 111.8058, Train Acc: 71.11%
+  Val Loss: 71.3302, Val Acc: 78.17%
+  Expert Accuracies: Expert 0: 74.12%, Expert 1: 73.49%, Expert 2: 73.85%, Expert 3: 74.46%
+  Current LRs: Experts=3.65e-05, Fusion=4.17e-04, Global=4.17e-04
+  📊 Training progress logged to CSV
+Epoch 53/100, Batch 0/79, Loss: 128.6620 (Global: 2.1068, Individual: 8.4370)
+Epoch 53/100, Batch 50/79, Loss: 126.6222 (Global: 2.0680, Individual: 8.3036)
+Epoch 53/100:
+  Train Loss: 111.0782, Train Acc: 69.60%
+  Val Loss: 71.4733, Val Acc: 77.89%
+  Expert Accuracies: Expert 0: 73.67%, Expert 1: 73.06%, Expert 2: 73.90%, Expert 3: 74.02%
+  Current LRs: Experts=3.55e-05, Fusion=4.06e-04, Global=4.06e-04
+  📊 Training progress logged to CSV
+Epoch 54/100, Batch 0/79, Loss: 109.6325 (Global: 1.7606, Individual: 7.1915)
+Epoch 54/100, Batch 50/79, Loss: 123.5889 (Global: 2.0354, Individual: 8.1036)
+Epoch 54/100:
+  Train Loss: 102.9858, Train Acc: 77.70%
+  Val Loss: 72.0466, Val Acc: 78.05%
+  Expert Accuracies: Expert 0: 73.95%, Expert 1: 73.04%, Expert 2: 74.00%, Expert 3: 74.13%
+  Current LRs: Experts=3.46e-05, Fusion=3.95e-04, Global=3.95e-04
+  📊 Training progress logged to CSV
+Epoch 55/100, Batch 0/79, Loss: 116.5949 (Global: 1.8799, Individual: 7.6477)
+Epoch 55/100, Batch 50/79, Loss: 119.2504 (Global: 1.9189, Individual: 7.8221)
+Epoch 55/100:
+  Train Loss: 108.7118, Train Acc: 73.94%
+  Val Loss: 71.9799, Val Acc: 78.03%
+  Expert Accuracies: Expert 0: 73.73%, Expert 1: 73.04%, Expert 2: 74.28%, Expert 3: 74.11%
+  Current LRs: Experts=3.36e-05, Fusion=3.84e-04, Global=3.84e-04
+  📊 Training progress logged to CSV
+Epoch 56/100, Batch 0/79, Loss: 152.4769 (Global: 2.4940, Individual: 9.9989)
+Epoch 56/100, Batch 50/79, Loss: 116.3272 (Global: 1.8778, Individual: 7.6300)
+Epoch 56/100:
+  Train Loss: 107.9705, Train Acc: 73.42%
+  Val Loss: 72.0931, Val Acc: 78.16%
+  Expert Accuracies: Expert 0: 74.13%, Expert 1: 72.81%, Expert 2: 73.83%, Expert 3: 74.26%
+  Current LRs: Experts=3.26e-05, Fusion=3.73e-04, Global=3.73e-04
+  📊 Training progress logged to CSV
+Epoch 57/100, Batch 0/79, Loss: 108.1902 (Global: 1.7874, Individual: 7.0935)
+Epoch 57/100, Batch 50/79, Loss: 96.5422 (Global: 1.5743, Individual: 6.3312)
+Epoch 57/100:
+  Train Loss: 103.9148, Train Acc: 82.00%
+  Val Loss: 72.6557, Val Acc: 78.28%
+  Expert Accuracies: Expert 0: 73.97%, Expert 1: 73.23%, Expert 2: 73.87%, Expert 3: 74.13%
+  Current LRs: Experts=3.16e-05, Fusion=3.61e-04, Global=3.61e-04
+  📊 Training progress logged to CSV
+Epoch 58/100, Batch 0/79, Loss: 107.0692 (Global: 1.7385, Individual: 7.0220)
+Epoch 58/100, Batch 50/79, Loss: 131.4993 (Global: 2.0892, Individual: 8.6273)
+Epoch 58/100:
+  Train Loss: 109.2017, Train Acc: 75.40%
+  Val Loss: 71.6649, Val Acc: 78.02%
+  Expert Accuracies: Expert 0: 74.22%, Expert 1: 73.56%, Expert 2: 73.98%, Expert 3: 73.81%
+  Current LRs: Experts=3.07e-05, Fusion=3.50e-04, Global=3.50e-04
+  📊 Training progress logged to CSV
+Epoch 59/100, Batch 0/79, Loss: 117.7517 (Global: 1.8680, Individual: 7.7256)
+Epoch 59/100, Batch 50/79, Loss: 121.5848 (Global: 1.9640, Individual: 7.9747)
+Epoch 59/100:
+  Train Loss: 112.2726, Train Acc: 64.98%
+  Val Loss: 72.6974, Val Acc: 78.39%
+  Expert Accuracies: Expert 0: 73.48%, Expert 1: 72.98%, Expert 2: 73.57%, Expert 3: 73.94%
+  Current LRs: Experts=2.97e-05, Fusion=3.40e-04, Global=3.40e-04
+  📊 Training progress logged to CSV
+Epoch 60/100, Batch 0/79, Loss: 109.7530 (Global: 1.7719, Individual: 7.1987)
+Epoch 60/100, Batch 50/79, Loss: 61.0386 (Global: 1.0157, Individual: 4.0015)
+Epoch 60/100:
+  Train Loss: 109.1055, Train Acc: 68.57%
+  Val Loss: 72.1378, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 73.86%, Expert 1: 73.09%, Expert 2: 73.92%, Expert 3: 74.12%
+  Current LRs: Experts=2.88e-05, Fusion=3.29e-04, Global=3.29e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_60.pth
+Epoch 61/100, Batch 0/79, Loss: 92.0502 (Global: 1.5157, Individual: 6.0356)
+Epoch 61/100, Batch 50/79, Loss: 85.8106 (Global: 1.4029, Individual: 5.6272)
+Epoch 61/100:
+  Train Loss: 108.5701, Train Acc: 74.94%
+  Val Loss: 72.6789, Val Acc: 78.24%
+  Expert Accuracies: Expert 0: 73.79%, Expert 1: 73.10%, Expert 2: 73.69%, Expert 3: 74.34%
+  Current LRs: Experts=2.78e-05, Fusion=3.18e-04, Global=3.18e-04
+  📊 Training progress logged to CSV
+Epoch 62/100, Batch 0/79, Loss: 118.6171 (Global: 1.9109, Individual: 7.7804)
+Epoch 62/100, Batch 50/79, Loss: 114.6866 (Global: 1.8522, Individual: 7.5223)
+Epoch 62/100:
+  Train Loss: 102.0068, Train Acc: 79.95%
+  Val Loss: 72.2275, Val Acc: 78.23%
+  Expert Accuracies: Expert 0: 73.68%, Expert 1: 73.13%, Expert 2: 73.98%, Expert 3: 74.43%
+  Current LRs: Experts=2.69e-05, Fusion=3.07e-04, Global=3.07e-04
+  📊 Training progress logged to CSV
+Epoch 63/100, Batch 0/79, Loss: 119.3525 (Global: 1.9706, Individual: 7.8255)
+Epoch 63/100, Batch 50/79, Loss: 85.5750 (Global: 1.4281, Individual: 5.6098)
+Epoch 63/100:
+  Train Loss: 108.3197, Train Acc: 72.77%
+  Val Loss: 72.6630, Val Acc: 78.04%
+  Expert Accuracies: Expert 0: 73.72%, Expert 1: 73.14%, Expert 2: 73.87%, Expert 3: 74.45%
+  Current LRs: Experts=2.60e-05, Fusion=2.97e-04, Global=2.97e-04
+  📊 Training progress logged to CSV
+Epoch 64/100, Batch 0/79, Loss: 114.4724 (Global: 1.8488, Individual: 7.5082)
+Epoch 64/100, Batch 50/79, Loss: 146.4532 (Global: 2.3108, Individual: 9.6095)
+Epoch 64/100:
+  Train Loss: 104.6514, Train Acc: 79.03%
+  Val Loss: 72.9556, Val Acc: 78.24%
+  Expert Accuracies: Expert 0: 73.57%, Expert 1: 73.01%, Expert 2: 74.07%, Expert 3: 74.23%
+  Current LRs: Experts=2.51e-05, Fusion=2.87e-04, Global=2.87e-04
+  📊 Training progress logged to CSV
+Epoch 65/100, Batch 0/79, Loss: 131.4728 (Global: 2.1220, Individual: 8.6234)
+Epoch 65/100, Batch 50/79, Loss: 128.3797 (Global: 2.0963, Individual: 8.4189)
+Epoch 65/100:
+  Train Loss: 110.0915, Train Acc: 71.41%
+  Val Loss: 72.5819, Val Acc: 78.31%
+  Expert Accuracies: Expert 0: 73.85%, Expert 1: 73.08%, Expert 2: 74.05%, Expert 3: 74.23%
+  Current LRs: Experts=2.42e-05, Fusion=2.77e-04, Global=2.77e-04
+  📊 Training progress logged to CSV
+Epoch 66/100, Batch 0/79, Loss: 109.0265 (Global: 1.7595, Individual: 7.1511)
+Epoch 66/100, Batch 50/79, Loss: 111.0662 (Global: 1.7759, Individual: 7.2860)
+Epoch 66/100:
+  Train Loss: 108.7957, Train Acc: 74.24%
+  Val Loss: 72.6935, Val Acc: 78.44%
+  Expert Accuracies: Expert 0: 73.57%, Expert 1: 73.10%, Expert 2: 74.25%, Expert 3: 74.19%
+  Current LRs: Experts=2.33e-05, Fusion=2.67e-04, Global=2.67e-04
+  📊 Training progress logged to CSV
+Epoch 67/100, Batch 0/79, Loss: 98.5438 (Global: 1.6251, Individual: 6.4612)
+Epoch 67/100, Batch 50/79, Loss: 105.4033 (Global: 1.7034, Individual: 6.9133)
+Epoch 67/100:
+  Train Loss: 105.8145, Train Acc: 76.76%
+  Val Loss: 72.0727, Val Acc: 77.82%
+  Expert Accuracies: Expert 0: 73.87%, Expert 1: 73.21%, Expert 2: 73.97%, Expert 3: 74.25%
+  Current LRs: Experts=2.25e-05, Fusion=2.57e-04, Global=2.57e-04
+  📊 Training progress logged to CSV
+Epoch 68/100, Batch 0/79, Loss: 118.8460 (Global: 1.9066, Individual: 7.7960)
+Epoch 68/100, Batch 50/79, Loss: 117.6545 (Global: 1.8894, Individual: 7.7177)
+Epoch 68/100:
+  Train Loss: 107.2472, Train Acc: 72.14%
+  Val Loss: 72.2763, Val Acc: 78.02%
+  Expert Accuracies: Expert 0: 73.81%, Expert 1: 73.31%, Expert 2: 73.98%, Expert 3: 74.30%
+  Current LRs: Experts=2.16e-05, Fusion=2.47e-04, Global=2.47e-04
+  📊 Training progress logged to CSV
+Epoch 69/100, Batch 0/79, Loss: 124.9554 (Global: 1.9860, Individual: 8.1980)
+Epoch 69/100, Batch 50/79, Loss: 122.2103 (Global: 1.9796, Individual: 8.0154)
+Epoch 69/100:
+  Train Loss: 109.1276, Train Acc: 69.12%
+  Val Loss: 72.7562, Val Acc: 77.98%
+  Expert Accuracies: Expert 0: 74.10%, Expert 1: 73.11%, Expert 2: 74.26%, Expert 3: 74.03%
+  Current LRs: Experts=2.08e-05, Fusion=2.38e-04, Global=2.38e-04
+  📊 Training progress logged to CSV
+Epoch 70/100, Batch 0/79, Loss: 125.4052 (Global: 1.9989, Individual: 8.2271)
+Epoch 70/100, Batch 50/79, Loss: 107.1817 (Global: 1.7261, Individual: 7.0304)
+Epoch 70/100:
+  Train Loss: 102.7421, Train Acc: 76.54%
+  Val Loss: 72.5755, Val Acc: 78.20%
+  Expert Accuracies: Expert 0: 74.21%, Expert 1: 73.55%, Expert 2: 74.00%, Expert 3: 73.98%
+  Current LRs: Experts=2.00e-05, Fusion=2.28e-04, Global=2.28e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_70.pth
+Epoch 71/100, Batch 0/79, Loss: 104.1468 (Global: 1.6978, Individual: 6.8299)
+Epoch 71/100, Batch 50/79, Loss: 98.1467 (Global: 1.5947, Individual: 6.4368)
+Epoch 71/100:
+  Train Loss: 103.0228, Train Acc: 75.81%
+  Val Loss: 72.7380, Val Acc: 77.91%
+  Expert Accuracies: Expert 0: 73.64%, Expert 1: 73.41%, Expert 2: 74.04%, Expert 3: 73.92%
+  Current LRs: Experts=1.92e-05, Fusion=2.19e-04, Global=2.19e-04
+  📊 Training progress logged to CSV
+Epoch 72/100, Batch 0/79, Loss: 125.3130 (Global: 1.9782, Individual: 8.2223)
+Epoch 72/100, Batch 50/79, Loss: 100.4386 (Global: 1.6559, Individual: 6.5855)
+Epoch 72/100:
+  Train Loss: 104.6050, Train Acc: 72.50%
+  Val Loss: 73.5377, Val Acc: 78.15%
+  Expert Accuracies: Expert 0: 74.02%, Expert 1: 73.31%, Expert 2: 74.19%, Expert 3: 74.02%
+  Current LRs: Experts=1.84e-05, Fusion=2.11e-04, Global=2.11e-04
+  📊 Training progress logged to CSV
+Epoch 73/100, Batch 0/79, Loss: 109.6843 (Global: 1.7328, Individual: 7.1968)
+Epoch 73/100, Batch 50/79, Loss: 103.5109 (Global: 1.6758, Individual: 6.7890)
+Epoch 73/100:
+  Train Loss: 103.7096, Train Acc: 81.48%
+  Val Loss: 72.4111, Val Acc: 78.13%
+  Expert Accuracies: Expert 0: 74.38%, Expert 1: 73.31%, Expert 2: 74.00%, Expert 3: 73.91%
+  Current LRs: Experts=1.77e-05, Fusion=2.02e-04, Global=2.02e-04
+  📊 Training progress logged to CSV
+Epoch 74/100, Batch 0/79, Loss: 99.3815 (Global: 1.6203, Individual: 6.5174)
+Epoch 74/100, Batch 50/79, Loss: 118.4736 (Global: 1.8831, Individual: 7.7727)
+Epoch 74/100:
+  Train Loss: 103.3925, Train Acc: 75.47%
+  Val Loss: 72.5430, Val Acc: 77.88%
+  Expert Accuracies: Expert 0: 73.83%, Expert 1: 73.08%, Expert 2: 73.67%, Expert 3: 73.95%
+  Current LRs: Experts=1.69e-05, Fusion=1.94e-04, Global=1.94e-04
+  📊 Training progress logged to CSV
+Epoch 75/100, Batch 0/79, Loss: 87.9341 (Global: 1.4486, Individual: 5.7657)
+Epoch 75/100, Batch 50/79, Loss: 121.8431 (Global: 1.9224, Individual: 7.9947)
+Epoch 75/100:
+  Train Loss: 102.7992, Train Acc: 76.37%
+  Val Loss: 72.3101, Val Acc: 78.19%
+  Expert Accuracies: Expert 0: 73.96%, Expert 1: 73.12%, Expert 2: 73.99%, Expert 3: 74.22%
+  Current LRs: Experts=1.62e-05, Fusion=1.85e-04, Global=1.85e-04
+  📊 Training progress logged to CSV
+Epoch 76/100, Batch 0/79, Loss: 73.4446 (Global: 1.2018, Individual: 4.8162)
+Epoch 76/100, Batch 50/79, Loss: 117.0720 (Global: 1.8700, Individual: 7.6801)
+Epoch 76/100:
+  Train Loss: 103.0817, Train Acc: 79.01%
+  Val Loss: 72.3677, Val Acc: 77.93%
+  Expert Accuracies: Expert 0: 73.99%, Expert 1: 72.91%, Expert 2: 73.91%, Expert 3: 74.19%
+  Current LRs: Experts=1.55e-05, Fusion=1.78e-04, Global=1.78e-04
+  📊 Training progress logged to CSV
+Epoch 77/100, Batch 0/79, Loss: 104.7796 (Global: 1.6843, Individual: 6.8730)
+Epoch 77/100, Batch 50/79, Loss: 113.3345 (Global: 1.7901, Individual: 7.4363)
+Epoch 77/100:
+  Train Loss: 106.4736, Train Acc: 74.23%
+  Val Loss: 73.0423, Val Acc: 78.15%
+  Expert Accuracies: Expert 0: 74.12%, Expert 1: 73.10%, Expert 2: 74.05%, Expert 3: 73.79%
+  Current LRs: Experts=1.49e-05, Fusion=1.70e-04, Global=1.70e-04
+  📊 Training progress logged to CSV
+Epoch 78/100, Batch 0/79, Loss: 120.0125 (Global: 1.9117, Individual: 7.8734)
+Epoch 78/100, Batch 50/79, Loss: 92.5626 (Global: 1.4979, Individual: 6.0710)
+Epoch 78/100:
+  Train Loss: 102.6811, Train Acc: 77.25%
+  Val Loss: 72.7691, Val Acc: 78.00%
+  Expert Accuracies: Expert 0: 74.07%, Expert 1: 73.10%, Expert 2: 74.13%, Expert 3: 74.01%
+  Current LRs: Experts=1.42e-05, Fusion=1.63e-04, Global=1.63e-04
+  📊 Training progress logged to CSV
+Epoch 79/100, Batch 0/79, Loss: 108.6739 (Global: 1.7257, Individual: 7.1299)
+Epoch 79/100, Batch 50/79, Loss: 54.0480 (Global: 0.8942, Individual: 3.5436)
+Epoch 79/100:
+  Train Loss: 106.4029, Train Acc: 73.68%
+  Val Loss: 72.3622, Val Acc: 77.91%
+  Expert Accuracies: Expert 0: 73.88%, Expert 1: 73.17%, Expert 2: 74.01%, Expert 3: 73.84%
+  Current LRs: Experts=1.36e-05, Fusion=1.56e-04, Global=1.56e-04
+  📊 Training progress logged to CSV
+Epoch 80/100, Batch 0/79, Loss: 120.7331 (Global: 1.9303, Individual: 7.9202)
+Epoch 80/100, Batch 50/79, Loss: 93.5765 (Global: 1.5298, Individual: 6.1364)
+Epoch 80/100:
+  Train Loss: 103.9272, Train Acc: 79.62%
+  Val Loss: 72.8896, Val Acc: 77.85%
+  Expert Accuracies: Expert 0: 73.85%, Expert 1: 72.96%, Expert 2: 73.84%, Expert 3: 74.17%
+  Current LRs: Experts=1.30e-05, Fusion=1.49e-04, Global=1.49e-04
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_80.pth
+Epoch 81/100, Batch 0/79, Loss: 109.5609 (Global: 1.7503, Individual: 7.1874)
+Epoch 81/100, Batch 50/79, Loss: 118.1276 (Global: 1.8828, Individual: 7.7497)
+Epoch 81/100:
+  Train Loss: 103.5923, Train Acc: 71.81%
+  Val Loss: 73.4816, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 73.85%, Expert 1: 72.83%, Expert 2: 73.87%, Expert 3: 73.90%
+  Current LRs: Experts=1.24e-05, Fusion=1.42e-04, Global=1.42e-04
+  📊 Training progress logged to CSV
+Epoch 82/100, Batch 0/79, Loss: 84.3744 (Global: 1.3874, Individual: 5.5325)
+Epoch 82/100, Batch 50/79, Loss: 81.1307 (Global: 1.3244, Individual: 5.3204)
+Epoch 82/100:
+  Train Loss: 103.0313, Train Acc: 77.00%
+  Val Loss: 73.4544, Val Acc: 78.19%
+  Expert Accuracies: Expert 0: 74.00%, Expert 1: 72.96%, Expert 2: 74.10%, Expert 3: 74.04%
+  Current LRs: Experts=1.19e-05, Fusion=1.36e-04, Global=1.36e-04
+  📊 Training progress logged to CSV
+Epoch 83/100, Batch 0/79, Loss: 119.9793 (Global: 1.9233, Individual: 7.8704)
+Epoch 83/100, Batch 50/79, Loss: 114.4314 (Global: 1.8407, Individual: 7.5060)
+Epoch 83/100:
+  Train Loss: 98.9960, Train Acc: 78.62%
+  Val Loss: 72.4648, Val Acc: 78.15%
+  Expert Accuracies: Expert 0: 74.13%, Expert 1: 73.05%, Expert 2: 73.81%, Expert 3: 74.29%
+  Current LRs: Experts=1.14e-05, Fusion=1.30e-04, Global=1.30e-04
+  📊 Training progress logged to CSV
+Epoch 84/100, Batch 0/79, Loss: 115.3607 (Global: 1.8369, Individual: 7.5683)
+Epoch 84/100, Batch 50/79, Loss: 117.9201 (Global: 1.8605, Individual: 7.7373)
+Epoch 84/100:
+  Train Loss: 102.1585, Train Acc: 76.98%
+  Val Loss: 73.6738, Val Acc: 77.89%
+  Expert Accuracies: Expert 0: 73.83%, Expert 1: 72.99%, Expert 2: 73.94%, Expert 3: 74.05%
+  Current LRs: Experts=1.09e-05, Fusion=1.25e-04, Global=1.25e-04
+  📊 Training progress logged to CSV
+Epoch 85/100, Batch 0/79, Loss: 73.6584 (Global: 1.2153, Individual: 4.8295)
+Epoch 85/100, Batch 50/79, Loss: 119.4513 (Global: 1.9082, Individual: 7.8362)
+Epoch 85/100:
+  Train Loss: 99.2317, Train Acc: 76.73%
+  Val Loss: 72.6767, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 73.97%, Expert 1: 73.34%, Expert 2: 74.24%, Expert 3: 73.99%
+  Current LRs: Experts=1.04e-05, Fusion=1.19e-04, Global=1.19e-04
+  📊 Training progress logged to CSV
+Epoch 86/100, Batch 0/79, Loss: 111.8606 (Global: 1.7943, Individual: 7.3377)
+Epoch 86/100, Batch 50/79, Loss: 109.3402 (Global: 1.7412, Individual: 7.1733)
+Epoch 86/100:
+  Train Loss: 105.6776, Train Acc: 74.30%
+  Val Loss: 72.8731, Val Acc: 78.13%
+  Expert Accuracies: Expert 0: 74.12%, Expert 1: 73.22%, Expert 2: 73.93%, Expert 3: 74.03%
+  Current LRs: Experts=1.00e-05, Fusion=1.14e-04, Global=1.14e-04
+  📊 Training progress logged to CSV
+Epoch 87/100, Batch 0/79, Loss: 124.7425 (Global: 1.9732, Individual: 8.1846)
+Epoch 87/100, Batch 50/79, Loss: 106.4951 (Global: 1.7147, Individual: 6.9854)
+Epoch 87/100:
+  Train Loss: 107.1258, Train Acc: 71.68%
+  Val Loss: 73.8923, Val Acc: 77.78%
+  Expert Accuracies: Expert 0: 73.72%, Expert 1: 73.05%, Expert 2: 73.73%, Expert 3: 73.95%
+  Current LRs: Experts=9.59e-06, Fusion=1.10e-04, Global=1.10e-04
+  📊 Training progress logged to CSV
+Epoch 88/100, Batch 0/79, Loss: 83.8238 (Global: 1.3749, Individual: 5.4966)
+Epoch 88/100, Batch 50/79, Loss: 104.0599 (Global: 1.6640, Individual: 6.8264)
+Epoch 88/100:
+  Train Loss: 105.1048, Train Acc: 72.32%
+  Val Loss: 73.9465, Val Acc: 77.94%
+  Expert Accuracies: Expert 0: 73.76%, Expert 1: 72.81%, Expert 2: 73.91%, Expert 3: 73.96%
+  Current LRs: Experts=9.21e-06, Fusion=1.05e-04, Global=1.05e-04
+  📊 Training progress logged to CSV
+Epoch 89/100, Batch 0/79, Loss: 92.8801 (Global: 1.4987, Individual: 6.0921)
+Epoch 89/100, Batch 50/79, Loss: 119.1168 (Global: 1.8721, Individual: 7.8163)
+Epoch 89/100:
+  Train Loss: 105.3832, Train Acc: 72.26%
+  Val Loss: 73.4233, Val Acc: 77.74%
+  Expert Accuracies: Expert 0: 74.04%, Expert 1: 73.08%, Expert 2: 73.81%, Expert 3: 73.99%
+  Current LRs: Experts=8.86e-06, Fusion=1.01e-04, Global=1.01e-04
+  📊 Training progress logged to CSV
+Epoch 90/100, Batch 0/79, Loss: 121.2344 (Global: 1.9766, Individual: 7.9505)
+Epoch 90/100, Batch 50/79, Loss: 56.2591 (Global: 0.9232, Individual: 3.6891)
+Epoch 90/100:
+  Train Loss: 103.9852, Train Acc: 75.68%
+  Val Loss: 72.9705, Val Acc: 78.05%
+  Expert Accuracies: Expert 0: 74.11%, Expert 1: 73.24%, Expert 2: 74.10%, Expert 3: 74.33%
+  Current LRs: Experts=8.54e-06, Fusion=9.76e-05, Global=9.76e-05
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_90.pth
+Epoch 91/100, Batch 0/79, Loss: 119.6270 (Global: 1.8712, Individual: 7.8504)
+Epoch 91/100, Batch 50/79, Loss: 52.0136 (Global: 0.8442, Individual: 3.4113)
+Epoch 91/100:
+  Train Loss: 101.7124, Train Acc: 75.59%
+  Val Loss: 72.4039, Val Acc: 78.21%
+  Expert Accuracies: Expert 0: 74.16%, Expert 1: 73.05%, Expert 2: 74.42%, Expert 3: 74.25%
+  Current LRs: Experts=8.25e-06, Fusion=9.43e-05, Global=9.43e-05
+  📊 Training progress logged to CSV
+Epoch 92/100, Batch 0/79, Loss: 82.0040 (Global: 1.3326, Individual: 5.3781)
+Epoch 92/100, Batch 50/79, Loss: 121.0630 (Global: 1.8998, Individual: 7.9442)
+Epoch 92/100:
+  Train Loss: 103.3077, Train Acc: 72.71%
+  Val Loss: 72.3666, Val Acc: 78.17%
+  Expert Accuracies: Expert 0: 74.02%, Expert 1: 73.15%, Expert 2: 74.30%, Expert 3: 74.11%
+  Current LRs: Experts=7.99e-06, Fusion=9.13e-05, Global=9.13e-05
+  📊 Training progress logged to CSV
+Epoch 93/100, Batch 0/79, Loss: 107.6266 (Global: 1.6797, Individual: 7.0631)
+Epoch 93/100, Batch 50/79, Loss: 107.1370 (Global: 1.6844, Individual: 7.0302)
+Epoch 93/100:
+  Train Loss: 104.4636, Train Acc: 77.57%
+  Val Loss: 72.5006, Val Acc: 78.12%
+  Expert Accuracies: Expert 0: 73.92%, Expert 1: 73.02%, Expert 2: 74.05%, Expert 3: 73.78%
+  Current LRs: Experts=7.76e-06, Fusion=8.87e-05, Global=8.87e-05
+  📊 Training progress logged to CSV
+Epoch 94/100, Batch 0/79, Loss: 102.4610 (Global: 1.6350, Individual: 6.7217)
+Epoch 94/100, Batch 50/79, Loss: 119.4049 (Global: 1.8943, Individual: 7.8340)
+Epoch 94/100:
+  Train Loss: 108.3164, Train Acc: 69.00%
+  Val Loss: 73.6151, Val Acc: 78.12%
+  Expert Accuracies: Expert 0: 73.87%, Expert 1: 73.15%, Expert 2: 73.91%, Expert 3: 73.87%
+  Current LRs: Experts=7.56e-06, Fusion=8.64e-05, Global=8.64e-05
+  📊 Training progress logged to CSV
+Epoch 95/100, Batch 0/79, Loss: 108.7545 (Global: 1.7119, Individual: 7.1362)
+Epoch 95/100, Batch 50/79, Loss: 109.1774 (Global: 1.7306, Individual: 7.1631)
+Epoch 95/100:
+  Train Loss: 106.2672, Train Acc: 72.52%
+  Val Loss: 72.4373, Val Acc: 77.97%
+  Expert Accuracies: Expert 0: 73.99%, Expert 1: 73.12%, Expert 2: 73.91%, Expert 3: 74.05%
+  Current LRs: Experts=7.39e-06, Fusion=8.44e-05, Global=8.44e-05
+  📊 Training progress logged to CSV
+Epoch 96/100, Batch 0/79, Loss: 99.7754 (Global: 1.6364, Individual: 6.5426)
+Epoch 96/100, Batch 50/79, Loss: 116.6881 (Global: 1.8398, Individual: 7.6565)
+Epoch 96/100:
+  Train Loss: 108.9381, Train Acc: 69.62%
+  Val Loss: 73.4817, Val Acc: 77.87%
+  Expert Accuracies: Expert 0: 74.01%, Expert 1: 72.99%, Expert 2: 73.78%, Expert 3: 73.78%
+  Current LRs: Experts=7.25e-06, Fusion=8.28e-05, Global=8.28e-05
+  📊 Training progress logged to CSV
+Epoch 97/100, Batch 0/79, Loss: 97.1735 (Global: 1.5745, Individual: 6.3733)
+Epoch 97/100, Batch 50/79, Loss: 120.5707 (Global: 1.9349, Individual: 7.9090)
+Epoch 97/100:
+  Train Loss: 102.4918, Train Acc: 78.01%
+  Val Loss: 72.7051, Val Acc: 78.07%
+  Expert Accuracies: Expert 0: 74.04%, Expert 1: 73.14%, Expert 2: 74.10%, Expert 3: 73.93%
+  Current LRs: Experts=7.14e-06, Fusion=8.16e-05, Global=8.16e-05
+  📊 Training progress logged to CSV
+Epoch 98/100, Batch 0/79, Loss: 86.5269 (Global: 1.4321, Individual: 5.6730)
+Epoch 98/100, Batch 50/79, Loss: 107.5721 (Global: 1.6971, Individual: 7.0583)
+Epoch 98/100:
+  Train Loss: 99.8585, Train Acc: 77.83%
+  Val Loss: 72.0762, Val Acc: 78.18%
+  Expert Accuracies: Expert 0: 74.01%, Expert 1: 73.06%, Expert 2: 73.72%, Expert 3: 74.17%
+  Current LRs: Experts=7.06e-06, Fusion=8.07e-05, Global=8.07e-05
+  📊 Training progress logged to CSV
+Epoch 99/100, Batch 0/79, Loss: 104.0587 (Global: 1.6492, Individual: 6.8273)
+Epoch 99/100, Batch 50/79, Loss: 92.0366 (Global: 1.5085, Individual: 6.0352)
+Epoch 99/100:
+  Train Loss: 99.8365, Train Acc: 81.29%
+  Val Loss: 72.8047, Val Acc: 78.13%
+  Expert Accuracies: Expert 0: 74.11%, Expert 1: 73.01%, Expert 2: 73.77%, Expert 3: 74.05%
+  Current LRs: Experts=7.02e-06, Fusion=8.02e-05, Global=8.02e-05
+  📊 Training progress logged to CSV
+Epoch 100/100, Batch 0/79, Loss: 107.3917 (Global: 1.7320, Individual: 7.0440)
+Epoch 100/100, Batch 50/79, Loss: 126.2474 (Global: 1.9987, Individual: 8.2832)
+Epoch 100/100:
+  Train Loss: 105.4589, Train Acc: 74.62%
+  Val Loss: 73.3995, Val Acc: 78.15%
+  Expert Accuracies: Expert 0: 73.76%, Expert 1: 72.85%, Expert 2: 73.77%, Expert 3: 74.08%
+  Current LRs: Experts=7.00e-06, Fusion=8.00e-05, Global=8.00e-05
+  📊 Training progress logged to CSV
+  Saved checkpoint: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/checkpoint_epoch_100.pth
+  Saved best model: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/best_model.pth
+✅ Training completed! Best validation accuracy: 78.89%
+
+💾 Saving trained model components...
+  Saved expert 0: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts/expert_0_alpha_15.0.pth
+  Saved expert 1: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts/expert_1_alpha_15.0.pth
+  Saved expert 2: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts/expert_2_alpha_15.0.pth
+  Saved expert 3: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts/expert_3_alpha_15.0.pth
+  Saved fusion module: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/fusion_module/fusion_module_alpha_15.0.pth
+  Saved global head: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/global_head/global_head_alpha_15.0.pth
+  Saved complete model: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/complete_model/complete_fusion_model_alpha_15.0.pth
+✅ All model components saved to: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition
+  - Experts: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts
+  - Fusion: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/fusion_module
+  - Global: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/global_head
+  - Complete: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/complete_model
+✅ Model components saved successfully
+
+🎉 DenseNet simpleAddition fusion training completed successfully!
+   Alpha: 15.0
+   Best validation accuracy: 78.89%
+   Model saved to: ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition
+
+================================================================================
+PHASE 3: POST-TRAINING EVALUATION (α=15.0)
+================================================================================
+/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py:2516: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=device)
+🔄 Loaded best Expert 0 from ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_0_best.pth
+🔄 Loaded best Expert 1 from ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_1_best.pth
+🔄 Loaded best Expert 2 from ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_2_best.pth
+🔄 Loaded best Expert 3 from ../fusion_checkpoints/densenet_fusions_alpha_15.0/simpleAddition/experts_best/expert_3_best.pth
+
+============================================================
+POST-TRAINING: Gaussian Noise Robustness
+============================================================
+
+Testing Expert 0 (POST-TRAINING) under Gaussian noise...
+Traceback (most recent call last):
+  File "/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py", line 2638, in <module>
+    main()
+  File "/home/ali.rasekh/orm/hos/geom/Fianl_MCN/fusion_training/scripts/train_densenet_fusions.py", line 2539, in main
+    noise_results = evaluate_gaussian_noise_robustness(expert, testloader, device, sigmas=noise_sigmas)
+UnboundLocalError: local variable 'testloader' referenced before assignment

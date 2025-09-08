@@ -57,6 +57,23 @@ class MultiplicativeAdditionFusion(nn.Module):
         fused = multiplicative + addition
         return self.mlp(fused)
 
+class MultiplicativeShiftedFusion(nn.Module):
+    def __init__(self, num_experts, input_dim, hidden_dim=None):
+        super().__init__()
+        if hidden_dim is None:
+            hidden_dim = input_dim
+        self.norms = nn.ModuleList([nn.LayerNorm(input_dim) for _ in range(num_experts)])
+        self.mlp = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim), nn.ReLU(), nn.Dropout(0.2),
+            nn.Linear(hidden_dim, input_dim)
+        )
+    
+    def forward(self, features_list):
+        normalized = [norm(f) for norm, f in zip(self.norms, features_list)]
+        shifted = [f + 1 for f in normalized]
+        fused = torch.stack(shifted, dim=0).prod(dim=0)
+        return self.mlp(fused)
+
 class TransformerBaseFusion(nn.Module):
     def __init__(self, num_experts, input_dim, hidden_dim=None):
         super().__init__()
@@ -123,6 +140,8 @@ class MCNFusionModel(nn.Module):
             self.fusion_module = ConcatenationFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "multiplicativeAddition":
             self.fusion_module = MultiplicativeAdditionFusion(len(expert_backbones), input_dim, hidden_dim)
+        elif fusion_type == "multiplicativeShifted":
+            self.fusion_module = MultiplicativeShiftedFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "TransformerBase":
             self.fusion_module = TransformerBaseFusion(len(expert_backbones), input_dim, hidden_dim)
         elif fusion_type == "simpleAddition":
