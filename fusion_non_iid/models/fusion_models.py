@@ -150,7 +150,14 @@ class MCNFusionModel(nn.Module):
             raise ValueError(f"Unknown fusion type: {fusion_type}")
         
         # The global head that operates on the fused features
-        self.global_head = nn.Linear(input_dim, num_classes)
+        # --- MODIFIED: Deeper, regularized global head ---
+        head_hidden_dim = 512 # A new hyperparameter to tune
+        self.global_head = nn.Sequential(
+            nn.Linear(input_dim, head_hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.5), # Increased dropout to fight overfitting
+            nn.Linear(head_hidden_dim, num_classes)
+        )
     
     def forward(self, x):
         features_list = []

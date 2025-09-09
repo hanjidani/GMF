@@ -36,6 +36,7 @@ def get_test_transform():
 
 def get_train_transform():
     return transforms.Compose([
+        transforms.TrivialAugmentWide(), # --- ADD THIS LINE ---
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
@@ -493,7 +494,7 @@ class CIFAR100CCorruption(Dataset):
             corrupted = corrupted.float()
         # Add salt and pepper noise
         mask = torch.rand_like(corrupted) < c
-        corrupted[mask] = torch.randint(0, 2, corrupted[mask].shape, device=corrupted.device) * 255
+        corrupted[mask] = torch.randint(0, 2, corrupted[mask].shape, device=corrupted.device).float() * 255
         return corrupted.byte()
     
     def _defocus_blur(self, img, severity):
